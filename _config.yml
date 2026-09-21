@@ -7,13 +7,10 @@ description: >-
 author: Munaf Khatri
 
 # --- hosting ---------------------------------------------------------------
-# Experiment phase: repo unitautogen/unitautogen.com is served by GitHub Pages at
-#   https://unitautogen.github.io/unitautogen.com/
-url: "https://unitautogen.github.io"
-baseurl: "/unitautogen.com"
-# At cut-over (custom domain): add the CNAME file, then set
-#   url: "https://unitautogen.com"
-#   baseurl: ""
+# Custom domain (CNAME file = unitautogen.com). All links are built with relative_url,
+# so the site also works under a sub-path if baseurl is ever set again.
+url: "https://unitautogen.com"
+baseurl: ""
 
 plugins:
   - jekyll-feed      # generates /feed.xml from _posts
