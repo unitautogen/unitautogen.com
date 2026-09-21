@@ -1,0 +1,99 @@
+---
+layout: default
+title: "rlsautotest - auto-generated pgTAP tests that prove your Postgres / Supabase RLS"
+description: "rlsautotest reads your Row-Level Security policies and auto-generates a native pgTAP suite - and the seed data - that proves, per table, per command, per identity, who can read and write which rows. Free, open-source, for Supabase and any Postgres."
+og_title: "rlsautotest - prove your Postgres / Supabase RLS, tests generated for you"
+og_description: "Auto-generate pgTAP tests (and the data) that prove your Row-Level Security policies. Catches an unprotected table on the spot. Free and open-source."
+og_image: "/assets/rls-hero.png"
+body_class: page-postgresql
+nav:
+  - label: "← All products"
+    href: "/"
+    class: "hidem"
+  - label: "How it works"
+    href: "#how"
+    class: "hidem"
+  - label: "Blog"
+    href: "/blog/"
+    class: "hidem"
+  - label: "GitHub"
+    href: "https://github.com/unitautogen/rlsautotest"
+  - label: "Install"
+    href: "https://pypi.org/project/rlsautotest/"
+    class: "btn"
+footer_left: "(c) 2026 UnitAutogen - rlsautotest, the free PostgreSQL member - Open-source under <a href=\"https://github.com/unitautogen/rlsautotest/blob/main/LICENSE\">Apache-2.0</a>"
+footer_sep: "-"
+footer_links:
+  - label: "All products"
+    href: "/"
+  - label: "GitHub"
+    href: "https://github.com/unitautogen/rlsautotest"
+  - label: "PyPI"
+    href: "https://pypi.org/project/rlsautotest/"
+---
+<a id="top"></a>
+<div class="hero wrap">
+  <h1>Prove your Postgres RLS,<br><span class="hl">tests generated for you</span>.</h1>
+  <p class="sub">rlsautotest reads your Row-Level Security policies and auto-generates a native pgTAP suite -
+    and the seed data - that proves, per table, per command, per identity, who can SELECT / INSERT / UPDATE /
+    DELETE which rows. The RLS tests Supabase apps skip, automated.</p>
+  <div class="cta">
+    <a class="btn" href="https://github.com/unitautogen/rlsautotest">View on GitHub</a>
+    <a class="btn ghost" href="https://pypi.org/project/rlsautotest/">PyPI</a>
+  </div>
+  <div class="meta-line">Free and open-source (Apache-2.0) - emits pgTAP - Supabase &amp; any Postgres</div>
+  <div class="shot">
+    <img src="{{ '/assets/rls-hero.png' | relative_url }}" alt="rlsautotest RLS access report: a per-identity grid where anon can read every row in public.documents is flagged red as a leak">
+    <div class="cap">One command - a per-identity access report that flags a table anon can read.</div>
+  </div>
+</div>
+
+<section class="soft">
+  <div class="wrap">
+    <h2>RLS is the security boundary - and it's mostly untested</h2>
+    <p class="lead">In a Supabase app, Row-Level Security is what stands between a user and everyone else's
+      data. Writing pgTAP tests for it by hand is hard - you fake identities, seed matching rows for every
+      policy, and assert who can do what - so it gets skipped, and a missed policy ships as a data leak.</p>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <h2>It generates the tests - and the data</h2>
+    <p class="lead">A generated test only proves something if the data behind it matches the policy and the
+      identity. rlsautotest uses <strong>reverse-predicate seeding</strong>: it works backward from each
+      policy to the exact rows and identities that satisfy (and violate) it - so "the owner can see their row"
+      is checked against a row that's actually theirs, and "another tenant can't" against a real, different
+      tenant.</p>
+    <div class="pts">
+      <div class="card"><h3>Per-identity proof</h3><p>For every table and command it proves what an owner, another user, another tenant, and anon can and cannot do.</p></div>
+      <div class="card"><h3>Tenant isolation</h3><p>Seeds two tenants and verifies one can't touch the other's rows - the core invariant of a multi-tenant app.</p></div>
+      <div class="card"><h3>Sound by design</h3><p>Never emits a false-passing test; an unprotected table fails CI through a built-in RLS-enabled guard.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="soft">
+  <div class="wrap">
+    <h2>Get started</h2>
+    <p class="lead">Native pgTAP - runs with <code>supabase test db</code>, <code>pg_prove</code>, or plain
+      <code>psql</code>. Nothing to install on the database.</p>
+    <pre><code>pip install rlsautotest
+
+# quick check - write an access report, open it in your browser (nothing saved)
+rlsautotest --db-url "$DATABASE_URL" --schema public --html rls-report.html
+
+# or generate a pgTAP suite to commit and run in CI
+rlsautotest --db-url "$DATABASE_URL" --schema public --emit supabase/</code></pre>
+    <ul class="honest">
+      <li>Free and open-source under Apache-2.0</li>
+      <li>Generates the tests and the seed data - no scenarios to hand-write</li>
+      <li>Runs against a local / branch / throwaway database (it seeds data) - never production</li>
+      <li>Beta: validated on real Supabase schemas and a multi-tenant test corpus</li>
+    </ul>
+    <div class="cta" style="justify-content:flex-start;margin-top:24px">
+      <a class="btn" href="https://github.com/unitautogen/rlsautotest">View on GitHub</a>
+      <a class="btn ghost" href="https://pypi.org/project/rlsautotest/">PyPI</a>
+    </div>
+  </div>
+</section>

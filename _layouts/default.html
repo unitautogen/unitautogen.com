@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{%- if page.layout == "post" %}
+<title>{{ page.title | escape }} - {{ site.title }}</title>
+{%- else %}
+<title>{{ page.title | default: site.title | escape }}</title>
+{%- endif %}
+<meta name="description" content="{{ page.description | default: site.description | escape }}">
+<link rel="canonical" href="{{ page.url | replace: 'index.html', '' | absolute_url }}">
+<link rel="alternate" type="application/atom+xml" title="UnitAutogen blog" href="{{ '/feed.xml' | absolute_url }}">
+<link rel="icon" href="{{ '/assets/logo.png' | relative_url }}">
+<meta property="og:title" content="{{ page.og_title | default: page.title | escape }}">
+<meta property="og:description" content="{{ page.og_description | default: page.description | escape }}">
+{%- if page.layout == "post" %}
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+{%- else %}
+<meta property="og:image" content="{{ page.og_image | default: '/assets/social-preview.png' | absolute_url }}">
+<meta property="og:type" content="website">
+{%- endif %}
+<link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
+</head>
+<body class="{{ page.body_class }}">
+<header>
+  <div class="wrap nav">
+    <a href="{{ '/' | relative_url }}"><img src="{{ '/assets/logo-lockup-tight.png' | relative_url }}" alt="UnitAutogen"></a>
+    <div class="links">
+      {%- assign nav = page.nav | default: site.nav %}
+      {%- for item in nav %}
+      {%- assign h = item.href %}
+      {%- unless h contains "://" or h contains "mailto:" or h contains "#" %}{% assign h = h | relative_url %}{% endunless %}
+      <a{% if item.class %} class="{{ item.class }}"{% endif %} href="{{ h }}">{{ item.label }}</a>
+      {%- endfor %}
+    </div>
+  </div>
+</header>
+
+{{ content }}
+
+<footer>
+  <div class="wrap foot">
+    {%- assign fl = page.footer_left | default: site.footer_left %}
+    <div>{{ fl | replace: "__BASE__", site.baseurl }}</div>
+    <div>
+      {%- assign links = page.footer_links | default: site.footer_links %}
+      {%- assign sep = page.footer_sep | default: site.footer_sep %}
+      {%- for item in links %}
+      {%- assign h = item.href %}
+      {%- unless h contains "://" or h contains "mailto:" or h contains "#" %}{% assign h = h | relative_url %}{% endunless %}
+      <a href="{{ h }}">{{ item.label }}</a>{% unless forloop.last %} {{ sep }}{% endunless %}
+      {%- endfor %}
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,42 @@
+---
+layout: default
+title: "Blog - UnitAutogen"
+description: "Notes on testing PostgreSQL and SQL Server: Row-Level Security, pgTAP, tSQLt, and automated database test generation."
+body_class: blog-index
+nav:
+  - label: "← Home"
+    href: "/"
+  - label: "PostgreSQL"
+    href: "/postgresql.html"
+    class: "hidem"
+  - label: "GitHub"
+    href: "https://github.com/unitautogen/rlsautotest"
+  - label: "Install"
+    href: "https://pypi.org/project/rlsautotest/"
+    class: "btn"
+footer_left: "(c) 2026 UnitAutogen &middot; automated database test generation"
+footer_sep: "&middot;"
+footer_links:
+  - label: "Products"
+    href: "/"
+  - label: "GitHub"
+    href: "https://github.com/unitautogen/rlsautotest"
+  - label: "Feed"
+    href: "/feed.xml"
+---
+<div class="head">
+  <h1>Blog</h1>
+  <p>Notes on testing your database: Row-Level Security, pgTAP, tSQLt, and generating the tests instead of hand-writing them.</p>
+  <p class="rss"><a href="{{ '/feed.xml' | relative_url }}">RSS / Atom feed</a></p>
+</div>
+
+<div class="posts">
+{% for post in site.posts %}
+  <div class="post">
+    <div class="date">{{ post.date | date: "%B %-d, %Y" }}</div>
+    <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+    <p>{{ post.excerpt }}</p>
+    <a href="{{ post.url | relative_url }}">Read &rarr;</a>
+  </div>
+{% endfor %}
+</div>

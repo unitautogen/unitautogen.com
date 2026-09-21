@@ -1,0 +1,84 @@
+# unitautogen.com - Jekyll site config (built by GitHub Pages, no CI needed)
+
+title: UnitAutogen
+description: >-
+  UnitAutogen auto-generates database unit tests - and the data that drives them -
+  so the logic inside your database is actually tested.
+author: Munaf Khatri
+
+# --- hosting ---------------------------------------------------------------
+# Experiment phase: repo unitautogen/unitautogen.com is served by GitHub Pages at
+#   https://unitautogen.github.io/unitautogen.com/
+url: "https://unitautogen.github.io"
+baseurl: "/unitautogen.com"
+# At cut-over (custom domain): add the CNAME file, then set
+#   url: "https://unitautogen.com"
+#   baseurl: ""
+
+plugins:
+  - jekyll-feed      # generates /feed.xml from _posts
+  - jekyll-sitemap   # generates /sitemap.xml
+
+feed:
+  path: feed.xml
+
+# Default header / footer (product pages override these in their front matter)
+nav:
+  - label: "SQL Server"
+    href: "/sql-server.html"
+    class: "hidem"
+  - label: "PostgreSQL"
+    href: "/postgresql.html"
+    class: "hidem"
+  - label: "Blog"
+    href: "/blog/"
+    class: "hidem"
+  - label: "GitHub"
+    href: "https://github.com/unitautogen"
+footer_left: "(c) 2026 UnitAutogen - automated database test generation."
+footer_sep: "-"
+footer_links:
+  - label: "SQL Server"
+    href: "/sql-server.html"
+  - label: "PostgreSQL"
+    href: "/postgresql.html"
+  - label: "GitHub"
+    href: "https://github.com/unitautogen"
+
+defaults:
+  # blog posts: _posts/YYYY-MM-DD-slug.html  ->  /blog/slug.html  (same URLs as today)
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      permalink: /blog/:title.html
+      author: Munaf Khatri
+      body_class: post-page
+      nav:
+        - label: "← Blog"
+          href: "/blog/"
+        - label: "Home"
+          href: "/"
+          class: "hidem"
+        - label: "GitHub"
+          href: "https://github.com/unitautogen/rlsautotest"
+        - label: "Install"
+          href: "https://pypi.org/project/rlsautotest/"
+          class: "btn"
+      footer_left: "(c) 2026 UnitAutogen &middot; <a href=\"__BASE__/postgresql.html\">rlsautotest</a>, the free PostgreSQL member &middot; Open-source under <a href=\"https://github.com/unitautogen/rlsautotest/blob/main/LICENSE\">Apache-2.0</a>"
+      footer_sep: "&middot;"
+      footer_links:
+        - label: "Products"
+          href: "/"
+        - label: "GitHub"
+          href: "https://github.com/unitautogen/rlsautotest"
+        - label: "PyPI"
+          href: "https://pypi.org/project/rlsautotest/"
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .jekyll-cache

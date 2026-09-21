@@ -1,0 +1,88 @@
+---
+layout: default
+title: "UnitAutogen - automated unit-test generation for your database (SQL Server & PostgreSQL)"
+description: "UnitAutogen auto-generates database unit tests - and the data that drives them - so the logic inside your database is actually tested. Two products: tSQLt tests with branch coverage for SQL Server, and pgTAP tests that prove Row-Level Security for PostgreSQL and Supabase."
+og_title: "UnitAutogen - generate your database tests"
+og_description: "The part of testing everyone skips, automated. Pick your platform: SQL Server (tSQLt) or PostgreSQL / Supabase RLS."
+og_image: "/assets/social-preview.png"
+body_class: page-index
+nav:
+  - label: "SQL Server"
+    href: "/sql-server.html"
+    class: "hidem"
+  - label: "PostgreSQL"
+    href: "/postgresql.html"
+    class: "hidem"
+  - label: "Blog"
+    href: "/blog/"
+    class: "hidem"
+  - label: "GitHub"
+    href: "https://github.com/unitautogen"
+footer_left: "(c) 2026 UnitAutogen - automated database test generation. SQL Server: AGPL-3.0 + commercial; PostgreSQL (rlsautotest): Apache-2.0."
+footer_sep: "-"
+footer_links:
+  - label: "SQL Server"
+    href: "/sql-server.html"
+  - label: "PostgreSQL"
+    href: "/postgresql.html"
+  - label: "GitHub"
+    href: "https://github.com/unitautogen"
+  - label: "Commercial licensing"
+    href: "mailto:licensing@unitautogen.com"
+---
+<a id="top"></a>
+<div class="hero wrap">
+  <h1>The logic in your database<br>is mostly <span class="hl">untested</span>. We fix that.</h1>
+  <p class="sub">UnitAutogen auto-generates database unit tests - and the data that drives them - so the
+    critical logic inside your database is actually tested, not just the app on top of it. Choose your platform.</p>
+  <div class="cta">
+    <a class="btn" href="{{ '/sql-server.html' | relative_url }}">SQL Server (tSQLt)</a>
+    <a class="btn ghost" href="{{ '/postgresql.html' | relative_url }}">PostgreSQL / Supabase</a>
+  </div>
+  <div class="meta-line">Open-source - the test frameworks (tSQLt, pgTAP) are free; UnitAutogen writes the tests for them</div>
+</div>
+
+<section class="soft">
+  <div class="wrap">
+    <h2>The most costly myth in software</h2>
+    <div class="myth">"QA tested the application, so the database is covered."</div>
+    <p class="lead">QA tests <em>through</em> the application, so it only drives your database with the inputs
+      the screens happen to produce. The logic underneath - the error paths, the rare data conditions, the
+      specific branch of every <code>IF</code> and <code>CASE</code>, the row a security policy is meant to
+      hide - mostly never runs. The app looks tested; the database logic underneath never was.</p>
+    <p class="lead">The honest fix is to test the database directly - which almost no one does, because by
+      hand it's brutal: fake every table, craft the data for every branch, set up every identity. So it gets
+      skipped.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>How we solve it: reverse predicate-based data seeding</h2>
+    <p class="lead">The hard part isn't faking the table - it's the data. UnitAutogen reads each predicate in
+      your code and works <strong>backwards</strong> from it to generate the rows (and identities) that drive
+      that branch both ways. It writes the tests <strong>and</strong> the data that make them mean something -
+      so a generated test exercises the real logic instead of passing against an empty table.</p>
+  </div>
+</section>
+
+<section class="soft">
+  <div class="wrap">
+    <h2>Two products, one idea</h2>
+    <p class="lead">Each is a self-contained tool for its platform.</p>
+    <div class="pts" style="grid-template-columns:1fr 1fr;margin-top:20px">
+      <div class="card">
+        <h3>UnitAutogen for SQL Server</h3>
+        <p>Auto-generate <strong>tSQLt</strong> unit tests and real line/branch coverage for your stored
+          procedures and functions, across the whole database.</p>
+        <p class="meta-line" style="margin-top:12px">Open-source (AGPL-3.0) + commercial license</p>
+      </div>
+      <div class="card">
+        <h3>rlsautotest for PostgreSQL / Supabase</h3>
+        <p>Auto-generate <strong>pgTAP</strong> tests that prove your Row-Level Security - who can read and
+          write which rows, per table, per command, per identity - with the data generated for you.</p>
+        <p class="meta-line" style="margin-top:12px">Free and open-source (Apache-2.0)</p>
+      </div>
+    </div>
+  </div>
+</section>

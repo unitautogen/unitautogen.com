@@ -1,0 +1,12 @@
+---
+layout: default
+---
+<article class="article">
+  <p class="backlink"><a href="{{ '/blog/' | relative_url }}">&larr; All posts</a></p>
+  <h1>{{ page.title }}</h1>
+  <p class="byline">By {{ page.author | default: site.author }} &middot; {{ page.date | date: "%B %-d, %Y" }}</p>
+
+{{ content }}
+
+  <p class="backlink"><a href="{{ '/blog/' | relative_url }}">&larr; All posts</a> &nbsp;&middot;&nbsp; <a href="https://github.com/unitautogen/rlsautotest">rlsautotest on GitHub</a></p>
+</article>
