@@ -26,7 +26,7 @@ Every page starts with a front-matter block (between `---` lines): title, descri
 2. Repo Settings -> Pages -> Build and deployment: Source "Deploy from a branch", Branch `main`, folder `/ (root)`. Save.
 3. Wait about a minute. The site is at `https://unitautogen.github.io/unitautogen.com/` (`baseurl` in `_config.yml` is set for this). The Actions tab shows the "pages build and deployment" run if anything fails.
 
-## Cut-over to unitautogen.com (only when the new site looks right)
+## Cut-over to unitautogen.com (done 2026-09-21; kept for reference)
 
 1. In the SQL Server repo (`unitautogen-public-repo`): delete `CNAME`, `index.html`, `sql-server.html`, `postgresql.html`, `blog/`, `feed.xml`, `assets/` (keep `docs/`). Push.
 2. In this repo: add a `CNAME` file containing `unitautogen.com`; in `_config.yml` set `url: "https://unitautogen.com"` and `baseurl: ""`. Push.
