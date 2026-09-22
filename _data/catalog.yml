@@ -17,25 +17,25 @@ platform:
   tagline_hl: "untested"
   tagline_b: ". We fix that."
   sub: >-
-    UnitAutogen automatically generates the unit tests for the logic inside your database,
-    and automatically seeds the data every test needs. No test to write, no fixture to build,
-    no scenario to script. It runs them and reports honest coverage, in your database's own
+    UnitAutogen generates the unit tests for the logic inside your database, and the seed
+    data each test depends on, directly from your code. Nothing is written by hand: not the
+    tests, not the fixtures. It runs them and reports honest coverage in your database's own
     test framework.
-  automatic_title: "Fully automatic. No manual work."
+  automatic_title: "Tests and seed data, generated end to end"
   automatic_points:
-    - title: "You point it at a database"
-      text: "Give it a connection and a schema. Nothing to annotate, no test skeletons to fill in."
-    - title: "It writes the unit tests"
+    - title: "Point it at a database"
+      text: "A connection and a schema are the only input. Nothing to annotate, no test skeletons to complete."
+    - title: "It generates the unit tests"
       text: "One test per branch of every function, procedure and trigger, in the native test framework (pgTAP, tSQLt, utPLSQL-style), ready to commit."
-    - title: "It seeds the data itself"
-      text: "For each branch it works out the exact rows and identities the test needs and creates them. No fixtures, no hand-crafted seed scripts."
-    - title: "It runs them and reports honestly"
+    - title: "It derives the seed data"
+      text: "For each branch it determines the exact rows and identities the test depends on and creates them. No fixtures, no seed scripts."
+    - title: "It runs the suite and reports coverage"
       text: "Line and branch coverage, every uncovered line explained, and never a false pass."
   # The one method - said once, engine-independent. No database named on purpose.
   method:
     - "Reads the logic in your database - functions, procedures, triggers"
-    - "Generates the unit tests automatically - none written by hand"
-    - "Seeds the data each test needs automatically - no fixtures to craft"
+    - "Generates the unit tests - none written by hand"
+    - "Derives and creates the seed data each test depends on - no fixtures"
     - "Runs them in the native test framework and reports honest branch coverage, never a false pass"
   guarantee_title: "The one guarantee"
   guarantee: "Never a fabricated, false-passing, or flaky test."
@@ -73,10 +73,9 @@ databases:
     hero_hl: "tests generated for you"
     hero_b: "."
     blurb: >-
-      Automatically generates pgTAP unit tests, and the seed data each test needs, for your
-      functions and triggers, then runs them and reports honest branch coverage. No manual test
-      writing, no manual seeding. Integration testing, security-isolation proof and PII auditing
-      on top.
+      Generates pgTAP unit tests, and the seed data each test depends on, for your functions and
+      triggers, then runs them and reports honest branch coverage, with no hand-written tests or
+      fixtures. Integration testing, security-isolation proof and PII auditing on top.
     cta_label: "Download"
     cta_href: "https://github.com/unitautogen/unitautogen-postgresql/releases"
     cta_style: "btn"
@@ -173,9 +172,9 @@ databases:
     hero_hl: "with real branch coverage"
     hero_b: "."
     blurb: >-
-      Automatically generates tSQLt unit tests, and the seed data each test needs, for stored
-      procedures and functions across the whole database, with real line and branch coverage.
-      No manual test writing, no manual seeding.
+      Generates tSQLt unit tests, and the seed data each test depends on, for stored procedures
+      and functions across the whole database, with real line and branch coverage and no
+      hand-written tests or fixtures.
     cta_label: "Talk to us"
     cta_href: "mailto:hello@unitautogen.com"
     cta_style: "btn ghost"
@@ -263,8 +262,8 @@ databases:
     hero_hl: "on Oracle and EDB"
     hero_b: "."
     blurb: >-
-      Automatically generates the tests, and the seed data, that run on both Oracle and EDB Postgres
-      Advanced Server, so a team can prove the same logic behaves identically across the two without
+      Generates the tests, and the seed data, that run on both Oracle and EDB Postgres Advanced
+      Server, so a team can prove the same logic behaves identically across the two without
       writing a test by hand.
     cta_label: "Talk to us"
     cta_href: "mailto:hello@unitautogen.com"
