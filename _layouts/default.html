@@ -51,16 +51,28 @@
     {%- assign db_root = db.slug | prepend: '/' | append: '/' %}
     <nav class="links dbnav" data-db="{{ db.id }}" aria-label="{{ db.name_full | default: db.name }} menu"{% unless db.id == active_id %} hidden{% endunless %}>
       <a{% if here == db_root %} class="is-here"{% endif %} href="{{ db_root | relative_url }}">Overview</a>
-      {%- for product in db.products %}
-      <a{% if here == product.url %} class="is-here"{% endif %} href="{{ product.url | relative_url }}">{{ product.short | default: product.name }}</a>
-      {%- endfor %}
-      {%- for product in db.products %}
-      {%- for cap in product.capabilities %}
-      {%- if cap.url %}
-      <a class="hidem{% if here == cap.url %} is-here{% endif %}" href="{{ cap.url | relative_url }}">{{ cap.short | default: cap.name }}</a>
+      {%- if db.products.size > 0 %}
+      {%- comment %} Products: each product with a one-line description and its capability pages beneath it. {% endcomment %}
+      {%- assign in_products = false %}
+      {%- for product in db.products %}{% if here contains product.url %}{% assign in_products = true %}{% endif %}{% endfor %}
+      <div class="menu">
+        <button type="button" class="menu-t{% if in_products %} is-here{% endif %}" aria-haspopup="true">Products <span class="caret" aria-hidden="true">&#9662;</span></button>
+        <div class="menu-panel menu-panel--wide" role="menu">
+          {%- for product in db.products %}
+          <a class="mp-group" role="menuitem" href="{{ product.url | relative_url }}">
+            <span class="mp-name">{{ product.name }}</span>
+            {%- if product.badge %}<span class="badge badge--{{ product.badge_kind | default: db.badge_kind }}">{{ product.badge }}</span>{% endif %}
+          </a>
+          <span class="mp-desc">{{ product.menu_blurb | default: product.blurb }}</span>
+          {%- for cap in product.capabilities %}
+          {%- if cap.url %}
+          <a class="mp-sub" role="menuitem" href="{{ cap.url | relative_url }}">{{ cap.name }}{% if cap.edition %} <span class="mp-ed">{{ cap.edition }}</span>{% endif %}</a>
+          {%- endif %}
+          {%- endfor %}
+          {%- endfor %}
+        </div>
+      </div>
       {%- endif %}
-      {%- endfor %}
-      {%- endfor %}
       <div class="menu">
         <button type="button" class="menu-t{% if page.url contains '/use-cases/' %} is-here{% endif %}" aria-haspopup="true">Use cases <span class="caret" aria-hidden="true">&#9662;</span></button>
         <div class="menu-panel" role="menu">

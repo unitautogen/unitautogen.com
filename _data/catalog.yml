@@ -80,6 +80,7 @@ databases:
         url: "/postgresql/unitautogen/"
         repo: "https://github.com/unitautogen/unitautogen-postgresql"
         framework: "pgTAP"
+        menu_blurb: "The engine: generated pgTAP tests and honest coverage for functions and triggers, with integration and security testing by edition."
         badge: "Beta"
         badge_kind: "beta"
         blurb: >-
@@ -130,6 +131,7 @@ databases:
         url: "/postgresql/rlsautotest/"
         repo: "https://github.com/unitautogen/rlsautotest"
         framework: "pgTAP"
+        menu_blurb: "Free, open source: pgTAP tests and seed data that prove your Row-Level Security policies hold."
         badge: "Free, open source"
         badge_kind: "beta"
         blurb: >-
@@ -180,6 +182,7 @@ databases:
         url: "/sql-server/unitautogen/"
         repo: "https://github.com/unitautogen/unitautogen-public-repo"
         framework: "tSQLt"
+        menu_blurb: "Generated tSQLt tests with real line and branch coverage for stored procedures and functions, whole database, CI output."
         badge: "Early access"
         badge_kind: "early"
         blurb: >-

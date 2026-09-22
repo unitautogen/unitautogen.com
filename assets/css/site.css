@@ -131,6 +131,10 @@ footer{border-top:1px solid var(--line);padding:40px 0;color:var(--muted);font-s
               padding:10px 12px;border-radius:8px;color:var(--ink);font-size:15px}
 .menu-panel a:hover{background:var(--bg-soft);text-decoration:none}
 .mp-name{font-weight:600}
+.menu-panel--wide{min-width:340px;max-width:420px}
+.mp-desc{display:block;padding:0 12px 8px;font-size:13px;line-height:1.45;color:var(--muted);white-space:normal}
+.mp-ed{font-size:11px;font-weight:700;color:var(--green-d);background:#e7f3ec;border-radius:999px;padding:1px 7px;margin-left:6px}
+.menu-panel .mp-group + .mp-desc{margin-top:-4px}
 .menu-panel .mp-group{margin-top:4px}
 .menu-panel .mp-group:first-child{margin-top:0}
 .menu-panel .mp-sub{padding:6px 12px 6px 24px;font-size:14px;color:var(--muted);font-weight:400;
