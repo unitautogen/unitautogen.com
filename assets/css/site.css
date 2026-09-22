@@ -17,9 +17,14 @@ a:hover{text-decoration:underline}
 /* header */
 header{position:sticky;top:0;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);
        border-bottom:1px solid var(--line);z-index:10}
-.nav{display:flex;align-items:center;justify-content:space-between;height:78px}
+/* two rows: the logo on its own line, then the menu spread evenly across the full width */
+.nav{display:flex;flex-direction:column;align-items:stretch;padding:14px 0 0}
+.nav .brand{align-self:flex-start;display:inline-block}
 .nav img{height:50px;display:block}
-.nav .links{display:flex;gap:22px;align-items:center;font-size:15px}
+.nav .links{display:flex;align-items:center;justify-content:space-between;gap:24px;
+            padding:12px 0 14px;font-size:16px;font-weight:500}
+.nav .links .menu-t{font-size:16px;font-weight:500}
+.nav .links a.btn{font-size:15px;font-weight:600}
 .nav .links a{color:var(--ink)}
 .btn{display:inline-block;background:var(--green);color:#fff;padding:11px 20px;border-radius:8px;
      font-weight:600;font-size:15px}
@@ -93,9 +98,69 @@ footer{border-top:1px solid var(--line);padding:40px 0;color:var(--muted);font-s
 .endcard{background:var(--bg-soft);border:1px solid var(--line);border-left:4px solid var(--green);
          border-radius:10px;padding:18px 22px;margin:28px 0;font-size:16px}
 
+/* platform nav: Databases dropdown */
+.nav .links{position:relative}
+.menu{position:relative}
+.menu-t{font:inherit;font-size:15px;color:var(--ink);background:none;border:0;cursor:pointer;
+        padding:0;display:inline-flex;align-items:center;gap:5px}
+.menu-t .caret{font-size:11px;color:var(--muted)}
+.menu::before{content:"";position:absolute;top:100%;left:0;right:0;height:16px}
+.menu-panel{display:none;position:absolute;top:100%;left:-14px;margin-top:8px;min-width:270px;max-width:82vw;
+            background:#fff;border:1px solid var(--line);border-radius:12px;
+            box-shadow:0 18px 50px rgba(20,40,30,.12);padding:8px;z-index:20}
+.menu:hover .menu-panel,.menu:focus-within .menu-panel{display:block}
+.menu-panel a{display:flex;align-items:center;justify-content:space-between;gap:16px;
+              padding:10px 12px;border-radius:8px;color:var(--ink);font-size:15px}
+.menu-panel a:hover{background:var(--bg-soft);text-decoration:none}
+.mp-name{font-weight:600}
+.menu-panel .mp-group{margin-top:4px}
+.menu-panel .mp-group:first-child{margin-top:0}
+.menu-panel .mp-sub{padding:6px 12px 6px 24px;font-size:14px;color:var(--muted);font-weight:400;
+                    display:block}
+.menu-panel .mp-sub:hover{color:var(--ink);background:var(--bg-soft)}
+
+/* maturity badges */
+.badge{font-size:11px;font-weight:700;letter-spacing:.02em;padding:3px 9px;border-radius:999px;
+       white-space:nowrap;text-transform:uppercase}
+.badge--beta{background:#e7f3ec;color:var(--green-d)}
+.badge--early{background:#fff3e0;color:#8a5a00}
+.badge--soon{background:#eef1f4;color:var(--muted)}
+
+/* the one method - strip */
+.method{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:26px}
+.method .m{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px}
+.method .m .n{color:var(--green);font-weight:800;font-size:13px}
+.method .m p{margin:6px 0 0;font-size:15px;color:var(--ink)}
+
+/* database cards (home + catalog) */
+.dbgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:26px}
+.dbcard{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);
+        border-radius:12px;padding:22px}
+.dbcard .top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.dbcard h3{margin:0;font-size:19px}
+.dbcard .fw{font-size:13px;color:var(--muted);margin:6px 0 12px}
+.dbcard p{margin:0 0 18px;color:var(--muted);font-size:15px;flex:1}
+.dbcard .go{font-weight:600;font-size:15px}
+
+/* comparison table (behavioural change verification) */
+.cmp-wrap{overflow-x:auto;margin:22px 0}
+.cmp{width:100%;border-collapse:collapse;font-size:14px;min-width:640px}
+.cmp th,.cmp td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+.cmp thead th{background:var(--bg-soft);font-weight:700}
+.cmp td.c{text-align:center}
+.cmp .yes{color:var(--green-d);font-weight:700}
+.cmp .no{color:var(--muted)}
+.cmp tbody tr:nth-child(even){background:#fbfcfc}
+
 @media(max-width:760px){
-  .nav .links a.hidem{display:none}
+  .nav .links a.hidem,.nav .links .menu.hidem{display:none}
+  .nav{padding-top:10px}
+  .nav img{height:40px}
+  .nav .links{gap:14px;flex-wrap:wrap;font-size:15px;padding:8px 0 12px}
+  .menu-panel{left:auto;right:-8px}
   .grid{grid-template-columns:1fr}
   .pts{grid-template-columns:1fr}
+  .method{grid-template-columns:1fr 1fr}
+  .dbgrid{grid-template-columns:1fr}
   .hero{padding:48px 0 24px}
 }
