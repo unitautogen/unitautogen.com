@@ -43,7 +43,6 @@
       </div>
       <div class="navlinks">
         <a class="hidem" href="{{ '/blog/' | relative_url }}">Blog</a>
-        <a class="hidem" href="https://github.com/unitautogen">GitHub</a>
       </div>
     </div>
 
@@ -75,6 +74,24 @@
       </div>
       {%- if db.docs_href and db.docs_href != "" %}
       <a class="hidem" href="{{ db.docs_href }}">Docs</a>
+      {%- endif %}
+      {%- comment %} GitHub is per database: the engine repo plus each product's own repo (rlsautotest has its own). {% endcomment %}
+      {%- assign nrepo = 0 %}
+      {%- if db.repo and db.repo != "" %}{% assign nrepo = nrepo | plus: 1 %}{% endif %}
+      {%- for product in db.products %}{% if product.repo and product.repo != "" and product.repo != db.repo %}{% assign nrepo = nrepo | plus: 1 %}{% endif %}{% endfor %}
+      {%- if nrepo == 1 %}
+      <a class="hidem" href="{{ db.repo }}">GitHub</a>
+      {%- elsif nrepo > 1 %}
+      <div class="menu hidem">
+        <button type="button" class="menu-t" aria-haspopup="true">GitHub <span class="caret" aria-hidden="true">&#9662;</span></button>
+        <div class="menu-panel" role="menu">
+          {%- for product in db.products %}
+          {%- if product.repo and product.repo != "" %}
+          <a role="menuitem" href="{{ product.repo }}"><span class="mp-name">{{ product.name }}</span></a>
+          {%- endif %}
+          {%- endfor %}
+        </div>
+      </div>
       {%- endif %}
       {%- assign cta_href = db.cta_href %}
       {%- unless cta_href contains "://" or cta_href contains "mailto:" %}{% assign cta_href = cta_href | relative_url %}{% endunless %}
