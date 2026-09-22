@@ -62,18 +62,22 @@
       {%- endfor %}
       <div class="menu">
         <button type="button" class="menu-t{% if cur_name != "" %} is-here{% endif %}" aria-haspopup="true">Products{% if cur_name != "" %}<span class="menu-cur">{{ cur_name }}</span>{% endif %} <span class="caret" aria-hidden="true">&#9662;</span></button>
-        <div class="menu-panel menu-panel--wide" role="menu">
+        <div class="menu-panel menu-panel--products" role="menu">
           {%- for product in db.products %}
           <a class="mp-group{% if here == product.url %} is-cur{% endif %}" role="menuitem" href="{{ product.url | relative_url }}"{% if here == product.url %} aria-current="page"{% endif %}>
             <span class="mp-name">{{ product.name }}</span>
             {%- if product.badge %}<span class="badge badge--{{ product.badge_kind | default: db.badge_kind }}">{{ product.badge }}</span>{% endif %}
           </a>
-          <span class="mp-desc">{{ product.menu_blurb | default: product.blurb }}</span>
-          {%- for cap in product.capabilities %}
-          {%- if cap.url %}
-          <a class="mp-sub{% if here == cap.url %} is-cur{% endif %}" role="menuitem" href="{{ cap.url | relative_url }}"{% if here == cap.url %} aria-current="page"{% endif %}>{{ cap.name }}{% if cap.edition %} <span class="mp-ed">{{ cap.edition }}</span>{% endif %}</a>
+          {%- assign ncap = 0 %}{% for cap in product.capabilities %}{% if cap.url %}{% assign ncap = ncap | plus: 1 %}{% endif %}{% endfor %}
+          {%- if ncap > 0 %}
+          <div class="mp-subs">
+            {%- for cap in product.capabilities %}
+            {%- if cap.url %}
+            <a class="mp-sub{% if here == cap.url %} is-cur{% endif %}" role="menuitem" href="{{ cap.url | relative_url }}"{% if here == cap.url %} aria-current="page"{% endif %} title="{{ cap.edition }}">{{ cap.short | default: cap.name }}</a>
+            {%- endif %}
+            {%- endfor %}
+          </div>
           {%- endif %}
-          {%- endfor %}
           {%- endfor %}
         </div>
       </div>

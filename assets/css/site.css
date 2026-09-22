@@ -139,10 +139,15 @@ footer{border-top:1px solid var(--line);padding:40px 0;color:var(--muted);font-s
 .menu-panel a.is-cur{background:var(--bg-soft)}
 .menu-panel a.is-cur .mp-name,.menu-panel a.mp-sub.is-cur{color:var(--green)}
 .menu-panel a.is-cur{box-shadow:inset 3px 0 0 var(--green)}
-.menu-panel--wide{min-width:340px;max-width:420px}
-.mp-desc{display:block;padding:0 12px 8px;font-size:13px;line-height:1.45;color:var(--muted);white-space:normal}
-.mp-ed{font-size:11px;font-weight:700;color:var(--green-d);background:#e7f3ec;border-radius:999px;padding:1px 7px;margin-left:6px}
-.menu-panel .mp-group + .mp-desc{margin-top:-4px}
+/* Products dropdown: one line per product, its capability pages as a compact row beneath */
+.menu-panel--products{min-width:280px;max-width:360px}
+.menu-panel--products .mp-group{padding:8px 12px 4px}
+.mp-subs{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 10px 24px;white-space:normal}
+.menu-panel .mp-subs a.mp-sub{display:inline-block;padding:3px 9px;border:1px solid var(--line);border-radius:999px;
+                              font-size:12.5px;font-weight:500;color:var(--muted);background:#fff;line-height:1.4}
+.menu-panel .mp-subs a.mp-sub:hover{color:var(--ink);border-color:var(--muted);background:var(--bg-soft)}
+.menu-panel .mp-subs a.mp-sub.is-cur{color:var(--green-d);background:#e7f3ec;border-color:#bfe0cb;box-shadow:none}
+.menu-panel--products .mp-group + .mp-group{border-top:1px solid var(--line);margin-top:4px;padding-top:10px}
 .menu-panel .mp-group{margin-top:4px}
 .menu-panel .mp-group:first-child{margin-top:0}
 .menu-panel .mp-sub{padding:6px 12px 6px 24px;font-size:14px;color:var(--muted);font-weight:400;
