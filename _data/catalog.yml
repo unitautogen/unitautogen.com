@@ -178,8 +178,8 @@ databases:
           cta_href: "mailto:licensing@unitautogen.com?subject=UnitAutogen%20for%20PostgreSQL%20-%20Enterprise%20licence"
           cta_style: "btn"
         - name: "Supabase startups"
-          price: "Negotiated"
-          unit: "Enterprise edition, startup rate, per year"
+          price: "Startup rate"
+          unit: "Enterprise edition, agreed case by case, per year"
           audience: "Early-stage teams building on Supabase."
           includes:
             - "The full Enterprise edition: seccover, PII detection, dated reports, priority support"
