@@ -30,8 +30,21 @@ footer_links:
     <a class="btn" href="{{ '/postgresql/' | relative_url }}">Get started with PostgreSQL</a>
     <a class="btn ghost" href="#databases">See all databases</a>
   </div>
-  <div class="meta-line">One method, brought to each database as its own native tool - tSQLt, pgTAP, utPLSQL-style.</div>
+  <div class="meta-line">Tests and seed data, both generated for you - in tSQLt, pgTAP or utPLSQL-style, whichever is native to your database.</div>
 </div>
+
+<section>
+  <div class="wrap">
+    <h2>{{ p.automatic_title }}</h2>
+    <p class="lead">Other tools give you a framework and leave the writing to you. UnitAutogen does the writing:
+      the tests and the data behind them, both generated from the code you already have.</p>
+    <div class="pts" style="grid-template-columns:repeat(4,1fr)">
+      {%- for a in p.automatic_points %}
+      <div class="card"><div class="num">{{ forloop.index }}</div><h3>{{ a.title }}</h3><p>{{ a.text }}</p></div>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
 
 <section class="soft">
   <div class="wrap">
@@ -42,7 +55,7 @@ footer_links:
       specific branch of every <code>IF</code> and <code>CASE</code>, the row a security policy is meant to
       hide - mostly never runs. The app looks tested; the database logic underneath never was.</p>
     <p class="lead">Testing it by hand is brutal: fake every table, craft the data for every branch, set up
-      every identity. So it gets skipped. UnitAutogen does that work for you.</p>
+      every identity. So it gets skipped. UnitAutogen does all of that for you, automatically.</p>
   </div>
 </section>
 
