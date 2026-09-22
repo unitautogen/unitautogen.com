@@ -53,33 +53,42 @@
       <a{% if here == db_root %} class="is-here"{% endif %} href="{{ db_root | relative_url }}">Overview</a>
       {%- if db.products.size > 0 %}
       {%- comment %} Products: each product with a one-line description and its capability pages beneath it. {% endcomment %}
-      {%- assign in_products = false %}
-      {%- for product in db.products %}{% if here contains product.url %}{% assign in_products = true %}{% endif %}{% endfor %}
+      {%- comment %} Which product / capability page is open, so the menu can show it. {% endcomment %}
+      {%- assign cur_name = "" %}
+      {%- for product in db.products %}
+        {%- if here == product.url %}{% assign cur_name = product.short | default: product.name %}{% endif %}
+        {%- for cap in product.capabilities %}{% if cap.url and here == cap.url %}{% assign cur_name = cap.name %}{% endif %}{% endfor %}
+        {%- if cur_name == "" and here contains product.url %}{% assign cur_name = product.short | default: product.name %}{% endif %}
+      {%- endfor %}
       <div class="menu">
-        <button type="button" class="menu-t{% if in_products %} is-here{% endif %}" aria-haspopup="true">Products <span class="caret" aria-hidden="true">&#9662;</span></button>
+        <button type="button" class="menu-t{% if cur_name != "" %} is-here{% endif %}" aria-haspopup="true">Products{% if cur_name != "" %}<span class="menu-cur">{{ cur_name }}</span>{% endif %} <span class="caret" aria-hidden="true">&#9662;</span></button>
         <div class="menu-panel menu-panel--wide" role="menu">
           {%- for product in db.products %}
-          <a class="mp-group" role="menuitem" href="{{ product.url | relative_url }}">
+          <a class="mp-group{% if here == product.url %} is-cur{% endif %}" role="menuitem" href="{{ product.url | relative_url }}"{% if here == product.url %} aria-current="page"{% endif %}>
             <span class="mp-name">{{ product.name }}</span>
             {%- if product.badge %}<span class="badge badge--{{ product.badge_kind | default: db.badge_kind }}">{{ product.badge }}</span>{% endif %}
           </a>
           <span class="mp-desc">{{ product.menu_blurb | default: product.blurb }}</span>
           {%- for cap in product.capabilities %}
           {%- if cap.url %}
-          <a class="mp-sub" role="menuitem" href="{{ cap.url | relative_url }}">{{ cap.name }}{% if cap.edition %} <span class="mp-ed">{{ cap.edition }}</span>{% endif %}</a>
+          <a class="mp-sub{% if here == cap.url %} is-cur{% endif %}" role="menuitem" href="{{ cap.url | relative_url }}"{% if here == cap.url %} aria-current="page"{% endif %}>{{ cap.name }}{% if cap.edition %} <span class="mp-ed">{{ cap.edition }}</span>{% endif %}</a>
           {%- endif %}
           {%- endfor %}
           {%- endfor %}
         </div>
       </div>
       {%- endif %}
+      {%- assign uc_cur = "" %}
+      {%- for uc in cat.use_cases %}{% assign uc_url = uc.slug | prepend: '/use-cases/' | append: '/' %}{% if here == uc_url %}{% assign uc_cur = uc.name %}{% endif %}{% endfor %}
+      {%- if here == "/use-cases/" %}{% assign uc_cur = "All" %}{% endif %}
       <div class="menu">
-        <button type="button" class="menu-t{% if page.url contains '/use-cases/' %} is-here{% endif %}" aria-haspopup="true">Use cases <span class="caret" aria-hidden="true">&#9662;</span></button>
+        <button type="button" class="menu-t{% if uc_cur != "" %} is-here{% endif %}" aria-haspopup="true">Use cases{% if uc_cur != "" %}<span class="menu-cur">{{ uc_cur }}</span>{% endif %} <span class="caret" aria-hidden="true">&#9662;</span></button>
         <div class="menu-panel" role="menu">
-          <a role="menuitem" href="{{ '/use-cases/' | relative_url }}"><span class="mp-name">All use cases</span></a>
+          <a role="menuitem" class="{% if here == '/use-cases/' %}is-cur{% endif %}" href="{{ '/use-cases/' | relative_url }}"><span class="mp-name">All use cases</span></a>
           {%- for uc in cat.use_cases %}
           {%- if uc.only_db and uc.only_db != db.id %}{% continue %}{% endif %}
-          <a role="menuitem" href="{{ uc.slug | prepend: '/use-cases/' | append: '/' | relative_url }}"><span class="mp-name">{{ uc.name }}</span></a>
+          {%- assign uc_url = uc.slug | prepend: '/use-cases/' | append: '/' %}
+          <a role="menuitem" class="{% if here == uc_url %}is-cur{% endif %}" href="{{ uc_url | relative_url }}"{% if here == uc_url %} aria-current="page"{% endif %}><span class="mp-name">{{ uc.name }}</span></a>
           {%- endfor %}
         </div>
       </div>

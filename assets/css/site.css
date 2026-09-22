@@ -131,6 +131,12 @@ footer{border-top:1px solid var(--line);padding:40px 0;color:var(--muted);font-s
               padding:10px 12px;border-radius:8px;color:var(--ink);font-size:15px}
 .menu-panel a:hover{background:var(--bg-soft);text-decoration:none}
 .mp-name{font-weight:600}
+/* the open sub-page: named on the dropdown button and highlighted in its list */
+.menu-cur{color:var(--green);font-weight:600}
+.menu-cur::before{content:'\00a0\00b7\00a0';color:var(--muted);font-weight:400}
+.menu-panel a.is-cur{background:var(--bg-soft)}
+.menu-panel a.is-cur .mp-name,.menu-panel a.mp-sub.is-cur{color:var(--green)}
+.menu-panel a.is-cur{box-shadow:inset 3px 0 0 var(--green)}
 .menu-panel--wide{min-width:340px;max-width:420px}
 .mp-desc{display:block;padding:0 12px 8px;font-size:13px;line-height:1.45;color:var(--muted);white-space:normal}
 .mp-ed{font-size:11px;font-weight:700;color:var(--green-d);background:#e7f3ec;border-radius:999px;padding:1px 7px;margin-left:6px}
