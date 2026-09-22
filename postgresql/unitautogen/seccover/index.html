@@ -2,11 +2,10 @@
 layout: default
 db: postgresql
 product: unitautogen
-title: "seccover & PII - UnitAutogen for PostgreSQL"
-description: "seccover exercises your functions, views and triggers as different tenants and reports, per routine, whether Row-Level Security and multi-tenant isolation are enforced or leaking, with the evidence. The --pii pass catches personal data escaping through error and RAISE messages. Part of the Enterprise edition."
-og_title: "seccover & PII - UnitAutogen for PostgreSQL"
-og_description: "Prove tenant isolation holds through functions, views and triggers, and catch PII leaked through error messages."
-og_image: "/assets/social-preview.png"
+title: "Security coverage - UnitAutogen for PostgreSQL"
+description: "seccover runs your functions, views and triggers as different tenants and reports, per routine, whether isolation is enforced or leaking - with the table, command and channel of any leak. Enterprise edition, runs on your side with no telemetry."
+og_title: "Security coverage - prove tenant isolation holds"
+og_description: "Isolation judged per routine through functions, views and triggers, with witnessed evidence. Enterprise edition."
 body_class: page-product
 footer_left: "(c) 2026 UnitAutogen - PostgreSQL engine"
 footer_sep: "-"
@@ -17,8 +16,10 @@ footer_links:
     href: "/postgresql/unitautogen/coverage/"
   - label: "Integration"
     href: "/postgresql/unitautogen/integration/"
-  - label: "seccover & PII"
+  - label: "Security coverage"
     href: "/postgresql/unitautogen/seccover/"
+  - label: "PII audit"
+    href: "/postgresql/unitautogen/pii/"
   - label: "Get started"
     href: "/postgresql/unitautogen/get-started/"
 ---
@@ -26,11 +27,11 @@ footer_links:
 <div class="hero wrap">
   <div style="margin-bottom:16px"><span class="badge badge--soon" style="text-transform:none">Enterprise</span></div>
   <h1>Prove your database<br><span class="hl">isolates tenants</span>.</h1>
-  <p class="sub">Functions, views and triggers run as different tenants. Verdict per routine.</p>
+  <p class="sub">Row-Level Security and function logic keep tenant A from seeing tenant B. seccover proves it stays true as the code keeps shipping.</p>
   <ul class="honest hero-points">
     <li>Enforced or leaking, per routine</li>
     <li>Evidence: which table, which command, which channel</li>
-    <li><code>--pii</code>: personal data escaping through error and RAISE messages</li>
+    <li>Functions, views and triggers, run as different tenants</li>
     <li>Runs on your side, no telemetry</li>
   </ul>
   <div class="cta">
@@ -38,6 +39,7 @@ footer_links:
     <a class="btn ghost" href="{{ '/postgresql/unitautogen/' | relative_url }}">Back to overview</a>
   </div>
 </div>
+
 <section>
   <div class="wrap">
     <div class="grid">
@@ -51,17 +53,6 @@ footer_links:
         </ul>
       </div>
       <img src="{{ '/assets/pg-seccover-report.png' | relative_url }}" alt="Security coverage report judging each function role by role">
-    </div>
-    <div class="grid" style="margin-top:28px">
-      <img src="{{ '/assets/pg-pii-report.png' | relative_url }}" alt="PII audit report listing personal data found in error and RAISE output">
-      <div>
-        <h3 style="margin:0 0 8px">The PII audit</h3>
-        <ul class="honest">
-          <li>Every error and RAISE path exercised</li>
-          <li>Output inspected for personal data</li>
-          <li>Findings in their own report, with JSON alongside</li>
-        </ul>
-      </div>
     </div>
   </div>
 </section>
@@ -78,6 +69,7 @@ footer_links:
       <li>A tool, never a certification or an audit service</li>
     </ul>
     <div class="cta" style="justify-content:flex-start;margin-top:22px">
+      <a class="btn ghost" href="{{ '/postgresql/unitautogen/pii/' | relative_url }}">PII audit &rarr;</a>
       <a class="btn ghost" href="{{ '/use-cases/tenant-isolation/' | relative_url }}">Tenant isolation</a>
       <a class="btn ghost" href="{{ '/use-cases/compliance-evidence/' | relative_url }}">Compliance evidence</a>
     </div>
