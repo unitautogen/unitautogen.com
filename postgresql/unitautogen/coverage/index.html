@@ -38,6 +38,10 @@ footer_links:
     <a class="btn ghost" href="{{ '/postgresql/unitautogen/' | relative_url }}">Back to overview</a>
   </div>
   <div class="meta-line">Standard pgTAP. Commit it, run with <code>runtests()</code> or <code>pg_prove</code>.</div>
+  <div class="shot">
+    <img src="{{ '/assets/pg-function-drilldown.png' | relative_url }}" alt="Function drill-down: per-test results and the annotated source with covered and uncovered lines">
+    <div class="cap">A function drill-down: each generated test, and the annotated source showing what ran.</div>
+  </div>
 </div>
 
 <section class="soft">
@@ -53,5 +57,9 @@ footer_links:
       <li>A branch that cannot be tested reliably is <code>NOT_TESTABLE</code> with a reason</li>
       <li>Never faked into a green pass</li>
     </ul>
+    <div class="shot" style="margin-top:28px">
+      <img src="{{ '/assets/pg-trigger-drilldown.png' | relative_url }}" alt="Trigger drill-down: the effect of each firing and the trigger function source">
+      <div class="cap">A trigger drill-down: the effect of each INSERT, UPDATE and DELETE, and the trigger function's source.</div>
+    </div>
   </div>
 </section>

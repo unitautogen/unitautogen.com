@@ -38,6 +38,33 @@ footer_links:
     <a class="btn ghost" href="{{ '/postgresql/unitautogen/' | relative_url }}">Back to overview</a>
   </div>
 </div>
+<section>
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <h3 style="margin:0 0 8px">The Security coverage report</h3>
+        <ul class="honest">
+          <li>Four counters and four detection sections up top</li>
+          <li>Each function judged role by role</li>
+          <li>Per cell: authorised, not authorised, anon, for SELECT / INSERT / UPDATE / DELETE</li>
+          <li>Verdict per routine with the table, command and channel of a leak</li>
+        </ul>
+      </div>
+      <img src="{{ '/assets/pg-seccover-report.png' | relative_url }}" alt="Security coverage report judging each function role by role">
+    </div>
+    <div class="grid" style="margin-top:28px">
+      <img src="{{ '/assets/pg-pii-report.png' | relative_url }}" alt="PII audit report listing personal data found in error and RAISE output">
+      <div>
+        <h3 style="margin:0 0 8px">The PII audit</h3>
+        <ul class="honest">
+          <li>Every error and RAISE path exercised</li>
+          <li>Output inspected for personal data</li>
+          <li>Findings in their own report, with JSON alongside</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
 {% include pairing.html %}
 

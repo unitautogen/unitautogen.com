@@ -29,6 +29,12 @@ layout: default
     {%- endif %}
   </div>
   {%- if product.meta_line %}<div class="meta-line">{{ product.meta_line }}</div>{% endif %}
+  {%- if product.shot %}
+  <div class="shot">
+    <img src="{{ product.shot | relative_url }}" alt="{{ product.shot_alt }}">
+    {%- if product.shot_cap %}<div class="cap">{{ product.shot_cap }}</div>{% endif %}
+  </div>
+  {%- endif %}
 </div>
 
 {%- if product.status_note %}
@@ -68,6 +74,48 @@ layout: default
 </section>
 {%- endif %}
 
+{%- if product.run_command or product.outputs %}
+<section class="soft">
+  <div class="wrap">
+    <h2>{{ product.run_title | default: "One command" }}</h2>
+    {%- if product.run_command %}<pre><code>{{ product.run_command }}</code></pre>{% endif %}
+    {%- if product.outputs %}
+    <h3 style="margin:18px 0 6px">{{ product.outputs_title | default: "What comes out" }}</h3>
+    <ul class="honest cols2">
+      {%- for it in product.outputs %}<li>{{ it }}</li>{% endfor %}
+    </ul>
+    {%- endif %}
+  </div>
+</section>
+{%- endif %}
+
+{%- if product.test_set %}
+<section>
+  <div class="wrap">
+    <h2>{{ product.test_set_title | default: "What every routine gets" }}</h2>
+    <ul class="honest cols2">
+      {%- for it in product.test_set %}<li>{{ it }}</li>{% endfor %}
+    </ul>
+  </div>
+</section>
+{%- endif %}
+
+{%- if product.requirements %}
+<section class="soft">
+  <div class="wrap">
+    <h2>{{ product.requirements_title | default: "Requirements" }}</h2>
+    <ul class="honest cols2">
+      {%- for it in product.requirements %}<li>{{ it }}</li>{% endfor %}
+    </ul>
+    <div class="cta" style="justify-content:flex-start;margin-top:22px">
+      <a class="btn" href="{{ h }}">{{ product.cta_label | default: db.cta_label }}</a>
+      {%- if db.docs_href and db.docs_href != "" %}<a class="btn ghost" href="{{ db.docs_href }}">Read the docs</a>{% endif %}
+      <a class="btn ghost" href="{{ db.slug | prepend: '/' | append: '/pricing/' | relative_url }}">Editions and pricing</a>
+    </div>
+  </div>
+</section>
+{%- endif %}
+
 {%- if product.status_note %}
 {%- comment %} early/coming products still state the guarantee, after the capabilities {% endcomment %}
 <section class="soft">
@@ -81,7 +129,7 @@ layout: default
 </section>
 {%- endif %}
 
-<section{% unless product.status_note %} class="soft"{% endunless %}>
+<section>
   <div class="wrap">
     <h2>Correctness. Isolation. Compliance.</h2>
     <p class="lead">{{ cat.platform.proves_sub }}</p>

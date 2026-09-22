@@ -38,6 +38,27 @@ footer_links:
     <a class="btn ghost" href="{{ '/postgresql/unitautogen/' | relative_url }}">Back to overview</a>
   </div>
 </div>
+<section>
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <h3 style="margin:0 0 8px">The Integration Testing Report</h3>
+        <ul class="honest">
+          <li>Same four summary cards, measured across the whole call map</li>
+          <li>One row per root function</li>
+          <li>Click a root for its call map, in real call order</li>
+          <li>Per-test write footprint across every table the map touches</li>
+          <li>Stitched annotated source of every function in the map</li>
+        </ul>
+      </div>
+      <img src="{{ '/assets/pg-integration-report.png' | relative_url }}" alt="Integration Testing Report with one row per root function">
+    </div>
+    <div class="shot" style="margin-top:28px">
+      <img src="{{ '/assets/pg-callmap.png' | relative_url }}" alt="Call map drill-down for one root function">
+      <div class="cap">A root's call map drill-down.</div>
+    </div>
+  </div>
+</section>
 
 <section class="soft">
   <div class="wrap">
