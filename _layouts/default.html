@@ -50,7 +50,6 @@
     {%- for db in cat.databases %}
     {%- assign db_root = db.slug | prepend: '/' | append: '/' %}
     <nav class="links dbnav" data-db="{{ db.id }}" aria-label="{{ db.name_full | default: db.name }} menu"{% unless db.id == active_id %} hidden{% endunless %}>
-      <span class="dbnow"><span class="dbnow-k">Viewing</span> {{ db.name_full | default: db.name }} <span class="badge badge--{{ db.badge_kind }}">{{ db.badge }}</span></span>
       <a{% if here == db_root %} class="is-here"{% endif %} href="{{ db_root | relative_url }}">Overview</a>
       {%- for product in db.products %}
       <a{% if here == product.url %} class="is-here"{% endif %} href="{{ product.url | relative_url }}">{{ product.short | default: product.name }}</a>
