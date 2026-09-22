@@ -56,6 +56,23 @@ platform:
     - "Generates the unit tests - none written by hand"
     - "Derives and creates the seed data each test depends on - no fixtures"
     - "Runs them in the native test framework and reports honest branch coverage, never a false pass"
+  # Deterministic-generation contrast, home section "Generated, not guessed".
+  # Framed on soundness + reproducibility (properties of the algorithm), no vendor named.
+  determinism_title: "Generated, not guessed"
+  determinism_sub: "The tests come from your code and your schema, checked against the real database - not from a language model's best guess."
+  determinism_ours_title: "How UnitAutogen generates a test"
+  determinism_ours:
+    - "Derived from the branch predicate and the schema, not written as prose"
+    - "Run against the real database: a pass means the branch ran and the assertion held"
+    - "The same tests, byte for byte, on every run - reviewable diffs, no flake"
+    - "A branch it cannot prove is marked with the reason, never turned green"
+  determinism_llm_title: "What a language model produces instead"
+  determinism_llm:
+    - "Plausible test text that can pass against an empty table or assert the wrong thing"
+    - "Wrong a fraction of the time, and you cannot tell which without the oracle you were generating"
+    - "Different output each run: a suite you cannot diff or trust"
+    - "Fails quietly - the worst failure mode for a test"
+  determinism_close: "Scaling a model changes the error rate, not the error kind: it still ships green-when-broken tests you cannot locate. Never a false pass is a property of the algorithm here, not a promise. A model still earns its place at the edges - naming a test, summarising a routine, triaging a flagged case - never in the correctness core."
   guarantee_title: "The one guarantee"
   guarantee: "Never a fabricated, false-passing, or flaky test."
   guarantee_points:
