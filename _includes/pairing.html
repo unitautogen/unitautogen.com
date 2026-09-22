@@ -8,14 +8,19 @@
   <div class="wrap">
     <h2>{{ pr.title }}</h2>
     <p class="lead">{{ pr.lead }}</p>
+    <ul class="honest">
+      {%- for pt in pr.lead_points %}<li>{{ pt }}</li>{% endfor %}
+    </ul>
     <div class="pts" style="grid-template-columns:1fr 1fr;margin-top:22px">
       {%- for side in pr.sides %}
       <div class="card">
         <div class="top" style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:6px">
           <h3 style="margin:0">{{ side.name }}</h3><span class="badge badge--beta" style="text-transform:none">{{ side.layer }}</span>
         </div>
-        <p>{{ side.does }}</p>
-        <p style="margin-top:10px"><strong>Cannot do:</strong> {{ side.cannot }}</p>
+        <ul class="honest" style="margin:0">
+          {%- for pt in side.does_points %}<li>{{ pt }}</li>{% endfor %}
+        </ul>
+        <p style="margin-top:10px"><strong>Cannot:</strong> {{ side.cannot }}</p>
         <p style="margin-top:12px"><a class="go" href="{{ side.url | relative_url }}">{{ side.link }} &rarr;</a></p>
       </div>
       {%- endfor %}

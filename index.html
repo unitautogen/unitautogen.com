@@ -26,18 +26,19 @@ footer_links:
 <div class="hero wrap">
   <h1>{{ p.tagline_a }} <span class="hl">{{ p.tagline_hl }}</span>{{ p.tagline_b }}</h1>
   <p class="sub">{{ p.sub }}</p>
+  <ul class="honest hero-points">
+    {%- for pt in p.sub_points %}<li>{{ pt }}</li>{% endfor %}
+  </ul>
   <div class="cta">
     <a class="btn" href="{{ '/postgresql/' | relative_url }}">Get started with PostgreSQL</a>
     <a class="btn ghost" href="#databases">See all databases</a>
   </div>
-  <div class="meta-line">Tests and seed data, both generated - in tSQLt, pgTAP or utPLSQL-style, whichever is native to your database.</div>
+  <div class="meta-line">tSQLt, pgTAP or utPLSQL-style: whichever is native to your database.</div>
 </div>
 
 <section>
   <div class="wrap">
     <h2>{{ p.automatic_title }}</h2>
-    <p class="lead">Test frameworks give you a place to put tests and leave the writing to you. UnitAutogen
-      produces the tests and the data behind them from the code you already have.</p>
     <div class="pts" style="grid-template-columns:repeat(4,1fr)">
       {%- for a in p.automatic_points %}
       <div class="card"><div class="num">{{ forloop.index }}</div><h3>{{ a.title }}</h3><p>{{ a.text }}</p></div>
@@ -50,22 +51,19 @@ footer_links:
   <div class="wrap">
     <h2>The most costly myth in software</h2>
     <div class="myth">"QA tested the application, so the database is covered."</div>
-    <p class="lead">QA tests <em>through</em> the application, so it only drives your database with the inputs
-      the screens happen to produce. The logic underneath - the error paths, the rare data conditions, the
-      specific branch of every <code>IF</code> and <code>CASE</code>, the row a security policy is meant to
-      hide - mostly never runs. The app looks tested; the database logic underneath never was.</p>
-    <p class="lead">Testing it by hand is brutal: fake every table, craft the data for every branch, set up
-      every identity. So it gets skipped. UnitAutogen takes that work on.</p>
+    <ul class="honest cols2">
+      <li>QA drives the database only with inputs the screens produce</li>
+      <li>Error paths, rare data conditions and most IF/CASE branches never run</li>
+      <li>The row a security policy should hide is never checked</li>
+      <li>Testing it by hand means faking tables and crafting data, so it gets skipped</li>
+    </ul>
   </div>
 </section>
 
 <section>
   <div class="wrap">
     <h2>One method, every database</h2>
-    <p class="lead">The hard part isn't faking the table, it's the data. UnitAutogen reads each predicate in
-      your code and works backwards to the rows and identities that drive that branch both ways. It writes the
-      tests <strong>and</strong> the data that make them mean something, in your database's own framework, so a
-      generated test exercises the real logic instead of passing against an empty table.</p>
+    <p class="lead">Read each predicate, work backwards to the rows that drive it both ways, write the test.</p>
     <div class="method">
       {%- for step in p.method %}
       <div class="m"><div class="n">{{ forloop.index }}</div><p>{{ step }}</p></div>
@@ -77,8 +75,7 @@ footer_links:
 <section class="soft" id="databases">
   <div class="wrap">
     <h2>Pick your database</h2>
-    <p class="lead">Each database gets its own native installable, all sharing the same method. Only
-      PostgreSQL is in general use today; the others show exactly where they are.</p>
+    <p class="lead">One native tool per database. Badges show exactly where each one is.</p>
     <div class="dbgrid">
       {%- for db in cat.databases %}
       <div class="dbcard">
@@ -95,12 +92,11 @@ footer_links:
 <section id="use-cases">
   <div class="wrap">
     <h2>What teams use it for</h2>
-    <p class="lead">One method, several jobs. Each is delivered on PostgreSQL today.</p>
     <div class="dbgrid">
       {%- for uc in cat.use_cases %}
       <div class="dbcard">
         <div class="top"><h3>{{ uc.name }}</h3></div>
-        <p>{{ uc.blurb }}</p>
+        <p>{{ uc.blurb | replace: "[framework]", "pgTAP" }}</p>
         <a class="go" href="{{ uc.slug | prepend: '/use-cases/' | append: '/' | relative_url }}">Learn more &rarr;</a>
       </div>
       {%- endfor %}

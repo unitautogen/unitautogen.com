@@ -15,6 +15,11 @@ layout: default
   <div style="margin-bottom:16px"><span class="badge badge--{{ product.badge_kind | default: db.badge_kind }}">{{ product.badge | default: db.badge }}</span></div>
   <h1>{{ product.hero_a }}<br><span class="hl">{{ product.hero_hl }}</span>{{ product.hero_b }}</h1>
   <p class="sub">{{ product.sub | default: product.blurb }}</p>
+  {%- if product.points %}
+  <ul class="honest hero-points">
+    {%- for pt in product.points %}<li>{{ pt }}</li>{% endfor %}
+  </ul>
+  {%- endif %}
   <div class="cta">
     {%- assign h = product.cta_href | default: db.cta_href %}{% unless h contains "://" or h contains "mailto:" %}{% assign h = h | relative_url %}{% endunless %}
     <a class="btn" href="{{ h }}">{{ product.cta_label | default: db.cta_label }}</a>
@@ -38,7 +43,9 @@ layout: default
   <div class="wrap">
     <h2>{{ cat.platform.guarantee_title }}</h2>
     <div class="myth">{{ cat.platform.guarantee }}</div>
-    <p class="lead">{{ cat.platform.guarantee_lead }}</p>
+    <ul class="honest cols2">
+      {%- for pt in cat.platform.guarantee_points %}<li>{{ pt }}</li>{% endfor %}
+    </ul>
   </div>
 </section>
 {%- endif %}
@@ -67,7 +74,9 @@ layout: default
   <div class="wrap">
     <h2>{{ cat.platform.guarantee_title }}</h2>
     <div class="myth">{{ cat.platform.guarantee }}</div>
-    <p class="lead">{{ cat.platform.guarantee_lead }}</p>
+    <ul class="honest cols2">
+      {%- for pt in cat.platform.guarantee_points %}<li>{{ pt }}</li>{% endfor %}
+    </ul>
   </div>
 </section>
 {%- endif %}

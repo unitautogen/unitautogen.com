@@ -26,36 +26,32 @@ footer_links:
 <div class="hero wrap">
   <div style="margin-bottom:16px"><span class="badge badge--beta" style="text-transform:none">Community Edition - free</span></div>
   <h1>Generated tests,<br><span class="hl">honest coverage</span>.</h1>
-  <p class="sub">The everyday command, and the default: it generates a full set of pgTAP tests for every
-    function and trigger, runs them, and measures how much of each routine they exercised.</p>
+  <p class="sub">The default command. A full pgTAP suite for every function and trigger, run for you, measured.</p>
+  <ul class="honest hero-points">
+    <li>Valid inputs, low and high boundaries</li>
+    <li>One test per branch, true and false side</li>
+    <li>Result-set shape and rows matching recorded output</li>
+    <li>Triggers: fire the write, assert what happened</li>
+  </ul>
   <div class="cta">
     <a class="btn" href="{{ '/postgresql/unitautogen/get-started/' | relative_url }}">Get started</a>
     <a class="btn ghost" href="{{ '/postgresql/unitautogen/' | relative_url }}">Back to overview</a>
   </div>
+  <div class="meta-line">Standard pgTAP. Commit it, run with <code>runtests()</code> or <code>pg_prove</code>.</div>
 </div>
 
 <section class="soft">
   <div class="wrap">
-    <h2>What it generates</h2>
-    <p class="lead">Per function: valid inputs, low and high boundaries, one test per branch on both its true
-      and false side, result-set shape, and rows matching the recorded output. Triggers are tested by
-      behaviour - it fires the INSERT, UPDATE or DELETE and asserts what the trigger actually did, or the error
-      it raised. All of it is standard pgTAP you commit next to your code and run with
-      <code>runtests()</code> or <code>pg_prove</code>.</p>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
     <h2>Every uncovered line is explained</h2>
-    <p class="lead">Coverage is measured by actually running the tests, not estimated. Rather than leave a
-      line simply red, the report tags each uncovered line so you know whose problem it is.</p>
+    <p class="lead">Coverage is measured by running the tests. Each uncovered line is tagged with whose problem it is.</p>
     <div class="pts">
-      <div class="card"><h3>Dead code (D)</h3><p>The line can never run, sometimes with the exact contradictory conditions named. Usually points at a real bug.</p></div>
-      <div class="card"><h3>Error-recovery (H)</h3><p>Inside an exception handler that valid data cannot reach. Untested by default, by design; you can opt in.</p></div>
-      <div class="card"><h3>Tool limit (E)</h3><p>No evidence of dead code; the tool could not produce a test for this line. An honest gap, reported plainly.</p></div>
+      <div class="card"><h3>Dead code (D)</h3><p>Can never run. Contradictory conditions named. Usually a real bug.</p></div>
+      <div class="card"><h3>Error-recovery (H)</h3><p>Exception handler valid data cannot reach. Untested by default; opt in.</p></div>
+      <div class="card"><h3>Tool limit (E)</h3><p>No test could be produced for this line. Reported plainly.</p></div>
     </div>
-    <p class="lead" style="margin-top:22px">When a branch cannot be tested reliably it is reported
-      <code>NOT_TESTABLE</code> with a plain reason, never faked into a green pass.</p>
+    <ul class="honest" style="margin-top:20px">
+      <li>A branch that cannot be tested reliably is <code>NOT_TESTABLE</code> with a reason</li>
+      <li>Never faked into a green pass</li>
+    </ul>
   </div>
 </section>

@@ -20,9 +20,13 @@ footer_links:
 <div class="hero wrap">
   <div style="margin-bottom:16px"><span class="badge badge--beta">Available for PostgreSQL - Team edition</span></div>
   <h1>The whole flow inside the database,<br><span class="hl">tested on every build</span>.</h1>
-  <p class="sub">A unit test proves one routine in isolation. QA needs more: the function, the functions it
-    calls, and the triggers its writes fire, all running together on real rows, the way production runs them.
-    UnitAutogen generates that too, from the same code, with no scenarios written by hand.</p>
+  <p class="sub">For QA teams that need the assembled database verified, not one routine at a time.</p>
+  <ul class="honest hero-points">
+    <li>Each entry point run with the functions it calls</li>
+    <li>Triggers its writes fire are run, not mocked</li>
+    <li>Coverage across the whole call map</li>
+    <li>No scenarios written by hand</li>
+  </ul>
   <div class="cta">
     <a class="btn" href="{{ '/postgresql/unitautogen/integration/' | relative_url }}">See integration testing</a>
     <a class="btn ghost" href="{{ '/postgresql/pricing/' | relative_url }}">Team edition</a>
@@ -33,9 +37,9 @@ footer_links:
   <div class="wrap">
     <h2>What QA gets</h2>
     <div class="pts">
-      <div class="card"><h3>End-to-end runs</h3><p>Each entry point is exercised with the routines it calls and the triggers it fires left in place, not mocked, so the test sees what production sees.</p></div>
-      <div class="card"><h3>Coverage across the call map</h3><p>Line and branch coverage reported for the root and everything it reaches, so a branch inside a trigger three calls deep is not invisible.</p></div>
-      <div class="card"><h3>A regression suite you did not write</h3><p>Today's behaviour is captured as tests. A change anywhere in the flow that alters an outcome fails the build with the exact routine and branch named.</p></div>
+      <div class="card"><h3>End-to-end runs</h3><p>The test sees what production sees: calls and triggers in place.</p></div>
+      <div class="card"><h3>Deep coverage</h3><p>A branch inside a trigger three calls down is measured, not invisible.</p></div>
+      <div class="card"><h3>A regression suite you did not write</h3><p>A change that alters an outcome fails the build with the routine and branch named.</p></div>
     </div>
   </div>
 </section>
@@ -43,12 +47,15 @@ footer_links:
 <section>
   <div class="wrap">
     <h2>Unit and integration together</h2>
-    <p class="lead">Developers run the unit tests on their own routines while they work. QA runs the
-      integration suite against the assembled database on every build. Both come from the same generator, so
-      there is one set of seed data, one report format, and one place a failure points to.</p>
-    <p class="lead">Integration testing is part of the Team edition; unit testing and coverage are free in the
-      Community Edition.</p>
-    <div class="cta" style="justify-content:flex-start">
+    <ul class="honest cols2">
+      <li>Developers run unit tests on their own routines while they work</li>
+      <li>QA runs the integration suite on the assembled database each build</li>
+      <li>Same generator: one set of seed data, one report format</li>
+      <li>One place a failure points to</li>
+      <li>Unit testing and coverage: free, Community Edition</li>
+      <li>Integration testing: Team edition</li>
+    </ul>
+    <div class="cta" style="justify-content:flex-start;margin-top:22px">
       <a class="btn" href="{{ '/postgresql/unitautogen/integration/' | relative_url }}">See integration testing</a>
       <a class="btn ghost" href="{{ '/use-cases/unit-testing/' | relative_url }}">Unit testing for developers &rarr;</a>
     </div>

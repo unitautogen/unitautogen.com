@@ -20,8 +20,13 @@ footer_links:
 <div class="hero wrap">
   <div style="margin-bottom:16px"><span class="badge badge--beta">Available for PostgreSQL</span></div>
   <h1>A guardrail for<br><span class="hl">AI-written database code</span>.</h1>
-  <p class="sub">AI assistants now write a lot of database logic, and they write it fast. That is exactly where
-    a silent mistake costs the most, and where it is hardest to catch by eye.</p>
+  <p class="sub">AI writes database logic fast. A silent mistake there costs the most and is hardest to catch by eye.</p>
+  <ul class="honest hero-points">
+    <li>Generated tests pin how each routine behaves today</li>
+    <li>The assistant runs them before reporting back</li>
+    <li>A failure you did not ask for means fix the code</li>
+    <li>Intended change: regenerate, re-pin, commit</li>
+  </ul>
   <div class="cta">
     <a class="btn" href="{{ '/postgresql/unitautogen/' | relative_url }}">See the engine</a>
     <a class="btn ghost" href="https://github.com/unitautogen/unitautogen-postgresql/releases">Download</a>
@@ -31,32 +36,19 @@ footer_links:
 <section class="soft">
   <div class="wrap">
     <h2>The mistake no code review catches</h2>
-    <p class="lead">Ask an AI editor to adjust a tier boundary and it might quietly change
-      <code>&gt;= 1000</code> to <code>&gt; 1000</code>. The edit reads fine, so it ships, and a customer with
-      exactly 1000 points silently drops a tier. UnitAutogen already captured how that function behaved when it
-      was correct, as committed pgTAP tests, so the change fails one of them before it reaches production.</p>
+    <ul class="honest">
+      <li>You ask for a new tier. The assistant quietly changes <code>&gt;= 1000</code> to <code>&gt; 1000</code>.</li>
+      <li>The edit reads fine and ships. A customer with exactly 1000 points drops a tier.</li>
+      <li>With the guardrail: the committed test for 1000 fails first. <code>have: silver, want: gold</code>.</li>
+      <li>The assistant fixes the boundary, re-runs green, then adds the new tier's tests.</li>
+    </ul>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h2>Hand the whole loop to the assistant</h2>
-    <p class="lead">Tell your assistant once to use UnitAutogen as its guardrail, then keep asking for
-      features. On every change it runs the committed tests first, fixes what breaks that you did not ask to
-      change, and regenerates only when the behaviour change was intended. Wired into CI, it checks
-      AI-authored changes as fast as they are produced, so you keep the speed without shipping broken database
-      logic.</p>
-    <div class="cta" style="justify-content:flex-start">
-      <a class="btn" href="{{ '/postgresql/unitautogen/' | relative_url }}">See how it works</a>
-    </div>
-  </div>
-</section>
-
-<section class="soft">
-  <div class="wrap">
     <h2>Set it once</h2>
-    <p class="lead">Put one rule in your project's rules file - <code>CLAUDE.md</code>, <code>AGENTS.md</code>,
-      or <code>.cursor/rules</code> - and the assistant follows it on every request:</p>
+    <p class="lead">One rule in <code>CLAUDE.md</code>, <code>AGENTS.md</code> or <code>.cursor/rules</code>:</p>
     <pre><code>Use UnitAutogen as the guardrail for all database work.
 Whenever you add or change a function, procedure, trigger or RLS policy:
 1. Run the committed guardrail tests first.
@@ -65,51 +57,13 @@ Whenever you add or change a function, procedure, trigger or RLS policy:
 3. If this is new logic, or I confirmed the change was intended,
    regenerate the tests, run them, and commit them with the migration.
 4. Tell me which tests ran, the pass/fail count, and what you regenerated.</code></pre>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <h2>Then just build (a real session)</h2>
-    <p class="lead">You type plain feature requests. The assistant runs the guardrail loop each time and
-      reports back. You never run a command.</p>
-
-    <p class="lead" style="margin-bottom:6px"><strong>You:</strong></p>
-    <div class="myth" style="font-weight:400;font-size:16px">Add a <code>membership_tier(p_points int)</code> function that returns the tier: bronze under 500, silver from 500 to 999, gold 1000 and up.</div>
-    <p class="lead"><strong>Assistant:</strong> Added <code>membership_tier</code> and generated 6 guardrail
-      tests covering the bronze, silver and gold boundaries. All 6 pass. I committed the tests next to the
-      migration.</p>
-
-    <hr style="border:none;border-top:1px solid var(--line);margin:28px 0">
-
-    <p class="lead" style="margin-bottom:6px"><strong>You, a week later:</strong></p>
-    <div class="myth" style="font-weight:400;font-size:16px">Add a platinum tier for 5000 points and up.</div>
-    <p class="lead">Following the rule, the assistant runs the committed tests <em>first</em>, before it
-      reports back. One fails:</p>
-    <pre><code>not ok 4 - membership_tier :: p_points = 1000
-    #   have: silver
-    #   want: gold</code></pre>
-    <p class="lead"><strong>Assistant:</strong> While adding platinum I had shifted the gold boundary to
-      <code>&gt; 1000</code> instead of <code>&gt;= 1000</code>, and the committed test for exactly 1000
-      points caught it (have: silver, want: gold). I corrected the check to <code>&gt;= 1000</code>, confirmed
-      all existing tests pass again, then regenerated to add coverage for the platinum tier. 8 tests, all
-      green, committed.</p>
-
-    <hr style="border:none;border-top:1px solid var(--line);margin:28px 0">
-
-    <p class="lead" style="margin-bottom:6px"><strong>You (this time you mean it):</strong></p>
-    <div class="myth" style="font-weight:400;font-size:16px">Rename the bronze tier to "starter".</div>
-    <p class="lead">Now a failing test is the correct outcome. The assistant runs the committed tests, sees
-      them fail with <code>have: starter, want: bronze</code>, recognises this is the rename you asked for, so
-      it regenerates to re-pin the new behaviour instead of "fixing" the code, runs the fresh suite green, and
-      commits.</p>
-    <p class="lead">The regression never left your machine, and you never ran a test. A failure you did not
-      ask for means fix the code; a failure that matches what you asked for means re-pin the baseline, and the
-      assistant makes that one judgement call from your instruction.</p>
-
-    <p class="lead" style="margin-top:20px">The complete walkthrough, including CI setup, is in the
-      <a href="https://github.com/unitautogen/unitautogen-postgresql/blob/main/docs/ai-guardrail.md">docs</a>.</p>
-    <div class="cta" style="justify-content:flex-start">
+    <ul class="honest cols2">
+      <li>You type feature requests; you never run a command</li>
+      <li>Every change is checked as fast as it is produced</li>
+      <li>Wired into CI, the same loop gates every merge</li>
+      <li>Full walkthrough with CI setup in the <a href="https://github.com/unitautogen/unitautogen-postgresql/blob/main/docs/ai-guardrail.md">docs</a></li>
+    </ul>
+    <div class="cta" style="justify-content:flex-start;margin-top:22px">
       <a class="btn" href="https://github.com/unitautogen/unitautogen-postgresql/releases">Download</a>
       <a class="btn ghost" href="{{ '/postgresql/unitautogen/' | relative_url }}">See the engine</a>
     </div>

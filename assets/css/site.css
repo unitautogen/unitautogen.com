@@ -82,6 +82,10 @@ code{font-family:"SF Mono",SFMono-Regular,Consolas,"Liberation Mono",Menlo,monos
 ul.honest{list-style:none;padding:0;margin:14px 0 0;color:var(--muted)}
 ul.honest li{padding:6px 0 6px 26px;position:relative}
 ul.honest li:before{content:"\2713";position:absolute;left:0;color:var(--green);font-weight:700}
+ul.honest.cols2{display:grid;grid-template-columns:1fr 1fr;column-gap:28px}
+.hero ul.hero-points{display:inline-grid;grid-template-columns:1fr 1fr;column-gap:32px;text-align:left;margin:0 auto 26px;font-size:16px;color:var(--ink)}
+.hero ul.hero-points li{padding:4px 0 4px 26px}
+@media(max-width:760px){ul.honest.cols2,.hero ul.hero-points{grid-template-columns:1fr}}
 
 /* pricing */
 .pricegrid{display:grid;gap:22px;align-items:stretch}

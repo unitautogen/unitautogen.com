@@ -20,9 +20,13 @@ footer_links:
 <div class="hero wrap">
   <div style="margin-bottom:16px"><span class="badge badge--beta">Available for PostgreSQL - free in the Community Edition</span></div>
   <h1>Unit tests for your database logic,<br><span class="hl">without writing them</span>.</h1>
-  <p class="sub">You own functions, procedures and triggers that nobody has unit-tested, because writing the
-    tests means faking every table and crafting the data for every branch. UnitAutogen generates the tests
-    and that data from the code itself, runs them, and tells you exactly which lines and branches ran.</p>
+  <p class="sub">For developers who own functions, procedures and triggers nobody has unit-tested.</p>
+  <ul class="honest hero-points">
+    <li>One test per branch, true and false side</li>
+    <li>Boundary values around every numeric gate</li>
+    <li>Seed data created per test, including FK parents</li>
+    <li>Line and branch coverage, uncovered lines explained</li>
+  </ul>
   <div class="cta">
     <a class="btn" href="{{ '/postgresql/unitautogen/get-started/' | relative_url }}">Get started</a>
     <a class="btn ghost" href="{{ '/postgresql/unitautogen/coverage/' | relative_url }}">See coverage</a>
@@ -31,11 +35,11 @@ footer_links:
 
 <section class="soft">
   <div class="wrap">
-    <h2>What you get for each routine</h2>
+    <h2>What each test asserts</h2>
     <div class="pts">
-      <div class="card"><h3>A test per branch</h3><p>Every IF, CASE, loop and exception handler gets a test that drives it, on both its true and false side, with the boundary values around each numeric gate.</p></div>
-      <div class="card"><h3>The data that makes it real</h3><p>Each test seeds the exact rows the branch depends on, including required columns and foreign-key parents, in the native test framework's own isolation so nothing persists.</p></div>
-      <div class="card"><h3>Assertions on behaviour</h3><p>Return values, result sets, and the rows a branch inserts, updates or deletes are asserted, so a broken branch fails instead of passing against an empty table.</p></div>
+      <div class="card"><h3>Return value</h3><p>Scalar results and result sets, compared to the recorded output.</p></div>
+      <div class="card"><h3>Rows written</h3><p>What the branch inserted, updated or deleted, so a broken branch fails.</p></div>
+      <div class="card"><h3>Errors raised</h3><p>The exact error an exception path produces.</p></div>
     </div>
   </div>
 </section>
@@ -43,13 +47,15 @@ footer_links:
 <section>
   <div class="wrap">
     <h2>How it fits your day</h2>
-    <p class="lead">Run it against a throwaway copy of the database. The generated suite lands as ordinary
-      test files you can read, edit and commit next to your migrations. Re-run it after a change and the
-      diff shows which behaviour moved. Wire it into CI and a change that alters a routine's behaviour fails
-      the build before it reaches production.</p>
-    <p class="lead">What it cannot test reliably, it says so, per line, rather than showing a green that
-      would mislead you. Never a fabricated, false-passing or flaky test.</p>
-    <div class="cta" style="justify-content:flex-start">
+    <ul class="honest cols2">
+      <li>Run it against a throwaway copy of the database</li>
+      <li>Tests land as ordinary pgTAP files you can read, edit and commit</li>
+      <li>Re-run after a change; the diff shows which behaviour moved</li>
+      <li>In CI, a behaviour change fails the build before production</li>
+      <li>What cannot be tested reliably is reported per line</li>
+      <li>Never a fabricated, false-passing or flaky test</li>
+    </ul>
+    <div class="cta" style="justify-content:flex-start;margin-top:22px">
       <a class="btn" href="{{ '/postgresql/unitautogen/get-started/' | relative_url }}">Get started, free</a>
       <a class="btn ghost" href="{{ '/use-cases/integration-testing/' | relative_url }}">Integration testing for QA &rarr;</a>
     </div>

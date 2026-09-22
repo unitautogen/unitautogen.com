@@ -26,8 +26,7 @@ footer_links:
 <div class="hero wrap">
   <div style="margin-bottom:16px"><span class="badge badge--beta">Beta</span></div>
   <h1>Get started<br>with <span class="hl">UnitAutogen for PostgreSQL</span>.</h1>
-  <p class="sub">Download the build for your platform, install the two extensions in your database, and
-    generate your first pgTAP suite with coverage.</p>
+  <p class="sub">Download, install two extensions, generate your first suite.</p>
   <div class="cta">
     <a class="btn" href="https://github.com/unitautogen/unitautogen-postgresql/releases">Download</a>
     <a class="btn ghost" href="https://github.com/unitautogen/unitautogen-postgresql#readme">Read the docs</a>
@@ -36,15 +35,18 @@ footer_links:
 
 <section class="soft">
   <div class="wrap">
-    <h2>Your first run</h2>
+    <h2>Three steps</h2>
+    <div class="pts">
+      <div class="card"><div class="num">1</div><h3>Download</h3><p>One self-contained binary, Windows or Linux. Nothing to install on the server.</p></div>
+      <div class="card"><div class="num">2</div><h3>Two extensions</h3><p><code>CREATE EXTENSION pgtap; CREATE EXTENSION plpgsql_check;</code> in the database you test.</p></div>
+      <div class="card"><div class="num">3</div><h3>Run</h3><p>Point it at a schema. Tests, coverage and reports come out.</p></div>
+    </div>
     <pre><code>unitautogen --schema public --out unit_tests --html report.html --json report.json</code></pre>
-    <ul class="honest">
-      <li>PostgreSQL 14 to 18, self-hosted or managed (Supabase, Neon, RDS and Aurora, Azure Database for PostgreSQL)</li>
-      <li>Needs pgTAP and plpgsql_check installed in the database you are testing</li>
-      <li>Generated tests are standard pgTAP - commit them and run them in CI with no UnitAutogen at run time</li>
-      <li>Ships as a single self-contained binary for Windows and Linux</li>
-      <li>Runs entirely on your side, with no telemetry</li>
-      <li>Beta (v0.3.2): validated at high coverage across a range of real schemas</li>
+    <ul class="honest cols2">
+      <li>PostgreSQL 14 to 18: Supabase, Neon, RDS, Aurora, Azure, self-hosted</li>
+      <li>Run against a throwaway copy, never production</li>
+      <li>Output is standard pgTAP; CI needs no UnitAutogen at run time</li>
+      <li>No telemetry</li>
     </ul>
   </div>
 </section>
@@ -53,14 +55,13 @@ footer_links:
   <div class="wrap">
     <h2>Editions</h2>
     <div class="pts">
-      <div class="card"><h3>Community Edition <span class="badge badge--beta" style="text-transform:none">Free</span></h3><p>Unit and trigger test generation, coverage, and CI exit-code gating. The everyday developer tool, free.</p></div>
-      <div class="card"><h3>Team</h3><p>Adds integration testing across the whole call map.</p></div>
-      <div class="card"><h3>Enterprise</h3><p>Adds seccover and PII auditing, plus licensed, unwatermarked, audit-ready output.</p></div>
+      <div class="card"><h3>Community Edition <span class="badge badge--beta" style="text-transform:none">Free</span></h3><p>Unit and trigger tests, coverage, CI gating.</p></div>
+      <div class="card"><h3>Team</h3><p>Adds integration testing across the call map.</p></div>
+      <div class="card"><h3>Enterprise</h3><p>Adds seccover and PII auditing.</p></div>
     </div>
-    <p class="lead" style="margin-top:20px">For Team or Enterprise licensing, email
-      <a href="mailto:licensing@unitautogen.com">licensing@unitautogen.com</a>.</p>
-    <div class="cta" style="justify-content:flex-start;margin-top:16px">
+    <div class="cta" style="justify-content:flex-start;margin-top:22px">
       <a class="btn" href="https://github.com/unitautogen/unitautogen-postgresql/releases">Download</a>
+      <a class="btn ghost" href="{{ '/postgresql/pricing/' | relative_url }}">Pricing</a>
     </div>
   </div>
 </section>

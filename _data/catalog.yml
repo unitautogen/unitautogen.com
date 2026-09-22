@@ -17,20 +17,23 @@ platform:
   tagline_hl: "untested"
   tagline_b: ". We fix that."
   sub: >-
-    UnitAutogen generates the unit tests for the logic inside your database, and the seed
-    data each test depends on, directly from your code. Nothing is written by hand: not the
-    tests, not the fixtures. It runs them and reports honest coverage in your database's own
-    test framework.
+    Unit tests for your database logic, generated from the code. The seed data too.
+    Nothing written by hand.
+  sub_points:
+    - "Reads your functions, procedures and triggers"
+    - "Writes one test per branch, in your database's own test framework"
+    - "Creates the rows each test depends on"
+    - "Runs the suite, reports line and branch coverage, never a false pass"
   automatic_title: "Tests and seed data, generated end to end"
   automatic_points:
     - title: "Point it at a database"
-      text: "A connection and a schema are the only input. Nothing to annotate, no test skeletons to complete."
+      text: "A connection and a schema. Nothing to annotate."
     - title: "It generates the unit tests"
-      text: "One test per branch of every function, procedure and trigger, in the native test framework (pgTAP, tSQLt, utPLSQL-style), ready to commit."
+      text: "One test per branch, in the native framework, ready to commit."
     - title: "It derives the seed data"
-      text: "For each branch it determines the exact rows and identities the test depends on and creates them. No fixtures, no seed scripts."
+      text: "The exact rows and identities each test depends on. No fixtures."
     - title: "It runs the suite and reports coverage"
-      text: "Line and branch coverage, every uncovered line explained, and never a false pass."
+      text: "Line and branch coverage. Uncovered lines explained. Never a false pass."
   # The one method - said once, engine-independent. No database named on purpose.
   method:
     - "Reads the logic in your database - functions, procedures, triggers"
@@ -39,11 +42,11 @@ platform:
     - "Runs them in the native test framework and reports honest branch coverage, never a false pass"
   guarantee_title: "The one guarantee"
   guarantee: "Never a fabricated, false-passing, or flaky test."
-  guarantee_lead: >-
-    If a branch cannot be tested reliably, the report tells you so in plain language, rather
-    than showing a green that would mislead you. Every report comes back with no failing and no
-    false tests, and a visible, explained gap always beats a false pass. That is what makes the
-    result safe to gate your CI on.
+  guarantee_points:
+    - "A branch that cannot be tested reliably is reported, with the reason"
+    - "No failing tests, no false tests, in any report"
+    - "An explained gap always beats a false pass"
+    - "Safe to gate CI on"
 
 # Databases in tab / home order. slug drives the URL: /<slug>/
 # The first one is the default the site opens on (also set as default_db in _config.yml).
@@ -59,9 +62,7 @@ databases:
     runner: "pg_prove or runtests()"
     objects: "functions and triggers"
     versions: "PostgreSQL 14 to 18"
-    platforms: >-
-      Works on PostgreSQL 14 to 18, self-hosted or managed, including Supabase, Neon, Amazon RDS
-      and Aurora, and Azure Database for PostgreSQL.
+    platforms: "PostgreSQL 14 to 18. Supabase, Neon, Amazon RDS and Aurora, Azure Database for PostgreSQL, self-hosted."
     prerequisites: "needs pgTAP and plpgsql_check in the target database"
     meta_line: "Native pgTAP - runs with <code>pg_prove</code> or <code>runtests()</code>, with or without us."
     # --- links ---
@@ -73,67 +74,57 @@ databases:
     hero_hl: "tests generated for you"
     hero_b: "."
     blurb: >-
-      Generates pgTAP unit tests, and the seed data each test depends on, for your functions and
-      triggers, then runs them and reports honest branch coverage, with no hand-written tests or
-      fixtures. Integration testing, security-isolation proof and PII auditing on top.
+      pgTAP unit tests and seed data for your functions and triggers, generated and run for you,
+      with honest branch coverage.
+    points:
+      - "Unit and trigger tests, free"
+      - "Integration tests across the call map"
+      - "Security coverage: tenant isolation through functions, views and triggers"
+      - "PII leak detection in error paths"
     cta_label: "Download"
     cta_href: "https://github.com/unitautogen/unitautogen-postgresql/releases"
     cta_style: "btn"
     cta2_label: "See the engine"
     cta2_href: "/postgresql/unitautogen/"
-    products_lead: >-
-      Two tools that share one idea: generate the tests, and the data that make them mean
-      something.
+    products_lead: "Two tools, one method: generate the tests and the data behind them."
     footer_left: "(c) 2026 UnitAutogen - PostgreSQL"
     # rlsautotest and the UnitAutogen engine test DIFFERENT layers; complete leakage detection needs both.
     # Rendered by _includes/pairing.html on the PostgreSQL overview, both product pages and the tenant-isolation use case.
     pairing:
       title: "Two layers where tenant data leaks. One tool for each. Use both."
-      lead: >-
-        Tenant data escapes a PostgreSQL database through two different layers, and a test at one layer
-        says nothing about the other. Row-Level Security policies govern direct table access. Functions,
-        views and triggers that run with elevated rights (SECURITY DEFINER, owner-run triggers) bypass
-        those policies by design, so their code is the second boundary.
+      lead: "A test at one layer says nothing about the other."
+      lead_points:
+        - "Policy layer: Row-Level Security governs direct table access"
+        - "Code layer: SECURITY DEFINER functions, views and owner-run triggers bypass RLS by design"
       sides:
         - name: "rlsautotest"
           layer: "Policy layer"
           url: "/postgresql/rlsautotest/"
           link: "rlsautotest, free and open source"
-          does: >-
-            Proves the Row-Level Security policies themselves: per table, per command, per identity, who can
-            read and write which rows through direct table access. Fails CI if a reachable table has no
-            policy at all. Names every SECURITY DEFINER function, view and trigger that runs outside the
-            policies as a suspect.
-          cannot: >-
-            Judge those suspects. From the policy layer it can only say "this bypasses RLS by design", not
-            whether the code inside actually leaks.
+          does_points:
+            - "Proves each RLS policy: per table, per command, per identity"
+            - "Fails CI on a reachable table with no policy"
+            - "Names every SECURITY DEFINER function, view and trigger as a suspect"
+          cannot: "Judge the suspects. It sees that code bypasses RLS, not whether it leaks."
         - name: "UnitAutogen seccover"
           layer: "Code layer"
           url: "/postgresql/unitautogen/seccover/"
           link: "seccover, in the UnitAutogen engine"
-          does: >-
-            Takes exactly that suspect list and runs each function, view and trigger as two different
-            tenants, with generated data on both sides, and reports per routine whether isolation is
-            enforced or leaking, with the witnessed evidence: which table, which command, which channel.
-            A PII pass catches personal data escaping through error messages.
-          cannot: >-
-            Stand in for the policies. It proves what the code does with the rights it has; whether the
-            table-level policies are right for direct access is rlsautotest's job.
-      close: >-
-        A green rlsautotest run with an untested SECURITY DEFINER function is not proof of isolation. A
-        clean seccover run on a table with no policy is not either. Complete leakage detection is both:
-        policies verified by rlsautotest, code paths verified by UnitAutogen.
+          does_points:
+            - "Runs each suspect as two tenants with generated data on both sides"
+            - "Verdict per routine: enforced or leaking, with table, command and channel"
+            - "PII pass: personal data escaping through error messages"
+          cannot: "Stand in for the policies. Direct table access is rlsautotest's job."
+      close: "Complete leakage detection is both: policies verified by rlsautotest, code paths verified by UnitAutogen."
     pricing:
       title: "Editions and pricing"
-      lead: >-
-        One binary, three editions. The Community Edition is free and needs no licence key. Team and
-        Enterprise are annual licences delivered as an offline key file; nothing phones home.
+      lead: "One binary, three editions. Offline key file, no telemetry."
       buy_note: "Online purchase is under development. Until then, email <a href=\"mailto:licensing@unitautogen.com\">licensing@unitautogen.com</a> and your licence is issued by email within one business day."
       editions:
         - name: "Community Edition"
           price: "Free"
           unit: "no licence key, no time limit"
-          audience: "Individual developers, open-source projects, evaluation."
+          audience: "Developers, open-source projects, evaluation."
           includes:
             - "Generated pgTAP unit tests for functions and triggers"
             - "Line and branch coverage with every uncovered line explained"
@@ -146,7 +137,7 @@ databases:
         - name: "Team"
           price: "USD 400"
           unit: "per developer, per year"
-          audience: "Development teams that want the full test suite in CI, without the watermark."
+          audience: "Teams running the suite in CI."
           includes:
             - "Everything in Community Edition, unwatermarked"
             - "Integration testing across the call map"
@@ -159,12 +150,12 @@ databases:
         - name: "Enterprise"
           price: "USD 6,000"
           unit: "per production database cluster, per year"
-          audience: "Teams that must prove tenant isolation and access control hold: multi-tenant SaaS, healthcare, finance."
+          audience: "Multi-tenant SaaS, healthcare, finance."
           includes:
             - "Everything in Team, for every developer on the cluster"
             - "seccover: security coverage through functions, views and triggers"
             - "PII leak detection in error paths"
-            - "Dated, reproducible reports as supporting evidence for HIPAA and SOC 2 controls"
+            - "Dated reports as supporting evidence for HIPAA and SOC 2 controls"
             - "Priority support"
           footnote: "Staging and preview clusters of a licensed production cluster are not charged."
           cta_label: "Email licensing@unitautogen.com"
@@ -172,13 +163,13 @@ databases:
           cta_style: "btn"
       extras:
         - title: "Consultants and resellers"
-          text: "Run UnitAutogen from your own infrastructure across your clients' environments under one consultant licence: USD 12,000 per year, list. Each client cluster where the tool runs in the client's own CI needs its own Enterprise licence."
+          text: "One licence to run it from your infrastructure across your clients: USD 12,000 per year, list. A client running it in their own CI needs their own Enterprise licence."
         - title: "rlsautotest"
-          text: "Free and open source under Apache-2.0, for any use, no licence needed."
+          text: "Apache-2.0. Free for any use, no licence needed."
         - title: "Buying a licence"
-          text: "Online purchase is under development. Until it ships, email licensing@unitautogen.com with the edition and the number of developers or clusters; you receive an invoice and, on payment, the key file by email."
+          text: "Email licensing@unitautogen.com with the edition and the number of developers or clusters. Invoice by email; key file on payment."
         - title: "How licensing works"
-          text: "A licence is an Ed25519-signed key file you place next to the binary. It is verified offline; no telemetry, no network call. On expiry the paid capabilities switch off and the Community Edition keeps working; your committed tests are never touched."
+          text: "A signed key file next to the binary, verified offline. On expiry the paid capabilities stop; Community Edition keeps working and committed tests are untouched."
     products:
       - name: "UnitAutogen for PostgreSQL"
         short: "UnitAutogen engine"
@@ -186,49 +177,50 @@ databases:
         url: "/postgresql/unitautogen/"
         repo: "https://github.com/unitautogen/unitautogen-postgresql"
         framework: "pgTAP"
-        menu_blurb: "The engine: generated pgTAP tests and honest coverage for functions and triggers, with integration and security testing by edition."
+        menu_blurb: "Generated pgTAP tests and coverage for functions and triggers."
         badge: "Beta"
         badge_kind: "beta"
         blurb: >-
-          Generates pgTAP unit tests for functions and triggers, runs them, and reports honest
-          branch coverage. Team adds integration testing across the call map; Enterprise adds
-          security coverage and PII auditing.
+          The engine. Unit tests and coverage free; integration testing in Team; security coverage
+          and PII in Enterprise.
         # product page
         hero_a: "The logic in your database,"
         hero_hl: "actually tested"
         hero_b: "."
         sub: >-
-          Point UnitAutogen at a PostgreSQL database and it reads your functions and triggers,
-          writes the pgTAP tests, seeds the data that drives every branch, runs them, and
-          reports honest coverage. No test written by hand, no seed data crafted by hand.
+          Point it at a PostgreSQL database. It writes the pgTAP tests, seeds the data, runs them
+          and reports coverage.
+        points:
+          - "One test per branch of every function and trigger"
+          - "Seed data derived from the code, not written by hand"
+          - "Line and branch coverage, every uncovered line explained"
+          - "Standard pgTAP, committed next to your migrations"
         cta_label: "Download"
         cta_href: "https://github.com/unitautogen/unitautogen-postgresql/releases"
         cta2_label: "Get started"
         cta2_href: "/postgresql/unitautogen/get-started/"
         meta_line: "Standard pgTAP - PostgreSQL 14 to 18 - needs pgTAP and plpgsql_check in the target database"
-        capabilities_lead: >-
-          One method, layered by edition. Start free with unit testing and coverage, then climb to
-          integration and security as you need them.
+        capabilities_lead: "Three capabilities, three editions."
         capabilities:
           - name: "Coverage"
             slug: "coverage"
             url: "/postgresql/unitautogen/coverage/"
             edition: "Free"
             edition_kind: "beta"
-            blurb: "Generated pgTAP unit and trigger tests, run for you, with measured line and branch coverage and every uncovered line explained."
+            blurb: "Unit and trigger tests, run for you. Line and branch coverage. Every uncovered line explained."
           - name: "Integration testing"
             short: "Integration"
             slug: "integration"
             url: "/postgresql/unitautogen/integration/"
             edition: "Team"
             edition_kind: "soon"
-            blurb: "Each function run together with the functions it calls and the triggers its writes fire, for real, with coverage across the whole call map."
+            blurb: "Each function run with what it calls and what it fires. Coverage across the whole call map."
           - name: "seccover & PII"
             slug: "seccover"
             url: "/postgresql/unitautogen/seccover/"
             edition: "Enterprise"
             edition_kind: "soon"
-            blurb: "Prove Row-Level Security and tenant isolation hold through your functions, views and triggers, and catch PII leaked through error messages."
+            blurb: "Tenant isolation proven through functions, views and triggers. PII caught in error messages."
         get_started_url: "/postgresql/unitautogen/get-started/"
         footer_left: "(c) 2026 UnitAutogen - PostgreSQL engine"
       - name: "rlsautotest"
@@ -237,13 +229,12 @@ databases:
         url: "/postgresql/rlsautotest/"
         repo: "https://github.com/unitautogen/rlsautotest"
         framework: "pgTAP"
-        menu_blurb: "Free, open source: pgTAP tests and seed data that prove your Row-Level Security policies hold. Pairs with seccover for complete leakage detection."
+        menu_blurb: "Free, open source. Proves your RLS policies."
         badge: "Free, open source"
         badge_kind: "beta"
         blurb: >-
-          Reads your Row-Level Security policies and generates pgTAP tests, and the seed data,
-          that prove who can read and write which rows, per table, per command, per identity.
-          Free and open source. Covers the policy layer; pair it with seccover for the code layer.
+          pgTAP tests that prove your Row-Level Security policies: per table, per command, per
+          identity. Free and open source. Policy layer; pair with seccover for the code layer.
         # rlsautotest keeps its own hand-written page (postgresql/rlsautotest/index.html)
 
   - id: sqlserver
@@ -266,32 +257,29 @@ databases:
     hero_hl: "with real branch coverage"
     hero_b: "."
     blurb: >-
-      Generates tSQLt unit tests, and the seed data each test depends on, for stored procedures
-      and functions across the whole database, with real line and branch coverage and no
-      hand-written tests or fixtures.
+      tSQLt unit tests and seed data for stored procedures and functions, whole database, with real
+      line and branch coverage.
+    points:
+      - "One command sweeps every testable procedure and function"
+      - "Cobertura, JUnit and HTML output for CI"
+      - "NOT_TESTABLE flagged with the reason, never faked green"
     cta_label: "Talk to us"
     cta_href: "mailto:hello@unitautogen.com"
     cta_style: "btn ghost"
     cta2_label: "What it does"
     cta2_href: "/sql-server/unitautogen/"
     status_title: "Where it is, honestly"
-    status_note: >-
-      The SQL Server tool is in early access and sits behind our PostgreSQL engine while we
-      bring it up to the same standard. The method is the same one proven on PostgreSQL: read the
-      procedures and functions, generate the tSQLt tests and the data that drive every branch, and
-      report real coverage. If you run SQL Server and want in early, tell us about your workload.
+    status_note: "Early access. Behind the PostgreSQL engine while we bring it to the same standard. Same method; tell us about your workload to get in early."
     products_lead: ""
     footer_left: "(c) 2026 UnitAutogen - SQL Server"
     pricing:
       title: "Licensing"
-      lead: >-
-        UnitAutogen for SQL Server is open source under AGPL-3.0, with a commercial licence for
-        organisations that prefer not to take on the AGPL obligations.
+      lead: "Open source under AGPL-3.0, or a commercial licence without the AGPL obligations."
       editions:
         - name: "AGPL-3.0"
           price: "Free"
           unit: "open source"
-          audience: "Evaluation and internal use under the AGPL terms."
+          audience: "Evaluation and internal use."
           includes:
             - "Generated tSQLt tests with real line and branch coverage"
             - "Whole-database sweep, Cobertura, JUnit and HTML output"
@@ -302,7 +290,7 @@ databases:
         - name: "Commercial licence"
           price: "On request"
           unit: "per organisation, per year"
-          audience: "Client delivery, embedding in a commercial product, or any use where the AGPL obligations do not fit."
+          audience: "Client delivery, commercial products."
           includes:
             - "Same software, without the AGPL copyleft obligations"
             - "Email support"
@@ -327,24 +315,19 @@ databases:
         hero_hl: "with real branch coverage"
         hero_b: "."
         sub: >-
-          Point UnitAutogen at a stored procedure, or your whole database, and it writes the tSQLt
-          tests, generates the data to drive every branch, runs them, and reports real line and
-          branch coverage. The same method proven on PostgreSQL, brought to SQL Server.
+          Point it at a procedure or the whole database. It writes the tSQLt tests, seeds the data,
+          runs them and reports coverage.
+        points:
+          - "One test per branch, with boundary values"
+          - "Seed data derived from the procedure's own predicates"
+          - "Real line and branch coverage"
+          - "Cobertura, JUnit and HTML for Azure DevOps, GitHub Actions, Jenkins, GitLab, SonarQube"
         cta_label: "Talk to us"
         cta_href: "mailto:hello@unitautogen.com"
         meta_line: "Built on tSQLt - SQL Server 2017+ - in early access"
         status_title: "Where it is, honestly"
-        status_note: >-
-          The SQL Server tool is in early access and sits behind our PostgreSQL engine while we
-          bring it up to the same standard. We are being upfront about that rather than presenting
-          it as finished: a product whose whole promise is never a false green should not oversell
-          its own maturity. If you run SQL Server and want in early, tell us about your workload.
-        capabilities_lead: >-
-          The hard part isn't faking the table, it's the data. Mocking a table gives you an empty
-          table, so a branch that needs matching rows only ever runs its "no rows" side. UnitAutogen
-          reads each predicate in the procedure and works backwards from it to build the rows that
-          drive that branch both ways, and asserts the data actually drove the condition the intended
-          way, so a wrong guess fails loudly instead of passing at the wrong coverage.
+        status_note: "Early access. Behind the PostgreSQL engine while we bring it to the same standard. A product that promises never a false green does not oversell its maturity."
+        capabilities_lead: "A faked table is empty, so only the no-rows branch runs. UnitAutogen builds the rows that drive each branch both ways."
         capabilities:
           - name: "Whole-database sweep"
             blurb: "One command generates, runs, and measures coverage across every testable procedure and function."
@@ -353,10 +336,7 @@ databases:
           - name: "Honest by design"
             blurb: "What it can't test is flagged NOT_TESTABLE with the reason, never faked into a green pass."
         get_started_title: "Get early access"
-        get_started_lead: >-
-          Built on the open-source <a href="https://tsqlt.org">tSQLt</a> framework. It is not yet
-          available for general download while we bring it up to date. Tell us about your SQL Server
-          workload and we'll get you in early.
+        get_started_lead: 'Built on <a href="https://tsqlt.org">tSQLt</a>. Not yet on general download; tell us about your workload to get in early.'
         get_started_points:
           - "SQL Server 2017+ with tSQLt installed"
           - "Generates tSQLt tests and the data that drives every branch, plus real line and branch coverage"
@@ -384,27 +364,22 @@ databases:
     hero_hl: "on Oracle and EDB"
     hero_b: "."
     blurb: >-
-      Generates the tests, and the seed data, that run on both Oracle and EDB Postgres Advanced
-      Server, so a team can prove the same logic behaves identically across the two without
-      writing a test by hand.
+      One generated test suite that runs on both Oracle and EDB Postgres Advanced Server, so the same
+      PL/SQL is proven to behave identically on both.
+    points:
+      - "utPLSQL-style tests, one source, two engines"
+      - "Line coverage on both, compared"
+      - "Standalone Oracle mode to follow"
     cta_label: "Talk to us"
     cta_href: "mailto:hello@unitautogen.com"
     cta_style: "btn ghost"
     status_title: "What it will do"
-    status_note: >-
-      A team moving Oracle PL/SQL to EDB Postgres Advanced Server needs to know the logic still
-      behaves exactly as before. The first Oracle + EDB offering generates one set of tests that runs
-      on both engines and reports whether the results match, so parity is something you prove rather
-      than hope for. It is the same method proven on PostgreSQL, brought to the Oracle and EDB world.
-    status_note_2: >-
-      It is not available yet. If you are evaluating Oracle or EDB testing, tell us what you need and
-      we will keep you posted.
+    status_note: "Moving PL/SQL from Oracle to EDB? One generated suite runs on both and reports whether results match. Parity proven, not assumed."
+    status_note_2: "Not available yet. Tell us what you need and we will keep you posted."
     footer_left: "(c) 2026 UnitAutogen - Oracle + EDB"
     pricing:
       title: "Licensing"
-      lead: >-
-        Oracle + EDB is in development and not yet licensed. Tell us about your Oracle or EDB
-        estate and we will keep you informed as it approaches release.
+      lead: "In development, not yet licensed. Tell us about your Oracle or EDB estate."
       editions: []
       extras:
         - title: "Early access"
@@ -416,38 +391,26 @@ databases:
 use_cases:
   - slug: "unit-testing"
     name: "Unit testing for developers"
-    blurb: >-
-      Unit tests for every function, procedure and trigger, generated with the seed data each test depends
-      on, run for you, with line and branch coverage. Free in the Community Edition.
+    blurb: "Generated unit tests and seed data for every routine, with branch coverage. Free."
     card: "Generated unit tests and seed data for every routine you own, with honest branch coverage. Free."
   - slug: "integration-testing"
     name: "Integration testing for QA"
-    blurb: >-
-      Each entry point run together with the functions it calls and the triggers its writes fire, on real
-      rows, with coverage across the whole call map. A regression suite for the assembled database, on every build.
+    blurb: "Each entry point run with what it calls and fires. Coverage across the call map, every build."
     card: "Each entry point run with everything it calls and fires, coverage across the call map, on every build."
   - slug: "ai-guardrail"
     name: "Guardrail for AI-written code"
-    blurb: >-
-      AI assistants write database logic fast, and a silent mistake there costs the most. Generated
-      tests pin today's behaviour so the next change, human or AI, that breaks it fails before production.
+    blurb: "Generated tests pin today's behaviour. An AI edit that breaks it fails before production."
     card: "Generated tests pin today's behaviour, so the next change - human or AI - that breaks it fails before production."
   - slug: "change-verification"
     name: "Behavioural change verification"
-    blurb: >-
-      Migration tools deploy your change. None of them check the changed logic still behaves the same.
-      UnitAutogen does, through the generated unit and integration tests.
+    blurb: "Migration tools deploy the change. UnitAutogen proves the logic still behaves the same."
     card: "Migration tools deploy your change; UnitAutogen proves the changed logic still behaves the same."
   - slug: "tenant-isolation"
     name: "Prove tenant isolation and security"
-    blurb: >-
-      Tenant data leaks at two layers: the RLS policies, and the functions, views and triggers that run
-      outside them. rlsautotest proves the first, seccover proves the second. Complete detection is both.
+    blurb: "rlsautotest proves the policies, seccover proves the code that bypasses them. Both, or no proof."
     card: "rlsautotest proves the policies; seccover proves the functions, views and triggers that bypass them. Together: complete leakage detection."
     only_db: postgresql
   - slug: "compliance-evidence"
     name: "Compliance evidence"
-    blurb: >-
-      Dated [framework] tests and reproducible reports that support your HIPAA and SOC 2 access controls.
-      Evidence you can hand an auditor, framed as a tool, never a certificate.
+    blurb: "Dated [framework] tests and reports as supporting evidence for HIPAA and SOC 2 access controls."
     card: "Dated [framework] tests and reports that support your HIPAA and SOC 2 access controls."

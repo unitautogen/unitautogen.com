@@ -11,7 +11,12 @@ layout: default
 <div class="hero wrap">
   <div style="margin-bottom:16px"><span class="badge badge--{{ db.badge_kind }}">{{ db.badge }}</span></div>
   <h1>{{ db.hero_a }}<br><span class="hl">{{ db.hero_hl }}</span>{{ db.hero_b }}</h1>
-  <p class="sub">{{ db.blurb }}{% if db.platforms and db.platforms != "" %} {{ db.platforms }}{% endif %}</p>
+  <p class="sub">{{ db.blurb }}</p>
+  {%- if db.points %}
+  <ul class="honest hero-points">
+    {%- for pt in db.points %}<li>{{ pt }}</li>{% endfor %}
+  </ul>
+  {%- endif %}
   <div class="cta">
     {%- assign h = db.cta_href %}{% unless h contains "://" or h contains "mailto:" %}{% assign h = h | relative_url %}{% endunless %}
     <a class="{{ db.cta_style | default: 'btn' }}" href="{{ h }}">{{ db.cta_label }}</a>
@@ -20,7 +25,7 @@ layout: default
     <a class="btn ghost" href="{{ h2 }}">{{ db.cta2_label }}</a>
     {%- endif %}
   </div>
-  {%- if db.meta_line %}<div class="meta-line">{{ db.meta_line }}</div>{% endif %}
+  {%- if db.meta_line %}<div class="meta-line">{{ db.meta_line }}{% if db.platforms and db.platforms != "" %}<br>{{ db.platforms }}{% endif %}</div>{% endif %}
 </div>
 
 {%- if db.status_note %}
