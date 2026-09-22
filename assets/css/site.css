@@ -41,7 +41,8 @@ header{overflow-x:clip}
 .nav .links[hidden]{display:none}
 .nav .links a{color:var(--ink)}
 .nav .links a.is-here{color:var(--green);box-shadow:inset 0 -2px 0 var(--green);padding-bottom:2px}
-.nav .links .menu-t{font-size:15px;font-weight:500}
+.nav .links .menu-t{font-size:15px;font-weight:500;padding:0}
+.nav .links .menu-t.is-here{color:var(--green);box-shadow:inset 0 -2px 0 var(--green);padding-bottom:2px}
 .nav .links a.btn{font-size:15px;font-weight:600}
 .dbnow{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--ink);
        padding:5px 10px 5px 0;border-right:1px solid var(--line);margin-right:-8px}

@@ -42,14 +42,6 @@
         {%- endfor %}
       </div>
       <div class="navlinks">
-        <div class="menu">
-          <button type="button" class="menu-t" aria-haspopup="true">Use cases <span class="caret" aria-hidden="true">&#9662;</span></button>
-          <div class="menu-panel" role="menu">
-            {%- for uc in cat.use_cases %}
-            <a role="menuitem" href="{{ uc.slug | prepend: '/use-cases/' | append: '/' | relative_url }}"><span class="mp-name">{{ uc.name }}</span></a>
-            {%- endfor %}
-          </div>
-        </div>
         <a class="hidem" href="{{ '/blog/' | relative_url }}">Blog</a>
         <a class="hidem" href="https://github.com/unitautogen">GitHub</a>
       </div>
@@ -71,6 +63,16 @@
       {%- endif %}
       {%- endfor %}
       {%- endfor %}
+      <div class="menu">
+        <button type="button" class="menu-t{% if page.url contains '/use-cases/' %} is-here{% endif %}" aria-haspopup="true">Use cases <span class="caret" aria-hidden="true">&#9662;</span></button>
+        <div class="menu-panel" role="menu">
+          <a role="menuitem" href="{{ '/use-cases/' | relative_url }}"><span class="mp-name">All use cases</span></a>
+          {%- for uc in cat.use_cases %}
+          {%- if uc.only_db and uc.only_db != db.id %}{% continue %}{% endif %}
+          <a role="menuitem" href="{{ uc.slug | prepend: '/use-cases/' | append: '/' | relative_url }}"><span class="mp-name">{{ uc.name }}</span></a>
+          {%- endfor %}
+        </div>
+      </div>
       {%- if db.docs_href and db.docs_href != "" %}
       <a class="hidem" href="{{ db.docs_href }}">Docs</a>
       {%- endif %}
