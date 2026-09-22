@@ -21,27 +21,12 @@ footer_links:
   <div style="margin-bottom:16px"><span class="badge badge--beta">Available for PostgreSQL</span></div>
   <h1>Prove your database<br><span class="hl">actually isolates tenants</span>.</h1>
   <p class="sub">Most PostgreSQL apps that hold more than one customer's data rely on Row-Level Security and
-    careful function logic to keep tenant A from ever seeing tenant B. The problem is proving it stays true as
-    the code keeps shipping.</p>
+    careful function logic to keep tenant A from ever seeing tenant B. Those are two separate layers, each
+    needs its own proof, and the proof has to stay true as the code keeps shipping.</p>
   <div class="cta">
     <a class="btn" href="{{ '/postgresql/unitautogen/' | relative_url }}">seccover, in the engine</a>
     <a class="btn ghost" href="{{ '/postgresql/rlsautotest/' | relative_url }}">rlsautotest, free</a>
   </div>
 </div>
 
-<section class="soft">
-  <div class="wrap">
-    <h2>Two ways in</h2>
-    <p class="lead"><strong>seccover</strong>, in the PostgreSQL engine, exercises your functions, views and
-      triggers as different tenants and reports, per routine, whether isolation is enforced or leaking, with
-      the evidence and the exact tables and channel a leak reaches. A <code>--pii</code> pass catches personal
-      data escaping through error and <code>RAISE</code> messages.</p>
-    <p class="lead"><strong>rlsautotest</strong>, free and open source, works from your Row-Level Security
-      policies directly: it generates pgTAP tests, and the seed data, that prove who can read and write which
-      rows, per table, per command, per identity, and fails CI if a table has no policy at all.</p>
-    <div class="cta" style="justify-content:flex-start">
-      <a class="btn" href="{{ '/postgresql/unitautogen/' | relative_url }}">See the engine</a>
-      <a class="btn ghost" href="{{ '/postgresql/rlsautotest/' | relative_url }}">See rlsautotest</a>
-    </div>
-  </div>
-</section>
+{% include pairing.html %}

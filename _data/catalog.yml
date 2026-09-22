@@ -85,6 +85,44 @@ databases:
       Two tools that share one idea: generate the tests, and the data that make them mean
       something.
     footer_left: "(c) 2026 UnitAutogen - PostgreSQL"
+    # rlsautotest and the UnitAutogen engine test DIFFERENT layers; complete leakage detection needs both.
+    # Rendered by _includes/pairing.html on the PostgreSQL overview, both product pages and the tenant-isolation use case.
+    pairing:
+      title: "Two layers where tenant data leaks. One tool for each. Use both."
+      lead: >-
+        Tenant data escapes a PostgreSQL database through two different layers, and a test at one layer
+        says nothing about the other. Row-Level Security policies govern direct table access. Functions,
+        views and triggers that run with elevated rights (SECURITY DEFINER, owner-run triggers) bypass
+        those policies by design, so their code is the second boundary.
+      sides:
+        - name: "rlsautotest"
+          layer: "Policy layer"
+          url: "/postgresql/rlsautotest/"
+          link: "rlsautotest, free and open source"
+          does: >-
+            Proves the Row-Level Security policies themselves: per table, per command, per identity, who can
+            read and write which rows through direct table access. Fails CI if a reachable table has no
+            policy at all. Names every SECURITY DEFINER function, view and trigger that runs outside the
+            policies as a suspect.
+          cannot: >-
+            Judge those suspects. From the policy layer it can only say "this bypasses RLS by design", not
+            whether the code inside actually leaks.
+        - name: "UnitAutogen seccover"
+          layer: "Code layer"
+          url: "/postgresql/unitautogen/seccover/"
+          link: "seccover, in the UnitAutogen engine"
+          does: >-
+            Takes exactly that suspect list and runs each function, view and trigger as two different
+            tenants, with generated data on both sides, and reports per routine whether isolation is
+            enforced or leaking, with the witnessed evidence: which table, which command, which channel.
+            A PII pass catches personal data escaping through error messages.
+          cannot: >-
+            Stand in for the policies. It proves what the code does with the rights it has; whether the
+            table-level policies are right for direct access is rlsautotest's job.
+      close: >-
+        A green rlsautotest run with an untested SECURITY DEFINER function is not proof of isolation. A
+        clean seccover run on a table with no policy is not either. Complete leakage detection is both:
+        policies verified by rlsautotest, code paths verified by UnitAutogen.
     products:
       - name: "UnitAutogen for PostgreSQL"
         short: "UnitAutogen engine"
@@ -143,13 +181,13 @@ databases:
         url: "/postgresql/rlsautotest/"
         repo: "https://github.com/unitautogen/rlsautotest"
         framework: "pgTAP"
-        menu_blurb: "Free, open source: pgTAP tests and seed data that prove your Row-Level Security policies hold."
+        menu_blurb: "Free, open source: pgTAP tests and seed data that prove your Row-Level Security policies hold. Pairs with seccover for complete leakage detection."
         badge: "Free, open source"
         badge_kind: "beta"
         blurb: >-
           Reads your Row-Level Security policies and generates pgTAP tests, and the seed data,
           that prove who can read and write which rows, per table, per command, per identity.
-          Free and open source.
+          Free and open source. Covers the policy layer; pair it with seccover for the code layer.
         # rlsautotest keeps its own hand-written page (postgresql/rlsautotest/index.html)
 
   - id: sqlserver
@@ -298,9 +336,9 @@ use_cases:
   - slug: "tenant-isolation"
     name: "Prove tenant isolation and security"
     blurb: >-
-      Prove Row-Level Security and multi-tenant isolation actually hold through your functions, views
-      and triggers, with the evidence, per routine.
-    card: "Prove Row-Level Security and tenant isolation hold through your functions, views and triggers, with the evidence per routine."
+      Tenant data leaks at two layers: the RLS policies, and the functions, views and triggers that run
+      outside them. rlsautotest proves the first, seccover proves the second. Complete detection is both.
+    card: "rlsautotest proves the policies; seccover proves the functions, views and triggers that bypass them. Together: complete leakage detection."
     only_db: postgresql
   - slug: "compliance-evidence"
     name: "Compliance evidence"

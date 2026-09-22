@@ -61,6 +61,8 @@ layout: default
 </section>
 {%- endif %}
 
+{%- if db.pairing %}{% include pairing.html %}{% endif %}
+
 {%- if product.status_note %}
 {%- comment %} early/coming products still state the guarantee, after the capabilities {% endcomment %}
 <section class="soft">

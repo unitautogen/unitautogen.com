@@ -1,0 +1,25 @@
+{%- comment %}
+  The rlsautotest + UnitAutogen pairing: two layers of leakage, one tool for each, use both.
+  Text lives in _data/catalog.yml under databases[postgresql].pairing. Include with {% include pairing.html %}.
+{%- endcomment %}
+{%- assign pdb = site.data.catalog.databases | where: "id", "postgresql" | first %}
+{%- assign pr = pdb.pairing %}
+<section class="soft" id="together">
+  <div class="wrap">
+    <h2>{{ pr.title }}</h2>
+    <p class="lead">{{ pr.lead }}</p>
+    <div class="pts" style="grid-template-columns:1fr 1fr;margin-top:22px">
+      {%- for side in pr.sides %}
+      <div class="card">
+        <div class="top" style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:6px">
+          <h3 style="margin:0">{{ side.name }}</h3><span class="badge badge--beta" style="text-transform:none">{{ side.layer }}</span>
+        </div>
+        <p>{{ side.does }}</p>
+        <p style="margin-top:10px"><strong>Cannot do:</strong> {{ side.cannot }}</p>
+        <p style="margin-top:12px"><a class="go" href="{{ side.url | relative_url }}">{{ side.link }} &rarr;</a></p>
+      </div>
+      {%- endfor %}
+    </div>
+    <div class="myth" style="margin-top:22px;font-size:17px">{{ pr.close }}</div>
+  </div>
+</section>

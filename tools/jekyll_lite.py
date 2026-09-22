@@ -21,7 +21,7 @@ def jdate(v, fmt):
     fmt = fmt.replace("%-d", str(v.day))
     return v.strftime(fmt)
 
-env = Environment(loader=FileSystemLoader(str(SITE / "_layouts")))
+env = Environment(loader=FileSystemLoader([str(SITE / "_layouts"), str(SITE / "_includes")]))
 env.filters["relative_url"] = relative_url
 env.filters["absolute_url"] = absolute_url
 env.filters["date"] = jdate
@@ -38,6 +38,8 @@ def apply_defaults(data, typ):
     return data
 
 def render(text, ctx):
+    # Jekyll writes {% include name.html %}; Liquid proper wants the name quoted
+    text = re.sub(r"\{%(-?)\s*include\s+([A-Za-z0-9_./-]+)\s*(-?)%\}", '{%\\1 include "\\2" \\3%}', text)
     return env.from_string(text).render(**ctx)
 
 def with_layout(content, page, site):
@@ -82,7 +84,7 @@ for p in posts:
     emit(p["url"], with_layout(body, p, site))
 
 # walk all .html anywhere except build/system dirs (recurses into /postgresql/, product pages, etc.)
-SKIP = {"_layouts", "_posts", "_data", "_site", "tools", "vendor", ".git",
+SKIP = {"_layouts", "_includes", "_posts", "_data", "_site", "tools", "vendor", ".git",
         ".jekyll-cache", "node_modules"}
 for f in SITE.rglob("*.html"):
     parts = f.relative_to(SITE).parts
