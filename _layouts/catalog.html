@@ -1,0 +1,60 @@
+---
+layout: default
+---
+{%- comment %}
+  Database catalog page (/<slug>/). Everything comes from _data/catalog.yml via page.db.
+  A stub page needs only:  layout: catalog / db: <id> / title / description
+{%- endcomment %}
+{%- assign cat = site.data.catalog %}
+{%- assign db = cat.databases | where: "id", page.db | first %}
+<a id="top"></a>
+<div class="hero wrap">
+  <div style="margin-bottom:16px"><span class="badge badge--{{ db.badge_kind }}">{{ db.badge }}</span></div>
+  <h1>{{ db.hero_a }}<br><span class="hl">{{ db.hero_hl }}</span>{{ db.hero_b }}</h1>
+  <p class="sub">{{ db.blurb }}{% if db.platforms and db.platforms != "" %} {{ db.platforms }}{% endif %}</p>
+  <div class="cta">
+    {%- assign h = db.cta_href %}{% unless h contains "://" or h contains "mailto:" %}{% assign h = h | relative_url %}{% endunless %}
+    <a class="{{ db.cta_style | default: 'btn' }}" href="{{ h }}">{{ db.cta_label }}</a>
+    {%- if db.cta2_href %}
+    {%- assign h2 = db.cta2_href %}{% unless h2 contains "://" or h2 contains "mailto:" %}{% assign h2 = h2 | relative_url %}{% endunless %}
+    <a class="btn ghost" href="{{ h2 }}">{{ db.cta2_label }}</a>
+    {%- endif %}
+  </div>
+  {%- if db.meta_line %}<div class="meta-line">{{ db.meta_line }}</div>{% endif %}
+</div>
+
+{%- if db.status_note %}
+<section class="soft">
+  <div class="wrap">
+    <h2>{{ db.status_title | default: "Status" }}</h2>
+    <p class="lead">{{ db.status_note }}</p>
+    {%- if db.status_note_2 %}<p class="lead">{{ db.status_note_2 }}</p>{% endif %}
+    {%- if db.cta_href contains "mailto:" %}
+    <div class="cta" style="justify-content:flex-start">
+      <a class="btn" href="{{ db.cta_href }}">{{ db.cta_label }}</a>
+    </div>
+    {%- endif %}
+  </div>
+</section>
+{%- endif %}
+
+{%- if db.products.size > 0 %}
+<section>
+  <div class="wrap">
+    <h2>{% if db.products.size == 1 %}Product{% else %}Products{% endif %} for {{ db.name_full | default: db.name }}</h2>
+    {% if db.products_lead and db.products_lead != "" %}<p class="lead">{{ db.products_lead }}</p>{% endif %}
+    <div class="dbgrid" style="grid-template-columns:{% if db.products.size == 1 %}1fr{% else %}1fr 1fr{% endif %}">
+      {%- for product in db.products %}
+      <div class="dbcard">
+        <div class="top"><h3>{{ product.name }}</h3>{% if product.badge %}<span class="badge badge--{{ product.badge_kind | default: db.badge_kind }}">{{ product.badge }}</span>{% endif %}</div>
+        <div class="fw">Framework: {{ product.framework | default: db.framework }}</div>
+        <p>{{ product.blurb }}</p>
+        <a class="go" href="{{ product.url | relative_url }}">Learn more &rarr;</a>
+      </div>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+{%- endif %}
+
+{{ content }}

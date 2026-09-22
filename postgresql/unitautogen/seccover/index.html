@@ -1,0 +1,60 @@
+---
+layout: default
+db: postgresql
+product: unitautogen
+title: "seccover & PII - UnitAutogen for PostgreSQL"
+description: "seccover exercises your functions, views and triggers as different tenants and reports, per routine, whether Row-Level Security and multi-tenant isolation are enforced or leaking, with the evidence. The --pii pass catches personal data escaping through error and RAISE messages. Part of the Enterprise edition."
+og_title: "seccover & PII - UnitAutogen for PostgreSQL"
+og_description: "Prove tenant isolation holds through functions, views and triggers, and catch PII leaked through error messages."
+og_image: "/assets/social-preview.png"
+body_class: page-product
+footer_left: "(c) 2026 UnitAutogen - PostgreSQL engine"
+footer_sep: "-"
+footer_links:
+  - label: "Overview"
+    href: "/postgresql/unitautogen/"
+  - label: "Coverage"
+    href: "/postgresql/unitautogen/coverage/"
+  - label: "Integration"
+    href: "/postgresql/unitautogen/integration/"
+  - label: "seccover & PII"
+    href: "/postgresql/unitautogen/seccover/"
+  - label: "Get started"
+    href: "/postgresql/unitautogen/get-started/"
+---
+<a id="top"></a>
+<div class="hero wrap">
+  <div style="margin-bottom:16px"><span class="badge badge--soon" style="text-transform:none">Enterprise</span></div>
+  <h1>Prove your database<br><span class="hl">isolates tenants</span>.</h1>
+  <p class="sub">Most PostgreSQL apps that hold more than one customer's data rely on Row-Level Security and
+    careful function logic to keep tenant A from ever seeing tenant B. seccover proves it stays true as the
+    code keeps shipping.</p>
+  <div class="cta">
+    <a class="btn" href="mailto:hello@unitautogen.com">Talk to us</a>
+    <a class="btn ghost" href="{{ '/postgresql/unitautogen/' | relative_url }}">Back to overview</a>
+  </div>
+</div>
+
+<section class="soft">
+  <div class="wrap">
+    <h2>Isolation, judged per routine</h2>
+    <p class="lead">seccover exercises your functions, views and triggers as different tenants and reports,
+      per routine, whether isolation is enforced or leaking, with the evidence and the exact tables and channel
+      a leak reaches. It runs entirely on your side, with no telemetry, so nothing about your schema or data
+      leaves your machine. The <code>--pii</code> pass adds a second check that catches personal data escaping
+      through error and <code>RAISE</code> messages, the leak nobody writes a test for.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Evidence, not a certificate</h2>
+    <p class="lead">Because seccover emits standard pgTAP and dated, reproducible reports, its output doubles
+      as supporting evidence for controls under HIPAA and SOC 2, produced inside your perimeter. It is a tool
+      that produces evidence, never a certification or an audit service.</p>
+    <div class="cta" style="justify-content:flex-start">
+      <a class="btn ghost" href="{{ '/use-cases/tenant-isolation/' | relative_url }}">Tenant isolation</a>
+      <a class="btn ghost" href="{{ '/use-cases/compliance-evidence/' | relative_url }}">Compliance evidence</a>
+    </div>
+  </div>
+</section>

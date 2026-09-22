@@ -12,6 +12,10 @@ author: Munaf Khatri
 url: "https://unitautogen.com"
 baseurl: ""
 
+# The database the site opens on when the visitor has not picked one (header tabs + menu panel).
+# Must match an id in _data/catalog.yml.
+default_db: postgresql
+
 plugins:
   - jekyll-feed      # generates /feed.xml from _posts
   - jekyll-sitemap   # generates /sitemap.xml
@@ -19,26 +23,17 @@ plugins:
 feed:
   path: feed.xml
 
-# Default header / footer (product pages override these in their front matter)
-nav:
-  - label: "SQL Server"
-    href: "/sql-server.html"
-    class: "hidem"
-  - label: "PostgreSQL"
-    href: "/postgresql.html"
-    class: "hidem"
-  - label: "Blog"
-    href: "/blog/"
-    class: "hidem"
-  - label: "GitHub"
-    href: "https://github.com/unitautogen"
+# Default footer for pages outside a database section (home, blog, use cases).
+# The header is built in _layouts/default.html from _data/catalog.yml.
 footer_left: "(c) 2026 UnitAutogen - automated database test generation."
 footer_sep: "-"
 footer_links:
-  - label: "SQL Server"
-    href: "/sql-server.html"
   - label: "PostgreSQL"
-    href: "/postgresql.html"
+    href: "/postgresql/"
+  - label: "SQL Server"
+    href: "/sql-server/"
+  - label: "Oracle + EDB"
+    href: "/oracle/"
   - label: "GitHub"
     href: "https://github.com/unitautogen"
 
@@ -52,18 +47,7 @@ defaults:
       permalink: /blog/:title.html
       author: Munaf Khatri
       body_class: post-page
-      nav:
-        - label: "← Blog"
-          href: "/blog/"
-        - label: "Home"
-          href: "/"
-          class: "hidem"
-        - label: "GitHub"
-          href: "https://github.com/unitautogen/rlsautotest"
-        - label: "Install"
-          href: "https://pypi.org/project/rlsautotest/"
-          class: "btn"
-      footer_left: "(c) 2026 UnitAutogen &middot; <a href=\"__BASE__/postgresql.html\">rlsautotest</a>, the free PostgreSQL member &middot; Open-source under <a href=\"https://github.com/unitautogen/rlsautotest/blob/main/LICENSE\">Apache-2.0</a>"
+      footer_left: "(c) 2026 UnitAutogen &middot; <a href=\"__BASE__/postgresql/rlsautotest/\">rlsautotest</a>, the free PostgreSQL companion &middot; open source under <a href=\"https://github.com/unitautogen/rlsautotest/blob/main/LICENSE\">Apache-2.0</a>"
       footer_sep: "&middot;"
       footer_links:
         - label: "Products"

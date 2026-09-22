@@ -4,7 +4,7 @@ relative_url / absolute_url / date filters. NOT a replacement for the real build
 
 usage: jekyll_lite.py <site_dir> <out_dir>
 """
-import sys, re, pathlib, datetime, yaml
+import sys, re, pathlib, datetime, shutil, yaml
 from liquid import Environment, FileSystemLoader
 from liquid.builtin import register as _reg
 
@@ -65,6 +65,13 @@ for f in sorted((SITE / "_posts").glob("*.*")):
 posts.sort(key=lambda p: (p["date"], p["url"]), reverse=True)
 site = dict(cfg); site["posts"] = posts; site["time"] = datetime.datetime.now()
 
+# _data/*.yml  ->  site.data.<stem>   (real Jekyll does this; the original tool did not)
+site["data"] = {}
+data_dir = SITE / "_data"
+if data_dir.exists():
+    for df in list(data_dir.glob("*.yml")) + list(data_dir.glob("*.yaml")):
+        site["data"][df.stem] = yaml.safe_load(df.read_text(encoding="utf-8"))
+
 def emit(url, html):
     p = OUT / url.lstrip("/")
     if url.endswith("/"): p = p / "index.html"
@@ -74,10 +81,29 @@ for p in posts:
     body = render(p["_body"], {"page": p, "site": site})
     emit(p["url"], with_layout(body, p, site))
 
-for f in list(SITE.glob("*.html")) + list((SITE / "blog").glob("*.html")):
-    data, body = front(f.read_text(encoding="utf-8"))
+# walk all .html anywhere except build/system dirs (recurses into /postgresql/, product pages, etc.)
+SKIP = {"_layouts", "_posts", "_data", "_site", "tools", "vendor", ".git",
+        ".jekyll-cache", "node_modules"}
+for f in SITE.rglob("*.html"):
+    parts = f.relative_to(SITE).parts
+    if parts[0] in SKIP:
+        continue
+    if OUT.resolve() in f.resolve().parents:
+        continue
+    text = f.read_text(encoding="utf-8")
     rel = "/" + f.relative_to(SITE).as_posix()
+    if not text.lstrip().startswith("---"):
+        # no front matter: Jekyll copies it verbatim (e.g. the redirect stubs)
+        emit(rel, text)
+        continue
+    data, body = front(text)
     data["url"] = rel; data.setdefault("layout", None)
     body = render(body, {"page": data, "site": site})
     emit(rel, with_layout(body, data, site))
+# copy static assets (css, images, logo) so the preview is actually styled
+assets = SITE / "assets"
+if assets.exists():
+    shutil.copytree(assets, OUT / "assets", dirs_exist_ok=True)
+
 print("rendered", sorted(str(p.relative_to(OUT)) for p in OUT.rglob("*.html")))
+print("copied assets ->", (OUT / "assets").exists())

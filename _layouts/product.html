@@ -1,0 +1,116 @@
+---
+layout: default
+---
+{%- comment %}
+  Product page (/<db>/<product>/). Everything comes from _data/catalog.yml via page.db + page.product.
+  A stub page needs only:  layout: product / db: <id> / product: <slug> / title / description
+  Any extra HTML in the stub body is rendered after the generated sections.
+{%- endcomment %}
+{%- assign cat = site.data.catalog %}
+{%- assign db = cat.databases | where: "id", page.db | first %}
+{%- assign product = db.products | where: "slug", page.product | first %}
+{%- assign fw = product.framework | default: db.framework %}
+<a id="top"></a>
+<div class="hero wrap">
+  <div style="margin-bottom:16px"><span class="badge badge--{{ product.badge_kind | default: db.badge_kind }}">{{ product.badge | default: db.badge }}</span></div>
+  <h1>{{ product.hero_a }}<br><span class="hl">{{ product.hero_hl }}</span>{{ product.hero_b }}</h1>
+  <p class="sub">{{ product.sub | default: product.blurb }}</p>
+  <div class="cta">
+    {%- assign h = product.cta_href | default: db.cta_href %}{% unless h contains "://" or h contains "mailto:" %}{% assign h = h | relative_url %}{% endunless %}
+    <a class="btn" href="{{ h }}">{{ product.cta_label | default: db.cta_label }}</a>
+    {%- if product.cta2_href %}
+    {%- assign h2 = product.cta2_href %}{% unless h2 contains "://" or h2 contains "mailto:" %}{% assign h2 = h2 | relative_url %}{% endunless %}
+    <a class="btn ghost" href="{{ h2 }}">{{ product.cta2_label }}</a>
+    {%- endif %}
+  </div>
+  {%- if product.meta_line %}<div class="meta-line">{{ product.meta_line }}</div>{% endif %}
+</div>
+
+{%- if product.status_note %}
+<section class="soft">
+  <div class="wrap">
+    <h2>{{ product.status_title | default: "Status" }}</h2>
+    <p class="lead">{{ product.status_note }}</p>
+  </div>
+</section>
+{%- else %}
+<section class="soft">
+  <div class="wrap">
+    <h2>{{ cat.platform.guarantee_title }}</h2>
+    <div class="myth">{{ cat.platform.guarantee }}</div>
+    <p class="lead">{{ cat.platform.guarantee_lead }}</p>
+  </div>
+</section>
+{%- endif %}
+
+{%- if product.capabilities %}
+<section>
+  <div class="wrap">
+    <h2>What it does</h2>
+    {%- if product.capabilities_lead %}<p class="lead">{{ product.capabilities_lead }}</p>{% endif %}
+    <div class="dbgrid">
+      {%- for cap in product.capabilities %}
+      <div class="dbcard">
+        <div class="top"><h3>{{ cap.name }}</h3>{% if cap.edition %}<span class="badge badge--{{ cap.edition_kind | default: 'beta' }}" style="text-transform:none">{{ cap.edition }}</span>{% endif %}</div>
+        <p>{{ cap.blurb }}</p>
+        {%- if cap.url %}<a class="go" href="{{ cap.url | relative_url }}">Learn more &rarr;</a>{% endif %}
+      </div>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+{%- endif %}
+
+{%- if product.status_note %}
+{%- comment %} early/coming products still state the guarantee, after the capabilities {% endcomment %}
+<section class="soft">
+  <div class="wrap">
+    <h2>{{ cat.platform.guarantee_title }}</h2>
+    <div class="myth">{{ cat.platform.guarantee }}</div>
+    <p class="lead">{{ cat.platform.guarantee_lead }}</p>
+  </div>
+</section>
+{%- endif %}
+
+<section{% unless product.status_note %} class="soft"{% endunless %}>
+  <div class="wrap">
+    <h2>What teams use it for</h2>
+    <div class="dbgrid">
+      {%- for uc in cat.use_cases %}
+      {%- if uc.only_db and uc.only_db != db.id %}{% continue %}{% endif %}
+      <div class="dbcard">
+        <div class="top"><h3>{{ uc.name }}</h3></div>
+        <p>{{ uc.card | default: uc.blurb | replace: "[framework]", fw }}</p>
+        <a class="go" href="{{ uc.slug | prepend: '/use-cases/' | append: '/' | relative_url }}">Learn more &rarr;</a>
+      </div>
+      {%- endfor %}
+    </div>
+    {%- unless product.get_started_points %}
+    <div class="cta" style="justify-content:flex-start;margin-top:28px">
+      <a class="btn" href="{{ h }}">{{ product.cta_label | default: db.cta_label }}</a>
+      {%- if product.cta2_href %}<a class="btn ghost" href="{{ h2 }}">{{ product.cta2_label }}</a>{% endif %}
+    </div>
+    {%- endunless %}
+  </div>
+</section>
+
+{%- if product.get_started_points %}
+<section class="soft">
+  <div class="wrap">
+    <h2>{{ product.get_started_title | default: "Get started" }}</h2>
+    {%- if product.get_started_lead %}<p class="lead">{{ product.get_started_lead }}</p>{% endif %}
+    {%- if product.install_snippet %}<pre><code>{{ product.install_snippet }}</code></pre>{% endif %}
+    <ul class="honest">
+      {%- for pt in product.get_started_points %}
+      <li>{{ pt }}</li>
+      {%- endfor %}
+    </ul>
+    <div class="cta" style="justify-content:flex-start;margin-top:24px">
+      <a class="btn" href="{{ h }}">{{ product.cta_label | default: db.cta_label }}</a>
+      {%- if product.cta2_href %}<a class="btn ghost" href="{{ h2 }}">{{ product.cta2_label }}</a>{% endif %}
+    </div>
+  </div>
+</section>
+{%- endif %}
+
+{{ content }}

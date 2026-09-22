@@ -1,45 +1,36 @@
 ---
 layout: default
-title: "UnitAutogen - automated unit-test generation for your database (SQL Server & PostgreSQL)"
-description: "UnitAutogen auto-generates database unit tests - and the data that drives them - so the logic inside your database is actually tested. Two products: tSQLt tests with branch coverage for SQL Server, and pgTAP tests that prove Row-Level Security for PostgreSQL and Supabase."
-og_title: "UnitAutogen - generate your database tests"
-og_description: "The part of testing everyone skips, automated. Pick your platform: SQL Server (tSQLt) or PostgreSQL / Supabase RLS."
+title: "UnitAutogen - generate the tests your database logic is missing"
+description: "UnitAutogen reads the logic inside your database and generates the tests, and the data that drives every branch, in your database's own test framework, with honest coverage. PostgreSQL today; SQL Server and Oracle + EDB next."
+og_title: "UnitAutogen - test the logic inside your database"
+og_description: "One method, brought to each database as its own native tool: read the logic, generate the tests and the data that drive them, report honest coverage. Never a false pass."
 og_image: "/assets/social-preview.png"
 body_class: page-index
-nav:
-  - label: "SQL Server"
-    href: "/sql-server.html"
-    class: "hidem"
-  - label: "PostgreSQL"
-    href: "/postgresql.html"
-    class: "hidem"
-  - label: "Blog"
-    href: "/blog/"
-    class: "hidem"
-  - label: "GitHub"
-    href: "https://github.com/unitautogen"
-footer_left: "(c) 2026 UnitAutogen - automated database test generation. SQL Server: AGPL-3.0 + commercial; PostgreSQL (rlsautotest): Apache-2.0."
+footer_left: "(c) 2026 UnitAutogen - automated database test generation."
 footer_sep: "-"
 footer_links:
-  - label: "SQL Server"
-    href: "/sql-server.html"
   - label: "PostgreSQL"
-    href: "/postgresql.html"
+    href: "/postgresql/"
+  - label: "SQL Server"
+    href: "/sql-server/"
+  - label: "Oracle + EDB"
+    href: "/oracle/"
   - label: "GitHub"
     href: "https://github.com/unitautogen"
-  - label: "Commercial licensing"
+  - label: "Licensing"
     href: "mailto:licensing@unitautogen.com"
 ---
+{%- assign cat = site.data.catalog %}
+{%- assign p = cat.platform %}
 <a id="top"></a>
 <div class="hero wrap">
-  <h1>The logic in your database<br>is mostly <span class="hl">untested</span>. We fix that.</h1>
-  <p class="sub">UnitAutogen auto-generates database unit tests - and the data that drives them - so the
-    critical logic inside your database is actually tested, not just the app on top of it. Choose your platform.</p>
+  <h1>{{ p.tagline_a }} <span class="hl">{{ p.tagline_hl }}</span>{{ p.tagline_b }}</h1>
+  <p class="sub">{{ p.sub }}</p>
   <div class="cta">
-    <a class="btn" href="{{ '/sql-server.html' | relative_url }}">SQL Server (tSQLt)</a>
-    <a class="btn ghost" href="{{ '/postgresql.html' | relative_url }}">PostgreSQL / Supabase</a>
+    <a class="btn" href="{{ '/postgresql/' | relative_url }}">Get started with PostgreSQL</a>
+    <a class="btn ghost" href="#databases">See all databases</a>
   </div>
-  <div class="meta-line">Open-source - the test frameworks (tSQLt, pgTAP) are free; UnitAutogen writes the tests for them</div>
+  <div class="meta-line">One method, brought to each database as its own native tool - tSQLt, pgTAP, utPLSQL-style.</div>
 </div>
 
 <section class="soft">
@@ -50,39 +41,56 @@ footer_links:
       the screens happen to produce. The logic underneath - the error paths, the rare data conditions, the
       specific branch of every <code>IF</code> and <code>CASE</code>, the row a security policy is meant to
       hide - mostly never runs. The app looks tested; the database logic underneath never was.</p>
-    <p class="lead">The honest fix is to test the database directly - which almost no one does, because by
-      hand it's brutal: fake every table, craft the data for every branch, set up every identity. So it gets
-      skipped.</p>
+    <p class="lead">Testing it by hand is brutal: fake every table, craft the data for every branch, set up
+      every identity. So it gets skipped. UnitAutogen does that work for you.</p>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h2>How we solve it: reverse predicate-based data seeding</h2>
-    <p class="lead">The hard part isn't faking the table - it's the data. UnitAutogen reads each predicate in
-      your code and works <strong>backwards</strong> from it to generate the rows (and identities) that drive
-      that branch both ways. It writes the tests <strong>and</strong> the data that make them mean something -
-      so a generated test exercises the real logic instead of passing against an empty table.</p>
+    <h2>One method, every database</h2>
+    <p class="lead">The hard part isn't faking the table, it's the data. UnitAutogen reads each predicate in
+      your code and works backwards to the rows and identities that drive that branch both ways. It writes the
+      tests <strong>and</strong> the data that make them mean something, in your database's own framework, so a
+      generated test exercises the real logic instead of passing against an empty table.</p>
+    <div class="method">
+      {%- for step in p.method %}
+      <div class="m"><div class="n">{{ forloop.index }}</div><p>{{ step }}</p></div>
+      {%- endfor %}
+    </div>
   </div>
 </section>
 
-<section class="soft">
+<section class="soft" id="databases">
   <div class="wrap">
-    <h2>Two products, one idea</h2>
-    <p class="lead">Each is a self-contained tool for its platform.</p>
-    <div class="pts" style="grid-template-columns:1fr 1fr;margin-top:20px">
-      <div class="card">
-        <h3>UnitAutogen for SQL Server</h3>
-        <p>Auto-generate <strong>tSQLt</strong> unit tests and real line/branch coverage for your stored
-          procedures and functions, across the whole database.</p>
-        <p class="meta-line" style="margin-top:12px">Open-source (AGPL-3.0) + commercial license</p>
+    <h2>Pick your database</h2>
+    <p class="lead">Each database gets its own native installable, all sharing the same method. Only
+      PostgreSQL is in general use today; the others show exactly where they are.</p>
+    <div class="dbgrid">
+      {%- for db in cat.databases %}
+      <div class="dbcard">
+        <div class="top"><h3>{{ db.name_full | default: db.name }}</h3><span class="badge badge--{{ db.badge_kind }}">{{ db.badge }}</span></div>
+        <div class="fw">Native framework: {{ db.framework }}</div>
+        <p>{{ db.blurb }}</p>
+        <a class="go" href="{{ db.slug | prepend: '/' | append: '/' | relative_url }}">Explore {{ db.name }} &rarr;</a>
       </div>
-      <div class="card">
-        <h3>rlsautotest for PostgreSQL / Supabase</h3>
-        <p>Auto-generate <strong>pgTAP</strong> tests that prove your Row-Level Security - who can read and
-          write which rows, per table, per command, per identity - with the data generated for you.</p>
-        <p class="meta-line" style="margin-top:12px">Free and open-source (Apache-2.0)</p>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="use-cases">
+  <div class="wrap">
+    <h2>What teams use it for</h2>
+    <p class="lead">One method, several jobs. Each is delivered on PostgreSQL today.</p>
+    <div class="dbgrid">
+      {%- for uc in cat.use_cases %}
+      <div class="dbcard">
+        <div class="top"><h3>{{ uc.name }}</h3></div>
+        <p>{{ uc.blurb }}</p>
+        <a class="go" href="{{ uc.slug | prepend: '/use-cases/' | append: '/' | relative_url }}">Learn more &rarr;</a>
       </div>
+      {%- endfor %}
     </div>
   </div>
 </section>

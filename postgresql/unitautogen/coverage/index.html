@@ -1,0 +1,61 @@
+---
+layout: default
+db: postgresql
+product: unitautogen
+title: "Coverage - UnitAutogen for PostgreSQL"
+description: "For every function and trigger, UnitAutogen generates a full set of pgTAP tests, runs them, and reports measured line and branch coverage, with every uncovered line explained. Free in the Community Edition."
+og_title: "Coverage - UnitAutogen for PostgreSQL"
+og_description: "Generated pgTAP unit and trigger tests with measured line and branch coverage, every uncovered line explained."
+og_image: "/assets/social-preview.png"
+body_class: page-product
+footer_left: "(c) 2026 UnitAutogen - PostgreSQL engine"
+footer_sep: "-"
+footer_links:
+  - label: "Overview"
+    href: "/postgresql/unitautogen/"
+  - label: "Coverage"
+    href: "/postgresql/unitautogen/coverage/"
+  - label: "Integration"
+    href: "/postgresql/unitautogen/integration/"
+  - label: "seccover & PII"
+    href: "/postgresql/unitautogen/seccover/"
+  - label: "Get started"
+    href: "/postgresql/unitautogen/get-started/"
+---
+<a id="top"></a>
+<div class="hero wrap">
+  <div style="margin-bottom:16px"><span class="badge badge--beta" style="text-transform:none">Community Edition - free</span></div>
+  <h1>Generated tests,<br><span class="hl">honest coverage</span>.</h1>
+  <p class="sub">The everyday command, and the default: it generates a full set of pgTAP tests for every
+    function and trigger, runs them, and measures how much of each routine they exercised.</p>
+  <div class="cta">
+    <a class="btn" href="{{ '/postgresql/unitautogen/get-started/' | relative_url }}">Get started</a>
+    <a class="btn ghost" href="{{ '/postgresql/unitautogen/' | relative_url }}">Back to overview</a>
+  </div>
+</div>
+
+<section class="soft">
+  <div class="wrap">
+    <h2>What it generates</h2>
+    <p class="lead">Per function: valid inputs, low and high boundaries, one test per branch on both its true
+      and false side, result-set shape, and rows matching the recorded output. Triggers are tested by
+      behaviour - it fires the INSERT, UPDATE or DELETE and asserts what the trigger actually did, or the error
+      it raised. All of it is standard pgTAP you commit next to your code and run with
+      <code>runtests()</code> or <code>pg_prove</code>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Every uncovered line is explained</h2>
+    <p class="lead">Coverage is measured by actually running the tests, not estimated. Rather than leave a
+      line simply red, the report tags each uncovered line so you know whose problem it is.</p>
+    <div class="pts">
+      <div class="card"><h3>Dead code (D)</h3><p>The line can never run, sometimes with the exact contradictory conditions named. Usually points at a real bug.</p></div>
+      <div class="card"><h3>Error-recovery (H)</h3><p>Inside an exception handler that valid data cannot reach. Untested by default, by design; you can opt in.</p></div>
+      <div class="card"><h3>Tool limit (E)</h3><p>No evidence of dead code; the tool could not produce a test for this line. An honest gap, reported plainly.</p></div>
+    </div>
+    <p class="lead" style="margin-top:22px">When a branch cannot be tested reliably it is reported
+      <code>NOT_TESTABLE</code> with a plain reason, never faked into a green pass.</p>
+  </div>
+</section>

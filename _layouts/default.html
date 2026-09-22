@@ -23,18 +23,62 @@
 {%- endif %}
 <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
 </head>
-<body class="{{ page.body_class }}">
+{%- assign cat = site.data.catalog %}
+{%- comment %} The database in view: the page's own db, else the site default (PostgreSQL).
+    Pages without an explicit db (home, blog, use cases) may be switched client-side to the
+    visitor's last choice - see the script at the end. {% endcomment %}
+{%- assign active_id = page.db | default: site.default_db %}
+{%- assign active_db = cat.databases | where: "id", active_id | first %}
+{%- assign here = page.url | replace: "index.html", "" %}
+<body class="{{ page.body_class }}" data-page-db="{{ page.db }}">
 <header>
   <div class="wrap nav">
-    <a href="{{ '/' | relative_url }}"><img src="{{ '/assets/logo-lockup-tight.png' | relative_url }}" alt="UnitAutogen"></a>
-    <div class="links">
-      {%- assign nav = page.nav | default: site.nav %}
-      {%- for item in nav %}
-      {%- assign h = item.href %}
-      {%- unless h contains "://" or h contains "mailto:" or h contains "#" %}{% assign h = h | relative_url %}{% endunless %}
-      <a{% if item.class %} class="{{ item.class }}"{% endif %} href="{{ h }}">{{ item.label }}</a>
-      {%- endfor %}
+    <div class="navtop">
+      <a class="brand" href="{{ '/' | relative_url }}"><img src="{{ '/assets/logo-lockup-tight.png' | relative_url }}" alt="UnitAutogen"></a>
+      <div class="dbtabs" role="tablist" aria-label="Database">
+        <span class="dbtabs-label">Database</span>
+        {%- for db in cat.databases %}
+        <a class="dbtab{% if db.id == active_id %} is-active{% endif %}" role="tab" aria-selected="{% if db.id == active_id %}true{% else %}false{% endif %}" data-db="{{ db.id }}" href="{{ db.slug | prepend: '/' | append: '/' | relative_url }}">{{ db.name_full | default: db.name }}</a>
+        {%- endfor %}
+      </div>
+      <div class="navlinks">
+        <div class="menu">
+          <button type="button" class="menu-t" aria-haspopup="true">Use cases <span class="caret" aria-hidden="true">&#9662;</span></button>
+          <div class="menu-panel" role="menu">
+            {%- for uc in cat.use_cases %}
+            <a role="menuitem" href="{{ uc.slug | prepend: '/use-cases/' | append: '/' | relative_url }}"><span class="mp-name">{{ uc.name }}</span></a>
+            {%- endfor %}
+          </div>
+        </div>
+        <a class="hidem" href="{{ '/blog/' | relative_url }}">Blog</a>
+        <a class="hidem" href="https://github.com/unitautogen">GitHub</a>
+      </div>
     </div>
+
+    {%- comment %} One menu panel per database, all rendered; only the active one is shown. {% endcomment %}
+    {%- for db in cat.databases %}
+    {%- assign db_root = db.slug | prepend: '/' | append: '/' %}
+    <nav class="links dbnav" data-db="{{ db.id }}" aria-label="{{ db.name_full | default: db.name }} menu"{% unless db.id == active_id %} hidden{% endunless %}>
+      <span class="dbnow"><span class="dbnow-k">Viewing</span> {{ db.name_full | default: db.name }} <span class="badge badge--{{ db.badge_kind }}">{{ db.badge }}</span></span>
+      <a{% if here == db_root %} class="is-here"{% endif %} href="{{ db_root | relative_url }}">Overview</a>
+      {%- for product in db.products %}
+      <a{% if here == product.url %} class="is-here"{% endif %} href="{{ product.url | relative_url }}">{{ product.short | default: product.name }}</a>
+      {%- endfor %}
+      {%- for product in db.products %}
+      {%- for cap in product.capabilities %}
+      {%- if cap.url %}
+      <a class="hidem{% if here == cap.url %} is-here{% endif %}" href="{{ cap.url | relative_url }}">{{ cap.short | default: cap.name }}</a>
+      {%- endif %}
+      {%- endfor %}
+      {%- endfor %}
+      {%- if db.docs_href and db.docs_href != "" %}
+      <a class="hidem" href="{{ db.docs_href }}">Docs</a>
+      {%- endif %}
+      {%- assign cta_href = db.cta_href %}
+      {%- unless cta_href contains "://" or cta_href contains "mailto:" %}{% assign cta_href = cta_href | relative_url %}{% endunless %}
+      <a class="{{ db.cta_style | default: 'btn' }}" href="{{ cta_href }}">{{ db.cta_label }}</a>
+    </nav>
+    {%- endfor %}
   </div>
 </header>
 
@@ -42,18 +86,52 @@
 
 <footer>
   <div class="wrap foot">
-    {%- assign fl = page.footer_left | default: site.footer_left %}
+    {%- if page.footer_left %}{% assign fl = page.footer_left %}
+    {%- elsif page.product and active_db %}{% assign prod = active_db.products | where: "slug", page.product | first %}{% assign fl = prod.footer_left | default: active_db.footer_left %}
+    {%- elsif page.db and active_db %}{% assign fl = active_db.footer_left %}
+    {%- else %}{% assign fl = site.footer_left %}{% endif %}
     <div>{{ fl | replace: "__BASE__", site.baseurl }}</div>
     <div>
-      {%- assign links = page.footer_links | default: site.footer_links %}
       {%- assign sep = page.footer_sep | default: site.footer_sep %}
+      {%- if page.footer_links == nil and page.db and active_db %}
+      {%- comment %} database pages: footer built from the catalog {% endcomment %}
+      <a href="{{ active_db.slug | prepend: '/' | append: '/' | relative_url }}">{{ active_db.name_full | default: active_db.name }}</a> {{ sep }}
+      {%- for product in active_db.products %}
+      <a href="{{ product.url | relative_url }}">{{ product.short | default: product.name }}</a> {{ sep }}
+      {%- endfor %}
+      {%- if active_db.repo and active_db.repo != "" %}
+      <a href="{{ active_db.repo }}">GitHub</a> {{ sep }}
+      {%- endif %}
+      <a href="mailto:licensing@unitautogen.com">Licensing</a>
+      {%- else %}
+      {%- assign links = page.footer_links | default: site.footer_links %}
       {%- for item in links %}
       {%- assign h = item.href %}
       {%- unless h contains "://" or h contains "mailto:" or h contains "#" %}{% assign h = h | relative_url %}{% endunless %}
       <a href="{{ h }}">{{ item.label }}</a>{% unless forloop.last %} {{ sep }}{% endunless %}
       {%- endfor %}
+      {%- endif %}
     </div>
   </div>
 </footer>
+<script>
+/* Remember the visitor's database. Pages inside a database section always show that database.
+   Pages without one (home, blog, use cases) show the last database the visitor chose, else the default. */
+(function(){
+  var KEY='uag_db', body=document.body, pageDb=body.getAttribute('data-page-db');
+  var tabs=document.querySelectorAll('.dbtab'), navs=document.querySelectorAll('.dbnav');
+  function show(id){
+    var ok=false; navs.forEach(function(n){ if(n.getAttribute('data-db')===id) ok=true; });
+    if(!ok) return;
+    navs.forEach(function(n){ n.hidden = n.getAttribute('data-db')!==id; });
+    tabs.forEach(function(t){ var on=t.getAttribute('data-db')===id; t.classList.toggle('is-active',on); t.setAttribute('aria-selected',on?'true':'false'); });
+  }
+  try{
+    if(pageDb){ localStorage.setItem(KEY,pageDb); }
+    else { var saved=localStorage.getItem(KEY); if(saved) show(saved); }
+  }catch(e){}
+  tabs.forEach(function(t){ t.addEventListener('click',function(){ try{ localStorage.setItem(KEY,t.getAttribute('data-db')); }catch(e){} }); });
+})();
+</script>
 </body>
 </html>

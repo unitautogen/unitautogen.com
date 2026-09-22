@@ -1,0 +1,49 @@
+---
+layout: default
+db: postgresql
+product: unitautogen
+title: "Integration testing - UnitAutogen for PostgreSQL"
+description: "Integration testing runs each function together with the functions it calls and the triggers its writes fire, for real, and measures coverage across the whole call map. Part of the Team edition."
+og_title: "Integration testing - UnitAutogen for PostgreSQL"
+og_description: "Run each function together with its callees and triggers, for real, with coverage across the whole call map."
+og_image: "/assets/social-preview.png"
+body_class: page-product
+footer_left: "(c) 2026 UnitAutogen - PostgreSQL engine"
+footer_sep: "-"
+footer_links:
+  - label: "Overview"
+    href: "/postgresql/unitautogen/"
+  - label: "Coverage"
+    href: "/postgresql/unitautogen/coverage/"
+  - label: "Integration"
+    href: "/postgresql/unitautogen/integration/"
+  - label: "seccover & PII"
+    href: "/postgresql/unitautogen/seccover/"
+  - label: "Get started"
+    href: "/postgresql/unitautogen/get-started/"
+---
+<a id="top"></a>
+<div class="hero wrap">
+  <div style="margin-bottom:16px"><span class="badge badge--soon" style="text-transform:none">Team</span></div>
+  <h1>Test the whole flow,<br><span class="hl">not just the unit</span>.</h1>
+  <p class="sub">Where unit testing checks a routine on its own, integration runs it together with the
+    functions it calls and the triggers its writes fire, for real, and measures coverage across all of it.</p>
+  <div class="cta">
+    <a class="btn" href="{{ '/postgresql/unitautogen/get-started/' | relative_url }}">Get started</a>
+    <a class="btn ghost" href="{{ '/postgresql/unitautogen/' | relative_url }}">Back to overview</a>
+  </div>
+</div>
+
+<section class="soft">
+  <div class="wrap">
+    <h2>The real call map, exercised</h2>
+    <p class="lead">A function that calls nothing and fires no triggered write is standalone, and its
+      integration result is identical to its unit test, so it is noted rather than duplicated. For everything
+      with a real call map, integration produces a full set of tests per root function - valid inputs,
+      boundaries, one per branch - run through the actual call chain, so a line uncovered here is one the
+      root's inputs never reached through the whole flow.</p>
+    <div class="cta" style="justify-content:flex-start">
+      <a class="btn" href="{{ '/postgresql/unitautogen/get-started/' | relative_url }}">Get started</a>
+    </div>
+  </div>
+</section>

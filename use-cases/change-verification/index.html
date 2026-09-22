@@ -1,0 +1,76 @@
+---
+layout: default
+title: "Behavioural change verification - UnitAutogen"
+description: "Migration tools version, deploy and govern your schema changes. None of them check that a change left your database logic behaving the same. UnitAutogen does, through the generated unit and integration tests. See how it compares to Redgate Flyway, Liquibase and Bytebase."
+og_title: "Behavioural change verification"
+og_description: "They manage the change. We verify the changed logic still behaves the same."
+og_image: "/assets/social-preview.png"
+body_class: page-usecase
+footer_left: "(c) 2026 UnitAutogen - use cases"
+footer_sep: "-"
+footer_links:
+  - label: "Use cases"
+    href: "/use-cases/"
+  - label: "PostgreSQL engine"
+    href: "/postgresql/unitautogen/"
+  - label: "GitHub"
+    href: "https://github.com/unitautogen"
+---
+<a id="top"></a>
+<div class="hero wrap">
+  <div style="margin-bottom:16px"><span class="badge badge--beta">Available for PostgreSQL</span></div>
+  <h1>They manage the change.<br><span class="hl">We verify it.</span></h1>
+  <p class="sub">Migration tools move your changes safely. They do not check that a change left your database
+    logic behaving the same. UnitAutogen does.</p>
+  <div class="cta">
+    <a class="btn" href="https://github.com/unitautogen/unitautogen-postgresql/releases">Download</a>
+    <a class="btn ghost" href="{{ '/postgresql/unitautogen/' | relative_url }}">See the engine</a>
+  </div>
+</div>
+
+<section class="soft">
+  <div class="wrap">
+    <h2>The gap</h2>
+    <p class="lead">Redgate Flyway, Liquibase and Bytebase version, deploy and govern schema changes for
+      PostgreSQL. That is change management, and it is essential. But none of them tell you whether a shipped
+      change altered how a function, trigger or procedure behaves. A migration that redeploys a function ships
+      whatever that function now does; nothing verifies it still returns what it returned yesterday.</p>
+    <p class="lead">UnitAutogen closes that gap. The generated unit and integration tests pin how your logic
+      behaves today as standard pgTAP, with real branch coverage, so any later change that moves a pinned
+      behaviour fails before it reaches production. It sits on top of whatever migration tool you already run.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>How it compares</h2>
+    <p class="lead">Redgate and Bytebase can also classify and mask sensitive columns to produce safe test
+      data. That is data masking, a separate job from proving your access rules hold and catching personal
+      data that escapes through error messages, which is what the last two rows below measure.</p>
+    <div class="cmp-wrap">
+      <table class="cmp">
+        <thead>
+          <tr><th>Capability</th><th>Redgate Flyway</th><th>Liquibase</th><th>Bytebase</th><th>UnitAutogen</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Version-control and apply schema migrations</td><td class="c yes">Yes</td><td class="c yes">Yes</td><td class="c yes">Yes</td><td class="c">Works alongside</td></tr>
+          <tr><td>Approval workflows and change governance</td><td class="c yes">Yes</td><td class="c yes">Yes</td><td class="c yes">Yes</td><td class="c">Works alongside</td></tr>
+          <tr><td>Structural schema drift detection</td><td class="c yes">Yes</td><td class="c yes">Yes</td><td class="c yes">Yes</td><td class="c">Works alongside</td></tr>
+          <tr><td>Deploy functions, triggers and procedures</td><td class="c yes">Yes</td><td class="c yes">Yes</td><td class="c yes">Yes</td><td class="c">Tests them</td></tr>
+          <tr><td>Auto-generate unit tests for that logic</td><td class="c no">No</td><td class="c no">No</td><td class="c no">No</td><td class="c yes">Yes</td></tr>
+          <tr><td>Auto-generate integration tests across the call map</td><td class="c no">No</td><td class="c no">No</td><td class="c no">No</td><td class="c yes">Yes</td></tr>
+          <tr><td>Measured branch and statement coverage of PL/pgSQL</td><td class="c no">No</td><td class="c no">No</td><td class="c no">No</td><td class="c yes">Yes</td></tr>
+          <tr><td>Proof a change preserved behaviour (regression gate)</td><td class="c no">No</td><td class="c no">No</td><td class="c no">No</td><td class="c yes">Yes</td></tr>
+          <tr><td>Prove RLS and tenant isolation hold through functions, views and triggers</td><td class="c no">No</td><td class="c no">No</td><td class="c no">No</td><td class="c yes">Yes</td></tr>
+          <tr><td>Audit PII leaked through error and RAISE messages</td><td class="c no">No</td><td class="c no">No</td><td class="c no">No</td><td class="c yes">Yes</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="meta-line">The top rows are what those tools do well; UnitAutogen sits on top rather than
+      replacing them. The rows below are the layer none of them offer, delivered through the generated tests.</p>
+    <div class="cta" style="justify-content:flex-start;margin-top:24px">
+      <a class="btn" href="https://github.com/unitautogen/unitautogen-postgresql/releases">Download</a>
+      <a class="btn ghost" href="{{ '/postgresql/unitautogen/' | relative_url }}">See the engine</a>
+    </div>
+  </div>
+</section>

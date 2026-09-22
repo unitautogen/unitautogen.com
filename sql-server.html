@@ -1,117 +1,13 @@
----
-layout: default
-title: "UnitAutogen for SQL Server - auto-generated tSQLt tests with real branch coverage"
-description: "UnitAutogen auto-generates tSQLt unit tests for SQL Server using reverse predicate-based data seeding: it derives the data that drives every branch from the procedure's own predicates, runs the tests across your whole database, and reports real line and branch coverage. Open-source, built on tSQLt."
-og_title: "UnitAutogen — auto-generated SQL Server unit tests with real branch coverage"
-og_description: "The part of testing everyone skips, automated: reverse predicate-based data seeding writes the tSQLt tests and the data that exercises every branch of your stored procedures."
-og_image: "/assets/social-preview.png"
-body_class: page-sql-server
-nav:
-  - label: "← All products"
-    href: "/"
-    class: "hidem"
-  - label: "How it works"
-    href: "#how"
-    class: "hidem"
-  - label: "CI/CD"
-    href: "#pipeline"
-    class: "hidem"
-  - label: "GitHub"
-    href: "https://github.com/unitautogen/unitautogen-public-repo"
-  - label: "Get started"
-    href: "https://github.com/unitautogen/unitautogen-public-repo#quick-start"
-    class: "btn"
-footer_left: "© 2026 UnitAutogen · Open-source under <a href=\"https://github.com/unitautogen/unitautogen-public-repo/blob/main/LICENSE\">AGPL-3.0</a>"
-footer_sep: "&middot;"
-footer_links:
-  - label: "GitHub"
-    href: "https://github.com/unitautogen/unitautogen-public-repo"
-  - label: "PowerShell Gallery"
-    href: "https://www.powershellgallery.com/packages/UnitAutogen"
-  - label: "Commercial licensing"
-    href: "mailto:licensing@unitautogen.com"
----
-<a id="top"></a>
-<div class="hero wrap">
-  <h1>Auto-generated SQL Server unit tests<br>with <span class="hl">real branch coverage</span>.</h1>
-  <p class="sub">Point UnitAutogen at a stored procedure — or your whole database — and it writes the
-    tSQLt tests, generates the data to drive every branch, runs them, and reports real line and branch
-    coverage. The part of testing everyone skips, automated.</p>
-  <div class="cta">
-    <a class="btn" href="https://github.com/unitautogen/unitautogen-public-repo">View on GitHub</a>
-    <a class="btn ghost" href="https://www.powershellgallery.com/packages/UnitAutogen">PowerShell Gallery</a>
-  </div>
-  <div class="meta-line">Open-source (AGPL-3.0) + commercial license · Built on tSQLt · SQL Server 2017+</div>
-  <div class="shot">
-    <img src="{{ '/assets/hero-coverage.png' | relative_url }}" alt="UnitAutogen coverage report showing line and branch coverage across a database">
-    <div class="cap">A full-database coverage report, generated automatically.</div>
-  </div>
-</div>
-
-<section id="how">
-  <div class="wrap">
-    <h2>Reverse predicate-based data seeding</h2>
-    <p class="lead">The hard part isn’t faking the table — it’s the data. Mocking a table gives you an
-      <strong>empty</strong> table, so a branch that needs matching rows only ever runs its “no rows” side.
-      UnitAutogen reads each predicate in the procedure and works <strong>backwards</strong> from it —
-      reverse predicate-based data seeding — to build the rows that drive that branch both ways.</p>
-    <pre><code>-- a gate inside your procedure:
-IF (SELECT COUNT(*) FROM Sales.Orders WHERE CustomerID = @CustomerID) > 5
-    -- ... high-value customer</code></pre>
-    <p class="lead">It generates one setup with 6 matching orders (so the <code>&gt; 5</code> branch runs)
-      and one with fewer (so the other branch runs) — and asserts the data actually drove the condition the
-      intended way, so a wrong guess fails loudly instead of passing at the wrong coverage.</p>
-    <div class="grid" style="margin-top:30px">
-      <img src="{{ '/assets/branch-before-after.png' | relative_url }}" alt="Branch coverage about 50% without seeding versus ~94% with UnitAutogen reverse predicate-based data seeding on the same tests">
-      <div>
-        <h3 style="margin:0 0 8px">From half-tested to actually tested</h3>
-        <p class="lead" style="margin:0">On Microsoft’s AdventureWorks sample database, the same tests that
-          reach only about <span class="num">50%</span> branch coverage without seeded data reach
-          <span class="num">~94%</span> once UnitAutogen fills in the rows that exercise each branch — with
-          no hand-written setup.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="pipeline" class="soft">
-  <div class="wrap">
-    <h2>Your whole database. Every build.</h2>
-    <p class="lead">It doesn’t stop at one procedure. Point it at the database and it generates and runs
-      tests across every procedure and function, then exports the results as standard
-      <strong>Cobertura</strong> and <strong>JUnit</strong> XML — so the coverage check drops into your
-      existing pipeline and every build verifies the SQL logic is tested, not just the app on top of it.</p>
-    <div class="pts">
-      <div class="card"><h3>Whole-database sweep</h3><p>One command generates, runs, and measures coverage across every testable procedure and function.</p></div>
-      <div class="card"><h3>CI/CD-ready</h3><p>Cobertura + JUnit + HTML output for Azure DevOps, GitHub Actions, Jenkins, GitLab, and SonarQube.</p></div>
-      <div class="card"><h3>Honest by design</h3><p>What it can’t test — temporal, full-text, memory-optimized tables — is flagged NOT_TESTABLE with the reason, never faked into a green pass.</p></div>
-    </div>
-    <div class="shot" style="margin-top:34px">
-      <img src="{{ '/assets/end-to-end.png' | relative_url }}" alt="One command generates tests, measures coverage, and emits Cobertura, JUnit and an HTML report">
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <h2>Get started</h2>
-    <p class="lead">Built on the open-source <a href="https://tsqlt.org">tSQLt</a> framework. Install the
-      module from the PowerShell Gallery, or run the SQL scripts in SSMS.</p>
-    <pre><code># PowerShell / CI
-Install-Module UnitAutogen
-Install-UnitAutogenDatabase -ServerInstance &lt;srv&gt; -Database &lt;db&gt;
-Invoke-UnitAutogen          -ServerInstance &lt;srv&gt; -Database &lt;db&gt; -OutputPath ./artifacts</code></pre>
-    <p class="lead" style="margin-top:8px">Prefer SSMS? Open and run the two install scripts from the repo,
-      then <code>EXEC TestGen.GenerateAndCoverDatabase</code>.</p>
-    <ul class="honest">
-      <li>Free to evaluate and use internally under AGPL-3.0</li>
-      <li>Using it in client delivery or a commercial product? A <a href="mailto:licensing@unitautogen.com">commercial license</a> removes the AGPL obligations</li>
-      <li>SQL Server 2017+ with tSQLt installed</li>
-      <li>Beta: validated end-to-end on AdventureWorks and Northwind</li>
-    </ul>
-    <div class="cta" style="justify-content:flex-start;margin-top:24px">
-      <a class="btn" href="https://github.com/unitautogen/unitautogen-public-repo">View on GitHub</a>
-      <a class="btn ghost" href="https://www.powershellgallery.com/packages/UnitAutogen">PowerShell Gallery</a>
-    </div>
-  </div>
-</section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Redirecting - UnitAutogen for SQL Server</title>
+<link rel="canonical" href="https://unitautogen.com/sql-server/">
+<meta http-equiv="refresh" content="0; url=/sql-server/">
+<meta name="robots" content="noindex">
+</head>
+<body>
+<p>This page has moved to <a href="/sql-server/">unitautogen.com/sql-server/</a>.</p>
+</body>
+</html>

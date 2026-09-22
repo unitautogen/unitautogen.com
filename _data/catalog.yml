@@ -1,0 +1,290 @@
+# catalog.yml - the single source of truth for the platform, its databases and products.
+#
+# EVERYTHING engine-specific lives here: the framework name, the runner, what objects are
+# tested, versions, prerequisites, links, badges, the capability cards and the menu.
+# The pages under /<database>/ are 3-line stubs rendered by _layouts/catalog.html and
+# _layouts/product.html from this file. Adding a database = one block here + two stubs.
+#
+# Text fields may contain the token [framework]; templates replace it with the current
+# database's framework name so shared copy (use cases, method) stays engine-neutral.
+#
+# Keep claims honest: badge reflects real maturity, and no engine is presented at parity
+# with another.
+
+platform:
+  name: "UnitAutogen"
+  tagline_a: "The logic in your database is mostly"
+  tagline_hl: "untested"
+  tagline_b: ". We fix that."
+  sub: >-
+    UnitAutogen reads the logic already living inside your database, generates the tests
+    and the data that drive every branch, in that database's own test framework, and reports
+    honest coverage. One method, brought to each database as its own native tool.
+  # The one method - said once, engine-independent. No database named on purpose.
+  method:
+    - "Reads the logic in your database - functions, procedures, triggers"
+    - "Generates the tests, and the data that drives each branch"
+    - "In that database's native test framework"
+    - "Reports honest branch coverage, and never a false pass"
+  guarantee_title: "The one guarantee"
+  guarantee: "Never a fabricated, false-passing, or flaky test."
+  guarantee_lead: >-
+    If a branch cannot be tested reliably, the report tells you so in plain language, rather
+    than showing a green that would mislead you. Every report comes back with no failing and no
+    false tests, and a visible, explained gap always beats a false pass. That is what makes the
+    result safe to gate your CI on.
+
+# Databases in tab / home order. slug drives the URL: /<slug>/
+# The first one is the default the site opens on (also set as default_db in _config.yml).
+databases:
+  - id: postgresql
+    slug: "postgresql"
+    name: "PostgreSQL"
+    name_full: "PostgreSQL / Supabase"
+    badge: "Beta"
+    badge_kind: "beta"
+    # --- vocabulary used by the templates ---
+    framework: "pgTAP"
+    runner: "pg_prove or runtests()"
+    objects: "functions and triggers"
+    versions: "PostgreSQL 14 to 18"
+    platforms: >-
+      Works on PostgreSQL 14 to 18, self-hosted or managed, including Supabase, Neon, Amazon RDS
+      and Aurora, and Azure Database for PostgreSQL.
+    prerequisites: "needs pgTAP and plpgsql_check in the target database"
+    meta_line: "Native pgTAP - runs with <code>pg_prove</code> or <code>runtests()</code>, with or without us."
+    # --- links ---
+    repo: "https://github.com/unitautogen/unitautogen-postgresql"
+    docs_href: "https://github.com/unitautogen/unitautogen-postgresql#readme"
+    download_href: "https://github.com/unitautogen/unitautogen-postgresql/releases"
+    # --- catalog page ---
+    hero_a: "Test your PostgreSQL logic,"
+    hero_hl: "tests generated for you"
+    hero_b: "."
+    blurb: >-
+      Generate pgTAP tests and honest branch coverage for your functions and triggers, with
+      integration testing, security-isolation proof and PII auditing on top.
+    cta_label: "Download"
+    cta_href: "https://github.com/unitautogen/unitautogen-postgresql/releases"
+    cta_style: "btn"
+    cta2_label: "See the engine"
+    cta2_href: "/postgresql/unitautogen/"
+    products_lead: >-
+      Two tools that share one idea: generate the tests, and the data that make them mean
+      something.
+    footer_left: "(c) 2026 UnitAutogen - PostgreSQL"
+    products:
+      - name: "UnitAutogen for PostgreSQL"
+        short: "UnitAutogen engine"
+        slug: "unitautogen"
+        url: "/postgresql/unitautogen/"
+        framework: "pgTAP"
+        badge: "Beta"
+        badge_kind: "beta"
+        blurb: >-
+          Generates pgTAP unit tests for functions and triggers, runs them, and reports honest
+          branch coverage. Team adds integration testing across the call map; Enterprise adds
+          security coverage and PII auditing.
+        # product page
+        hero_a: "The logic in your database,"
+        hero_hl: "actually tested"
+        hero_b: "."
+        sub: >-
+          Point UnitAutogen at a PostgreSQL database and it reads your functions and triggers,
+          writes the pgTAP tests, generates the data that drives every branch, runs them, and
+          reports honest coverage. No test written by hand.
+        cta_label: "Download"
+        cta_href: "https://github.com/unitautogen/unitautogen-postgresql/releases"
+        cta2_label: "Get started"
+        cta2_href: "/postgresql/unitautogen/get-started/"
+        meta_line: "Standard pgTAP - PostgreSQL 14 to 18 - needs pgTAP and plpgsql_check in the target database"
+        capabilities_lead: >-
+          One method, layered by edition. Start free with unit testing and coverage, then climb to
+          integration and security as you need them.
+        capabilities:
+          - name: "Coverage"
+            slug: "coverage"
+            url: "/postgresql/unitautogen/coverage/"
+            edition: "Free"
+            edition_kind: "beta"
+            blurb: "Generated pgTAP unit and trigger tests, run for you, with measured line and branch coverage and every uncovered line explained."
+          - name: "Integration testing"
+            short: "Integration"
+            slug: "integration"
+            url: "/postgresql/unitautogen/integration/"
+            edition: "Team"
+            edition_kind: "soon"
+            blurb: "Each function run together with the functions it calls and the triggers its writes fire, for real, with coverage across the whole call map."
+          - name: "seccover & PII"
+            slug: "seccover"
+            url: "/postgresql/unitautogen/seccover/"
+            edition: "Enterprise"
+            edition_kind: "soon"
+            blurb: "Prove Row-Level Security and tenant isolation hold through your functions, views and triggers, and catch PII leaked through error messages."
+        get_started_url: "/postgresql/unitautogen/get-started/"
+        footer_left: "(c) 2026 UnitAutogen - PostgreSQL engine"
+      - name: "rlsautotest"
+        short: "rlsautotest"
+        slug: "rlsautotest"
+        url: "/postgresql/rlsautotest/"
+        framework: "pgTAP"
+        badge: "Free, open source"
+        badge_kind: "beta"
+        blurb: >-
+          Reads your Row-Level Security policies and generates pgTAP tests, and the seed data,
+          that prove who can read and write which rows, per table, per command, per identity.
+          Free and open source.
+        # rlsautotest keeps its own hand-written page (postgresql/rlsautotest/index.html)
+
+  - id: sqlserver
+    slug: "sql-server"
+    name: "SQL Server"
+    name_full: "SQL Server"
+    badge: "Early access"
+    badge_kind: "early"
+    framework: "tSQLt"
+    runner: "tSQLt.Run"
+    objects: "stored procedures and functions"
+    versions: "SQL Server 2017+"
+    platforms: ""
+    prerequisites: "needs tSQLt installed in the target database"
+    meta_line: "Built on tSQLt - SQL Server 2017+"
+    repo: "https://github.com/unitautogen/unitautogen-public-repo"
+    docs_href: "https://github.com/unitautogen/unitautogen-public-repo#readme"
+    download_href: ""
+    hero_a: "Auto-generated SQL Server tests"
+    hero_hl: "with real branch coverage"
+    hero_b: "."
+    blurb: >-
+      Generate tSQLt tests with real line and branch coverage for stored procedures and functions
+      across the whole database.
+    cta_label: "Talk to us"
+    cta_href: "mailto:hello@unitautogen.com"
+    cta_style: "btn ghost"
+    cta2_label: "What it does"
+    cta2_href: "/sql-server/unitautogen/"
+    status_title: "Where it is, honestly"
+    status_note: >-
+      The SQL Server tool is in early access and sits behind our PostgreSQL engine while we
+      bring it up to the same standard. The method is the same one proven on PostgreSQL: read the
+      procedures and functions, generate the tSQLt tests and the data that drive every branch, and
+      report real coverage. If you run SQL Server and want in early, tell us about your workload.
+    products_lead: ""
+    footer_left: "(c) 2026 UnitAutogen - SQL Server"
+    products:
+      - name: "UnitAutogen for SQL Server"
+        short: "UnitAutogen for SQL Server"
+        slug: "unitautogen"
+        url: "/sql-server/unitautogen/"
+        framework: "tSQLt"
+        badge: "Early access"
+        badge_kind: "early"
+        blurb: >-
+          Generates tSQLt tests with real line and branch coverage for stored procedures and
+          functions, across the whole database, with Cobertura, JUnit and HTML output for CI.
+        hero_a: "Auto-generated SQL Server tests"
+        hero_hl: "with real branch coverage"
+        hero_b: "."
+        sub: >-
+          Point UnitAutogen at a stored procedure, or your whole database, and it writes the tSQLt
+          tests, generates the data to drive every branch, runs them, and reports real line and
+          branch coverage. The same method proven on PostgreSQL, brought to SQL Server.
+        cta_label: "Talk to us"
+        cta_href: "mailto:hello@unitautogen.com"
+        meta_line: "Built on tSQLt - SQL Server 2017+ - in early access"
+        status_title: "Where it is, honestly"
+        status_note: >-
+          The SQL Server tool is in early access and sits behind our PostgreSQL engine while we
+          bring it up to the same standard. We are being upfront about that rather than presenting
+          it as finished: a product whose whole promise is never a false green should not oversell
+          its own maturity. If you run SQL Server and want in early, tell us about your workload.
+        capabilities_lead: >-
+          The hard part isn't faking the table, it's the data. Mocking a table gives you an empty
+          table, so a branch that needs matching rows only ever runs its "no rows" side. UnitAutogen
+          reads each predicate in the procedure and works backwards from it to build the rows that
+          drive that branch both ways, and asserts the data actually drove the condition the intended
+          way, so a wrong guess fails loudly instead of passing at the wrong coverage.
+        capabilities:
+          - name: "Whole-database sweep"
+            blurb: "One command generates, runs, and measures coverage across every testable procedure and function."
+          - name: "CI/CD-ready"
+            blurb: "Cobertura, JUnit and HTML output for Azure DevOps, GitHub Actions, Jenkins, GitLab and SonarQube."
+          - name: "Honest by design"
+            blurb: "What it can't test is flagged NOT_TESTABLE with the reason, never faked into a green pass."
+        get_started_title: "Get early access"
+        get_started_lead: >-
+          Built on the open-source <a href="https://tsqlt.org">tSQLt</a> framework. It is not yet
+          available for general download while we bring it up to date. Tell us about your SQL Server
+          workload and we'll get you in early.
+        get_started_points:
+          - "SQL Server 2017+ with tSQLt installed"
+          - "Generates tSQLt tests and the data that drives every branch, plus real line and branch coverage"
+          - "Earlier validation reached roughly 94% branch coverage on AdventureWorks, up from about 50% without seeded data"
+          - "In early access - behind the PostgreSQL engine while we bring it to the same standard"
+        footer_left: "(c) 2026 UnitAutogen - SQL Server engine"
+
+  - id: oracle
+    slug: "oracle"
+    name: "Oracle + EDB"
+    name_full: "Oracle + EDB"
+    badge: "Coming soon"
+    badge_kind: "soon"
+    framework: "utPLSQL-style"
+    runner: "ut.run"
+    objects: "packages, procedures and functions"
+    versions: "Oracle and EDB Postgres Advanced Server"
+    platforms: ""
+    prerequisites: ""
+    meta_line: "In active development - not available yet"
+    repo: ""
+    docs_href: ""
+    download_href: ""
+    hero_a: "Prove your PL/SQL behaves the same"
+    hero_hl: "on Oracle and EDB"
+    hero_b: "."
+    blurb: >-
+      Generate tests that run on both Oracle and EDB Postgres Advanced Server, so a team can prove
+      the same logic behaves identically across the two.
+    cta_label: "Talk to us"
+    cta_href: "mailto:hello@unitautogen.com"
+    cta_style: "btn ghost"
+    status_title: "What it will do"
+    status_note: >-
+      A team moving Oracle PL/SQL to EDB Postgres Advanced Server needs to know the logic still
+      behaves exactly as before. The first Oracle + EDB offering generates one set of tests that runs
+      on both engines and reports whether the results match, so parity is something you prove rather
+      than hope for. It is the same method proven on PostgreSQL, brought to the Oracle and EDB world.
+    status_note_2: >-
+      It is not available yet. If you are evaluating Oracle or EDB testing, tell us what you need and
+      we will keep you posted.
+    footer_left: "(c) 2026 UnitAutogen - Oracle + EDB"
+    products: []
+
+# Use cases - the second nav axis (the problem / who it's for). Delivered on PostgreSQL today.
+# [framework] is replaced with the current database's framework name.
+use_cases:
+  - slug: "ai-guardrail"
+    name: "Guardrail for AI-written code"
+    blurb: >-
+      AI assistants write database logic fast, and a silent mistake there costs the most. Generated
+      tests pin today's behaviour so the next change, human or AI, that breaks it fails before production.
+    card: "Generated tests pin today's behaviour, so the next change - human or AI - that breaks it fails before production."
+  - slug: "change-verification"
+    name: "Behavioural change verification"
+    blurb: >-
+      Migration tools deploy your change. None of them check the changed logic still behaves the same.
+      UnitAutogen does, through the generated unit and integration tests.
+    card: "Migration tools deploy your change; UnitAutogen proves the changed logic still behaves the same."
+  - slug: "tenant-isolation"
+    name: "Prove tenant isolation and security"
+    blurb: >-
+      Prove Row-Level Security and multi-tenant isolation actually hold through your functions, views
+      and triggers, with the evidence, per routine.
+    card: "Prove Row-Level Security and tenant isolation hold through your functions, views and triggers, with the evidence per routine."
+    only_db: postgresql
+  - slug: "compliance-evidence"
+    name: "Compliance evidence"
+    blurb: >-
+      Dated [framework] tests and reproducible reports that support your HIPAA and SOC 2 access controls.
+      Evidence you can hand an auditor, framed as a tool, never a certificate.
+    card: "Dated [framework] tests and reports that support your HIPAA and SOC 2 access controls."

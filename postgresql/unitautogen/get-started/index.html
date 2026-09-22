@@ -1,0 +1,66 @@
+---
+layout: default
+db: postgresql
+product: unitautogen
+title: "Get started - UnitAutogen for PostgreSQL"
+description: "Download UnitAutogen for PostgreSQL, install pgTAP and plpgsql_check in your database, and generate your first pgTAP suite with coverage. Editions, prerequisites and CI wiring."
+og_title: "Get started - UnitAutogen for PostgreSQL"
+og_description: "Download, install the two extensions, and generate your first pgTAP suite with coverage."
+og_image: "/assets/social-preview.png"
+body_class: page-product
+footer_left: "(c) 2026 UnitAutogen - PostgreSQL engine"
+footer_sep: "-"
+footer_links:
+  - label: "Overview"
+    href: "/postgresql/unitautogen/"
+  - label: "Coverage"
+    href: "/postgresql/unitautogen/coverage/"
+  - label: "Integration"
+    href: "/postgresql/unitautogen/integration/"
+  - label: "seccover & PII"
+    href: "/postgresql/unitautogen/seccover/"
+  - label: "Get started"
+    href: "/postgresql/unitautogen/get-started/"
+---
+<a id="top"></a>
+<div class="hero wrap">
+  <div style="margin-bottom:16px"><span class="badge badge--beta">Beta</span></div>
+  <h1>Get started<br>with <span class="hl">UnitAutogen for PostgreSQL</span>.</h1>
+  <p class="sub">Download the build for your platform, install the two extensions in your database, and
+    generate your first pgTAP suite with coverage.</p>
+  <div class="cta">
+    <a class="btn" href="https://github.com/unitautogen/unitautogen-postgresql/releases">Download</a>
+    <a class="btn ghost" href="https://github.com/unitautogen/unitautogen-postgresql#readme">Read the docs</a>
+  </div>
+</div>
+
+<section class="soft">
+  <div class="wrap">
+    <h2>Your first run</h2>
+    <pre><code>unitautogen --schema public --out unit_tests --html report.html --json report.json</code></pre>
+    <ul class="honest">
+      <li>PostgreSQL 14 to 18, self-hosted or managed (Supabase, Neon, RDS and Aurora, Azure Database for PostgreSQL)</li>
+      <li>Needs pgTAP and plpgsql_check installed in the database you are testing</li>
+      <li>Generated tests are standard pgTAP - commit them and run them in CI with no UnitAutogen at run time</li>
+      <li>Ships as a single self-contained binary for Windows and Linux</li>
+      <li>Runs entirely on your side, with no telemetry</li>
+      <li>Beta (v0.3.2): validated at high coverage across a range of real schemas</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Editions</h2>
+    <div class="pts">
+      <div class="card"><h3>Community Edition <span class="badge badge--beta" style="text-transform:none">Free</span></h3><p>Unit and trigger test generation, coverage, and CI exit-code gating. The everyday developer tool, free.</p></div>
+      <div class="card"><h3>Team</h3><p>Adds integration testing across the whole call map.</p></div>
+      <div class="card"><h3>Enterprise</h3><p>Adds seccover and PII auditing, plus licensed, unwatermarked, audit-ready output.</p></div>
+    </div>
+    <p class="lead" style="margin-top:20px">For Team or Enterprise licensing, email
+      <a href="mailto:licensing@unitautogen.com">licensing@unitautogen.com</a>.</p>
+    <div class="cta" style="justify-content:flex-start;margin-top:16px">
+      <a class="btn" href="https://github.com/unitautogen/unitautogen-postgresql/releases">Download</a>
+    </div>
+  </div>
+</section>
