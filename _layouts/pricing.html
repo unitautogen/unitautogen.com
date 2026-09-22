@@ -1,0 +1,59 @@
+---
+layout: default
+---
+{%- comment %}
+  Pricing / licensing page (/<db>/pricing/). Everything comes from _data/catalog.yml: databases[].pricing
+  A stub page needs only:  layout: pricing / db: <id> / title / description
+{%- endcomment %}
+{%- assign cat = site.data.catalog %}
+{%- assign db = cat.databases | where: "id", page.db | first %}
+{%- assign pr = db.pricing %}
+<a id="top"></a>
+<div class="hero wrap" style="padding-bottom:24px">
+  <div style="margin-bottom:16px"><span class="badge badge--{{ db.badge_kind }}">{{ db.name_full | default: db.name }} - {{ db.badge }}</span></div>
+  <h1>{{ pr.title }}</h1>
+  <p class="sub">{{ pr.lead }}</p>
+  {%- if pr.buy_note %}<div class="meta-line">{{ pr.buy_note }}</div>{% endif %}
+</div>
+
+{%- if pr.editions.size > 0 %}
+<section>
+  <div class="wrap">
+    <div class="pricegrid" style="grid-template-columns:repeat({{ pr.editions.size }},1fr)">
+      {%- for ed in pr.editions %}
+      <div class="price{% if ed.highlight %} price--hl{% endif %}">
+        <h3>{{ ed.name }}</h3>
+        <div class="price-amt">{{ ed.price }}</div>
+        <div class="price-unit">{{ ed.unit }}</div>
+        <p class="price-for">{{ ed.audience }}</p>
+        <ul class="honest">
+          {%- for it in ed.includes %}
+          <li>{{ it }}</li>
+          {%- endfor %}
+        </ul>
+        {%- if ed.footnote %}<p class="price-note">{{ ed.footnote }}</p>{% endif %}
+        {%- assign h = ed.cta_href %}{% unless h contains "://" or h contains "mailto:" %}{% assign h = h | relative_url %}{% endunless %}
+        <a class="{{ ed.cta_style | default: 'btn' }}" href="{{ h }}">{{ ed.cta_label }}</a>
+      </div>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+{%- endif %}
+
+{%- if pr.extras %}
+<section class="soft">
+  <div class="wrap">
+    <div class="pts" style="grid-template-columns:repeat({{ pr.extras.size }},1fr);margin-top:0">
+      {%- for ex in pr.extras %}
+      <div class="card"><h3>{{ ex.title }}</h3><p>{{ ex.text }}</p></div>
+      {%- endfor %}
+    </div>
+    <div class="cta" style="justify-content:flex-start;margin-top:26px">
+      <a class="btn" href="mailto:licensing@unitautogen.com">Contact licensing@unitautogen.com</a>
+    </div>
+  </div>
+</section>
+{%- endif %}
+
+{{ content }}

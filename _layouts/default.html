@@ -117,6 +117,10 @@
         </div>
       </div>
       {%- endif %}
+      {%- if db.pricing %}
+      {%- assign price_url = db_root | append: "pricing/" %}
+      <a{% if here == price_url %} class="is-here"{% endif %} href="{{ price_url | relative_url }}">{% if db.pricing.editions.size > 1 %}Pricing{% else %}Licensing{% endif %}</a>
+      {%- endif %}
       {%- assign cta_href = db.cta_href %}
       {%- unless cta_href contains "://" or cta_href contains "mailto:" %}{% assign cta_href = cta_href | relative_url %}{% endunless %}
       <a class="{{ db.cta_style | default: 'btn' }}" href="{{ cta_href }}">{{ db.cta_label }}</a>
@@ -145,7 +149,7 @@
       {%- if active_db.repo and active_db.repo != "" %}
       <a href="{{ active_db.repo }}">GitHub</a> {{ sep }}
       {%- endif %}
-      <a href="mailto:licensing@unitautogen.com">Licensing</a>
+      {%- if active_db.pricing %}<a href="{{ active_db.slug | prepend: '/' | append: '/pricing/' | relative_url }}">Pricing and licensing</a>{% else %}<a href="mailto:licensing@unitautogen.com">Licensing</a>{% endif %}
       {%- else %}
       {%- assign links = page.footer_links | default: site.footer_links %}
       {%- for item in links %}

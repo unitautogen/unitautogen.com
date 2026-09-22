@@ -123,6 +123,60 @@ databases:
         A green rlsautotest run with an untested SECURITY DEFINER function is not proof of isolation. A
         clean seccover run on a table with no policy is not either. Complete leakage detection is both:
         policies verified by rlsautotest, code paths verified by UnitAutogen.
+    pricing:
+      title: "Editions and pricing"
+      lead: >-
+        One binary, three editions. The Community Edition is free and needs no licence key. Team and
+        Enterprise are annual licences delivered as an offline key file; nothing phones home.
+      buy_note: "Online purchase is coming. Until then, licences are issued by email within one business day."
+      editions:
+        - name: "Community Edition"
+          price: "Free"
+          unit: "no licence key, no time limit"
+          audience: "Individual developers, open-source projects, evaluation."
+          includes:
+            - "Generated pgTAP unit tests for functions and triggers"
+            - "Line and branch coverage with every uncovered line explained"
+            - "CI exit codes, JSON and HTML reports"
+            - "Commercial use permitted; generated tests and reports are yours"
+          footnote: "Output carries a Community Edition watermark."
+          cta_label: "Download"
+          cta_href: "https://github.com/unitautogen/unitautogen-postgresql/releases"
+          cta_style: "btn ghost"
+        - name: "Team"
+          price: "USD 400"
+          unit: "per developer, per year"
+          audience: "Development teams that want the full test suite in CI, without the watermark."
+          includes:
+            - "Everything in Community Edition, unwatermarked"
+            - "Integration testing across the call map"
+            - "One named key per developer, bound to their email"
+            - "Email support"
+          cta_label: "Get Team"
+          cta_href: "mailto:licensing@unitautogen.com?subject=UnitAutogen%20for%20PostgreSQL%20-%20Team%20licence"
+          cta_style: "btn"
+          highlight: true
+        - name: "Enterprise"
+          price: "USD 6,000"
+          unit: "per production database cluster, per year"
+          audience: "Teams that must prove tenant isolation and access control hold: multi-tenant SaaS, healthcare, finance."
+          includes:
+            - "Everything in Team, for every developer on the cluster"
+            - "seccover: security coverage through functions, views and triggers"
+            - "PII leak detection in error paths"
+            - "Dated, reproducible reports as supporting evidence for HIPAA and SOC 2 controls"
+            - "Priority support"
+          footnote: "Staging and preview clusters of a licensed production cluster are not charged."
+          cta_label: "Talk to us"
+          cta_href: "mailto:licensing@unitautogen.com?subject=UnitAutogen%20for%20PostgreSQL%20-%20Enterprise%20licence"
+          cta_style: "btn"
+      extras:
+        - title: "Consultants and resellers"
+          text: "Run UnitAutogen from your own infrastructure across your clients' environments under one consultant licence: USD 12,000 per year, list. Each client cluster where the tool runs in the client's own CI needs its own Enterprise licence."
+        - title: "rlsautotest"
+          text: "Free and open source under Apache-2.0, for any use, no licence needed."
+        - title: "How licensing works"
+          text: "A licence is an Ed25519-signed key file you place next to the binary. It is verified offline; no telemetry, no network call. On expiry the paid capabilities switch off and the Community Edition keeps working; your committed tests are never touched."
     products:
       - name: "UnitAutogen for PostgreSQL"
         short: "UnitAutogen engine"
@@ -226,6 +280,34 @@ databases:
       report real coverage. If you run SQL Server and want in early, tell us about your workload.
     products_lead: ""
     footer_left: "(c) 2026 UnitAutogen - SQL Server"
+    pricing:
+      title: "Licensing"
+      lead: >-
+        UnitAutogen for SQL Server is open source under AGPL-3.0, with a commercial licence for
+        organisations that prefer not to take on the AGPL obligations.
+      editions:
+        - name: "AGPL-3.0"
+          price: "Free"
+          unit: "open source"
+          audience: "Evaluation and internal use under the AGPL terms."
+          includes:
+            - "Generated tSQLt tests with real line and branch coverage"
+            - "Whole-database sweep, Cobertura, JUnit and HTML output"
+            - "PowerShell module and Azure DevOps task"
+          cta_label: "View on GitHub"
+          cta_href: "https://github.com/unitautogen/unitautogen-public-repo"
+          cta_style: "btn ghost"
+        - name: "Commercial licence"
+          price: "On request"
+          unit: "per organisation, per year"
+          audience: "Client delivery, embedding in a commercial product, or any use where the AGPL obligations do not fit."
+          includes:
+            - "Same software, without the AGPL copyleft obligations"
+            - "Email support"
+          cta_label: "Talk to us"
+          cta_href: "mailto:licensing@unitautogen.com?subject=UnitAutogen%20for%20SQL%20Server%20-%20commercial%20licence"
+          cta_style: "btn"
+          highlight: true
     products:
       - name: "UnitAutogen for SQL Server"
         short: "UnitAutogen for SQL Server"
@@ -316,6 +398,15 @@ databases:
       It is not available yet. If you are evaluating Oracle or EDB testing, tell us what you need and
       we will keep you posted.
     footer_left: "(c) 2026 UnitAutogen - Oracle + EDB"
+    pricing:
+      title: "Licensing"
+      lead: >-
+        Oracle + EDB is in development and not yet licensed. Tell us about your Oracle or EDB
+        estate and we will keep you informed as it approaches release.
+      editions: []
+      extras:
+        - title: "Early access"
+          text: "Design partners get early builds and a say in what ships first."
     products: []
 
 # Use cases - the second nav axis (the problem / who it's for). Delivered on PostgreSQL today.
