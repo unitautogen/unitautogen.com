@@ -142,11 +142,11 @@ footer{border-top:1px solid var(--line);padding:40px 0;color:var(--muted);font-s
 /* Products dropdown: one line per product, its capability pages as a compact row beneath */
 .menu-panel--products{min-width:280px;max-width:360px}
 .menu-panel--products .mp-group{padding:8px 12px 4px}
-.mp-subs{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 10px 24px;white-space:normal}
-.menu-panel .mp-subs a.mp-sub{display:inline-block;padding:3px 9px;border:1px solid var(--line);border-radius:999px;
-                              font-size:12.5px;font-weight:500;color:var(--muted);background:#fff;line-height:1.4}
-.menu-panel .mp-subs a.mp-sub:hover{color:var(--ink);border-color:var(--muted);background:var(--bg-soft)}
-.menu-panel .mp-subs a.mp-sub.is-cur{color:var(--green-d);background:#e7f3ec;border-color:#bfe0cb;box-shadow:none}
+/* sub-items: a plain vertical list, indented under their product, one per line */
+.mp-subs{display:block;padding:0 0 6px}
+.menu-panel .mp-subs a.mp-sub{display:flex;padding:5px 12px 5px 28px;font-size:13.5px;font-weight:400;color:var(--muted);line-height:1.4}
+.menu-panel .mp-subs a.mp-sub:hover{color:var(--ink);background:var(--bg-soft)}
+.menu-panel .mp-subs a.mp-sub.is-cur{color:var(--green-d);background:var(--bg-soft);box-shadow:inset 3px 0 0 var(--green)}
 .menu-panel--products .mp-group + .mp-group{border-top:1px solid var(--line);margin-top:4px;padding-top:10px}
 .menu-panel .mp-group{margin-top:4px}
 .menu-panel .mp-group:first-child{margin-top:0}
