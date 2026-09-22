@@ -44,7 +44,7 @@ layout: default
 {%- if pr.extras %}
 <section class="soft">
   <div class="wrap">
-    <div class="pts" style="grid-template-columns:repeat({{ pr.extras.size }},1fr);margin-top:0">
+    <div class="pts" style="grid-template-columns:repeat(2,1fr);margin-top:0">
       {%- for ex in pr.extras %}
       <div class="card"><h3>{{ ex.title }}</h3><p>{{ ex.text }}</p></div>
       {%- endfor %}

@@ -128,7 +128,7 @@ databases:
       lead: >-
         One binary, three editions. The Community Edition is free and needs no licence key. Team and
         Enterprise are annual licences delivered as an offline key file; nothing phones home.
-      buy_note: "Online purchase is coming. Until then, licences are issued by email within one business day."
+      buy_note: "Online purchase is under development. To buy a licence or ask about one, email <a href=\"mailto:licensing@unitautogen.com\">licensing@unitautogen.com</a>; keys are issued by email."
       editions:
         - name: "Community Edition"
           price: "Free"
@@ -152,7 +152,7 @@ databases:
             - "Integration testing across the call map"
             - "One named key per developer, bound to their email"
             - "Email support"
-          cta_label: "Get Team"
+          cta_label: "Email licensing@unitautogen.com"
           cta_href: "mailto:licensing@unitautogen.com?subject=UnitAutogen%20for%20PostgreSQL%20-%20Team%20licence"
           cta_style: "btn"
           highlight: true
@@ -167,7 +167,7 @@ databases:
             - "Dated, reproducible reports as supporting evidence for HIPAA and SOC 2 controls"
             - "Priority support"
           footnote: "Staging and preview clusters of a licensed production cluster are not charged."
-          cta_label: "Talk to us"
+          cta_label: "Email licensing@unitautogen.com"
           cta_href: "mailto:licensing@unitautogen.com?subject=UnitAutogen%20for%20PostgreSQL%20-%20Enterprise%20licence"
           cta_style: "btn"
       extras:
@@ -175,6 +175,8 @@ databases:
           text: "Run UnitAutogen from your own infrastructure across your clients' environments under one consultant licence: USD 12,000 per year, list. Each client cluster where the tool runs in the client's own CI needs its own Enterprise licence."
         - title: "rlsautotest"
           text: "Free and open source under Apache-2.0, for any use, no licence needed."
+        - title: "Buying a licence"
+          text: "Online purchase is under development. Until it ships, email licensing@unitautogen.com with the edition and the number of developers or clusters; you receive an invoice and, on payment, the key file by email."
         - title: "How licensing works"
           text: "A licence is an Ed25519-signed key file you place next to the binary. It is verified offline; no telemetry, no network call. On expiry the paid capabilities switch off and the Community Edition keeps working; your committed tests are never touched."
     products:
@@ -304,7 +306,7 @@ databases:
           includes:
             - "Same software, without the AGPL copyleft obligations"
             - "Email support"
-          cta_label: "Talk to us"
+          cta_label: "Email licensing@unitautogen.com"
           cta_href: "mailto:licensing@unitautogen.com?subject=UnitAutogen%20for%20SQL%20Server%20-%20commercial%20licence"
           cta_style: "btn"
           highlight: true
