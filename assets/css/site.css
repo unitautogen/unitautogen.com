@@ -99,7 +99,12 @@ ul.honest.cols2{display:grid;grid-template-columns:1fr 1fr;column-gap:28px}
 .price ul.honest li{font-size:15px}
 .price-note{color:var(--muted);font-size:13px;margin:0 0 14px}
 .price .btn{align-self:flex-start}
-@media(max-width:900px){.pricegrid{grid-template-columns:1fr !important}}
+/* featured program band (e.g. Supabase startups) */
+.program{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;background:#f3faf5;border:1px solid #bfe0cb;border-radius:14px;padding:26px 28px}
+.program h2{font-size:clamp(20px,2.6vw,26px)}
+.program ul.honest{margin:6px 0 0}
+.program-cta{white-space:nowrap}
+@media(max-width:900px){.pricegrid{grid-template-columns:1fr !important}.program{grid-template-columns:1fr}}
 
 /* footer */
 footer{border-top:1px solid var(--line);padding:40px 0;color:var(--muted);font-size:14px}

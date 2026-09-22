@@ -41,6 +41,25 @@ layout: default
 </section>
 {%- endif %}
 
+{%- if pr.program %}
+<section>
+  <div class="wrap">
+    <div class="program">
+      <div>
+        <div style="margin-bottom:10px"><span class="badge badge--beta" style="text-transform:none">{{ pr.program.badge }}</span></div>
+        <h2 style="margin-bottom:10px">{{ pr.program.title }}</h2>
+        <ul class="honest">
+          {%- for pt in pr.program.points %}<li>{{ pt }}</li>{% endfor %}
+        </ul>
+      </div>
+      <div class="program-cta">
+        <a class="btn" href="{{ pr.program.cta_href }}">{{ pr.program.cta_label }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+{%- endif %}
+
 {%- if pr.extras %}
 <section class="soft">
   <div class="wrap">
