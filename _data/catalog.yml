@@ -24,6 +24,22 @@ platform:
     - "Writes one test per branch, in your database's own test framework"
     - "Creates the rows each test depends on"
     - "Runs the suite, reports line and branch coverage, never a false pass"
+  # The claim, first thing under the home hero. Three outcomes, three audiences.
+  proves_title: "Three things your database can't prove today. One generator."
+  proves_sub: "Built for developers. Bought by security and compliance."
+  proves:
+    - name: "Correctness"
+      text: "The logic returns what it should. Unit and integration tests, generated. Free to start."
+      url: "/use-cases/unit-testing/"
+      link: "Unit and integration testing"
+    - name: "Isolation"
+      text: "One tenant cannot reach another, through the policies and through the code that bypasses them."
+      url: "/use-cases/tenant-isolation/"
+      link: "Tenant isolation and security"
+    - name: "Compliance"
+      text: "Dated, reproducible reports that stand as audit evidence for HIPAA and SOC 2 access controls."
+      url: "/use-cases/compliance-evidence/"
+      link: "Compliance evidence"
   automatic_title: "Tests and seed data, generated end to end"
   automatic_points:
     - title: "Point it at a database"

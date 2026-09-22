@@ -83,14 +83,15 @@ layout: default
 
 <section{% unless product.status_note %} class="soft"{% endunless %}>
   <div class="wrap">
-    <h2>What teams use it for</h2>
+    <h2>Correctness. Isolation. Compliance.</h2>
+    <p class="lead">{{ cat.platform.proves_sub }}</p>
     <div class="dbgrid">
-      {%- for uc in cat.use_cases %}
-      {%- if uc.only_db and uc.only_db != db.id %}{% continue %}{% endif %}
+      {%- for pv in cat.platform.proves %}
+      {%- if pv.url contains "tenant-isolation" and db.id != "postgresql" %}{% continue %}{% endif %}
       <div class="dbcard">
-        <div class="top"><h3>{{ uc.name }}</h3></div>
-        <p>{{ uc.card | default: uc.blurb | replace: "[framework]", fw }}</p>
-        <a class="go" href="{{ uc.slug | prepend: '/use-cases/' | append: '/' | relative_url }}">Learn more &rarr;</a>
+        <div class="top"><h3>{{ pv.name }}</h3></div>
+        <p>{{ pv.text }}</p>
+        <a class="go" href="{{ pv.url | relative_url }}">{{ pv.link }} &rarr;</a>
       </div>
       {%- endfor %}
     </div>

@@ -1,9 +1,9 @@
 ---
 layout: default
 title: "UnitAutogen - generate the tests your database logic is missing"
-description: "UnitAutogen reads the logic inside your database and generates the tests, and the data that drives every branch, in your database's own test framework, with honest coverage. PostgreSQL today; SQL Server and Oracle + EDB next."
+description: "Automated test generation for database logic. Correctness, isolation, compliance: unit and integration tests, tenant-isolation proof and audit evidence, generated from your code. PostgreSQL today; SQL Server and Oracle + EDB next."
 og_title: "UnitAutogen - test the logic inside your database"
-og_description: "One method, brought to each database as its own native tool: read the logic, generate the tests and the data that drive them, report honest coverage. Never a false pass."
+og_description: "Automated test generation for database logic. Correctness, isolation, compliance. Built for developers, bought by security and compliance."
 og_image: "/assets/social-preview.png"
 body_class: page-index
 footer_left: "(c) 2026 UnitAutogen - automated database test generation."
@@ -38,6 +38,18 @@ footer_links:
 
 <section>
   <div class="wrap">
+    <h2>{{ p.proves_title }}</h2>
+    <p class="lead">{{ p.proves_sub }}</p>
+    <div class="pts">
+      {%- for pv in p.proves %}
+      <div class="card"><h3>{{ pv.name }}</h3><p>{{ pv.text }}</p><p style="margin-top:10px"><a class="go" href="{{ pv.url | relative_url }}">{{ pv.link }} &rarr;</a></p></div>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="soft">
+  <div class="wrap">
     <h2>{{ p.automatic_title }}</h2>
     <div class="pts" style="grid-template-columns:repeat(4,1fr)">
       {%- for a in p.automatic_points %}
@@ -47,7 +59,7 @@ footer_links:
   </div>
 </section>
 
-<section class="soft">
+<section>
   <div class="wrap">
     <h2>The most costly myth in software</h2>
     <div class="myth">"QA tested the application, so the database is covered."</div>
