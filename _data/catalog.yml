@@ -128,7 +128,7 @@ databases:
       lead: >-
         One binary, three editions. The Community Edition is free and needs no licence key. Team and
         Enterprise are annual licences delivered as an offline key file; nothing phones home.
-      buy_note: "Online purchase is under development. To buy a licence or ask about one, email <a href=\"mailto:licensing@unitautogen.com\">licensing@unitautogen.com</a>; keys are issued by email."
+      buy_note: "Online purchase is under development. Until then, email <a href=\"mailto:licensing@unitautogen.com\">licensing@unitautogen.com</a> and your licence is issued by email within one business day."
       editions:
         - name: "Community Edition"
           price: "Free"
