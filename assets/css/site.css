@@ -27,7 +27,7 @@ header{overflow-x:clip}
 .navlinks{margin-left:auto;display:flex;align-items:center;gap:22px;font-size:15px;font-weight:500}
 .navlinks a{color:var(--ink)}
 /* database tabs */
-.dbtabs{display:flex;align-items:center;gap:4px;padding:4px;border:1px solid var(--line);border-radius:10px;background:#fff}
+.dbtabs{display:flex;align-items:center;gap:4px;margin-left:auto;margin-right:auto;padding:4px;border:1px solid var(--line);border-radius:10px;background:#fff}
 .dbtabs-label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;padding:0 8px 0 6px}
 .dbtab{display:inline-block;padding:7px 14px;border-radius:7px;font-size:14px;font-weight:600;color:var(--muted);line-height:1.2}
 .dbtab:hover{color:var(--ink);background:var(--bg-soft);text-decoration:none}

@@ -107,8 +107,7 @@ databases:
     hero_hl: "tests generated for you"
     hero_b: "."
     blurb: >-
-      pgTAP unit tests and seed data for your functions and triggers, generated and run for you,
-      with honest branch coverage.
+      auto-generate pgTAP unit tests and seed data for your functions and triggers, with honest branch coverage.
     points:
       - "Unit and trigger tests, free"
       - "Integration tests across the call map"
@@ -207,6 +206,8 @@ databases:
           cta_href: "mailto:licensing@unitautogen.com?subject=Supabase%20startup%20program%20-%20UnitAutogen%20Enterprise"
           cta_style: "btn ghost"
       extras:
+        - title: "Free trial"
+          text: "Evaluate the full Enterprise feature set - security coverage and PII auditing - for a limited period. Email licensing@unitautogen.com for a trial key; the download itself needs no key and runs as the free Community Edition. Trial output carries a TRIAL stamp."
         - title: "Consultants and resellers"
           text: "One licence to run it from your infrastructure across your clients: USD 12,000 per year, list. A client running it in their own CI needs their own Enterprise licence."
         - title: "rlsautotest"

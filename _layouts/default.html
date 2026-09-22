@@ -41,9 +41,6 @@
         <a class="dbtab{% if db.id == active_id %} is-active{% endif %}" role="tab" aria-selected="{% if db.id == active_id %}true{% else %}false{% endif %}" data-db="{{ db.id }}" href="{{ db.slug | prepend: '/' | append: '/' | relative_url }}">{{ db.name_full | default: db.name }}</a>
         {%- endfor %}
       </div>
-      <div class="navlinks">
-        <a class="hidem" href="{{ '/blog/' | relative_url }}">Blog</a>
-      </div>
     </div>
 
     {%- comment %} One menu panel per database, all rendered; only the active one is shown. {% endcomment %}
@@ -96,16 +93,15 @@
           {%- endfor %}
         </div>
       </div>
-      {%- if db.docs_href and db.docs_href != "" %}
-      <a class="hidem" href="{{ db.docs_href }}">Docs</a>
-      {%- endif %}
-      {%- comment %} GitHub is per database: the engine repo plus each product's own repo (rlsautotest has its own). {% endcomment %}
+      {%- comment %} GitHub menu, per database: the engine repo, each product's own repo (rlsautotest has its own), and the Docs (README) link. {% endcomment %}
       {%- assign nrepo = 0 %}
       {%- if db.repo and db.repo != "" %}{% assign nrepo = nrepo | plus: 1 %}{% endif %}
       {%- for product in db.products %}{% if product.repo and product.repo != "" and product.repo != db.repo %}{% assign nrepo = nrepo | plus: 1 %}{% endif %}{% endfor %}
-      {%- if nrepo == 1 %}
+      {%- assign has_docs = false %}{% if db.docs_href and db.docs_href != "" %}{% assign has_docs = true %}{% endif %}
+      {%- assign gh_items = nrepo %}{% if has_docs %}{% assign gh_items = gh_items | plus: 1 %}{% endif %}
+      {%- if gh_items == 1 and nrepo == 1 %}
       <a class="hidem" href="{{ db.repo }}">GitHub</a>
-      {%- elsif nrepo > 1 %}
+      {%- elsif gh_items > 1 %}
       <div class="menu hidem">
         <button type="button" class="menu-t" aria-haspopup="true">GitHub <span class="caret" aria-hidden="true">&#9662;</span></button>
         <div class="menu-panel" role="menu">
@@ -114,6 +110,9 @@
           <a role="menuitem" href="{{ product.repo }}"><span class="mp-name">{{ product.name }}</span></a>
           {%- endif %}
           {%- endfor %}
+          {%- if has_docs %}
+          <a role="menuitem" href="{{ db.docs_href }}"><span class="mp-name">Docs</span></a>
+          {%- endif %}
         </div>
       </div>
       {%- endif %}
@@ -121,6 +120,7 @@
       {%- assign price_url = db_root | append: "pricing/" %}
       <a{% if here == price_url %} class="is-here"{% endif %} href="{{ price_url | relative_url }}">{% if db.pricing.editions.size > 1 %}Pricing{% else %}Licensing{% endif %}</a>
       {%- endif %}
+      <a{% if here contains "/blog" %} class="is-here"{% endif %} href="{{ '/blog/' | relative_url }}">Blog</a>
       {%- assign cta_href = db.cta_href %}
       {%- unless cta_href contains "://" or cta_href contains "mailto:" %}{% assign cta_href = cta_href | relative_url %}{% endunless %}
       <a class="{{ db.cta_style | default: 'btn' }}" href="{{ cta_href }}">{{ db.cta_label }}</a>
