@@ -1,0 +1,72 @@
+---
+layout: default
+title: "Deterministic tests, not guesses - UnitAutogen"
+description: "Why UnitAutogen's generated tests beat AI-generated ones: derived from your code and schema, run against the real database, byte-for-byte reproducible, and never a false pass. A property of the algorithm, not a promise."
+og_title: "Generated, not guessed"
+og_description: "Deterministic, reproducible tests derived from your code, versus a language model's best guess. Never a false pass."
+og_image: "/assets/social-preview.png"
+body_class: page-usecase
+footer_left: "(c) 2026 UnitAutogen - use cases"
+footer_sep: "-"
+footer_links:
+  - label: "Use cases"
+    href: "/use-cases/"
+  - label: "PostgreSQL engine"
+    href: "/postgresql/unitautogen/"
+  - label: "Contact"
+    href: "mailto:hello@unitautogen.com"
+---
+{%- assign p = site.data.catalog.platform %}
+<a id="top"></a>
+<div class="hero wrap">
+  <div style="margin-bottom:16px"><span class="badge badge--beta">Every edition, every database</span></div>
+  <h1>Generated,<br><span class="hl">not guessed</span>.</h1>
+  <p class="sub">{{ p.determinism_sub }}</p>
+  <ul class="honest hero-points">
+    <li>Derived from the code, not written as prose</li>
+    <li>Checked against the real database</li>
+    <li>Byte-for-byte reproducible</li>
+    <li>Never a false pass</li>
+  </ul>
+  <div class="cta">
+    <a class="btn" href="{{ '/postgresql/unitautogen/' | relative_url }}">See the engine</a>
+    <a class="btn ghost" href="{{ '/use-cases/ai-guardrail/' | relative_url }}">Guardrail for AI-written code</a>
+  </div>
+</div>
+
+<section class="soft">
+  <div class="wrap">
+    <h2>Two ways to get a test</h2>
+    <div class="grid" style="align-items:start">
+      <div class="card">
+        <h3>{{ p.determinism_ours_title }}</h3>
+        <ul class="honest" style="margin:8px 0 0">
+          {%- for pt in p.determinism_ours %}<li>{{ pt }}</li>{% endfor %}
+        </ul>
+      </div>
+      <div class="card" style="background:#fff">
+        <h3 style="color:var(--muted)">{{ p.determinism_llm_title }}</h3>
+        <ul class="plain-x" style="margin:8px 0 0">
+          {%- for pt in p.determinism_llm %}<li>{{ pt }}</li>{% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Why it matters for tests specifically</h2>
+    <ul class="honest cols2">
+      <li>A test suite is only worth what it rules out</li>
+      <li>A wrong test is worse than none: it fails when the code is fine, or passes when it is broken</li>
+      <li>You cannot find the wrong ones without the oracle you were trying to generate</li>
+      <li>Scaling a model changes the error rate, not the error kind</li>
+    </ul>
+    <div class="myth" style="margin-top:22px;font-weight:400;font-size:17px">Never a false pass is a property of the algorithm here, not a promise. A model still earns its place at the edges - naming a test, summarising a routine, triaging a flagged case - never in the correctness core.</div>
+    <div class="cta" style="justify-content:flex-start;margin-top:6px">
+      <a class="btn" href="{{ '/postgresql/unitautogen/' | relative_url }}">See the engine</a>
+      <a class="btn ghost" href="{{ '/postgresql/unitautogen/coverage/' | relative_url }}">How coverage is measured</a>
+    </div>
+  </div>
+</section>

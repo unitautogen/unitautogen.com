@@ -61,28 +61,6 @@ footer_links:
 
 <section>
   <div class="wrap">
-    <h2>{{ p.determinism_title }}</h2>
-    <p class="lead">{{ p.determinism_sub }}</p>
-    <div class="grid" style="margin-top:20px;align-items:start">
-      <div class="card">
-        <h3>{{ p.determinism_ours_title }}</h3>
-        <ul class="honest" style="margin:8px 0 0">
-          {%- for pt in p.determinism_ours %}<li>{{ pt }}</li>{% endfor %}
-        </ul>
-      </div>
-      <div class="card" style="background:var(--bg-soft)">
-        <h3 style="color:var(--muted)">{{ p.determinism_llm_title }}</h3>
-        <ul class="plain-x" style="margin:8px 0 0">
-          {%- for pt in p.determinism_llm %}<li>{{ pt }}</li>{% endfor %}
-        </ul>
-      </div>
-    </div>
-    <p class="lead" style="margin-top:20px">{{ p.determinism_close }}</p>
-  </div>
-</section>
-
-<section class="soft">
-  <div class="wrap">
     <h2>The most costly myth in software</h2>
     <div class="myth">"QA tested the application, so the database is covered."</div>
     <ul class="honest cols2">
