@@ -1,0 +1,57 @@
+---
+layout: default
+title: "Unit testing for developers - UnitAutogen"
+description: "Unit tests for every function, procedure and trigger in your database, generated with the seed data each test depends on, run for you, with line and branch coverage. For developers who own database logic and want it tested without writing the tests."
+og_title: "Unit testing for developers"
+og_description: "Generated unit tests and seed data for every function, procedure and trigger, with honest branch coverage. Free in the Community Edition."
+og_image: "/assets/social-preview.png"
+body_class: page-usecase
+footer_left: "(c) 2026 UnitAutogen - use cases"
+footer_sep: "-"
+footer_links:
+  - label: "Use cases"
+    href: "/use-cases/"
+  - label: "PostgreSQL engine"
+    href: "/postgresql/unitautogen/"
+  - label: "Contact"
+    href: "mailto:hello@unitautogen.com"
+---
+<a id="top"></a>
+<div class="hero wrap">
+  <div style="margin-bottom:16px"><span class="badge badge--beta">Available for PostgreSQL - free in the Community Edition</span></div>
+  <h1>Unit tests for your database logic,<br><span class="hl">without writing them</span>.</h1>
+  <p class="sub">You own functions, procedures and triggers that nobody has unit-tested, because writing the
+    tests means faking every table and crafting the data for every branch. UnitAutogen generates the tests
+    and that data from the code itself, runs them, and tells you exactly which lines and branches ran.</p>
+  <div class="cta">
+    <a class="btn" href="{{ '/postgresql/unitautogen/get-started/' | relative_url }}">Get started</a>
+    <a class="btn ghost" href="{{ '/postgresql/unitautogen/coverage/' | relative_url }}">See coverage</a>
+  </div>
+</div>
+
+<section class="soft">
+  <div class="wrap">
+    <h2>What you get for each routine</h2>
+    <div class="pts">
+      <div class="card"><h3>A test per branch</h3><p>Every IF, CASE, loop and exception handler gets a test that drives it, on both its true and false side, with the boundary values around each numeric gate.</p></div>
+      <div class="card"><h3>The data that makes it real</h3><p>Each test seeds the exact rows the branch depends on, including required columns and foreign-key parents, in the native test framework's own isolation so nothing persists.</p></div>
+      <div class="card"><h3>Assertions on behaviour</h3><p>Return values, result sets, and the rows a branch inserts, updates or deletes are asserted, so a broken branch fails instead of passing against an empty table.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>How it fits your day</h2>
+    <p class="lead">Run it against a throwaway copy of the database. The generated suite lands as ordinary
+      test files you can read, edit and commit next to your migrations. Re-run it after a change and the
+      diff shows which behaviour moved. Wire it into CI and a change that alters a routine's behaviour fails
+      the build before it reaches production.</p>
+    <p class="lead">What it cannot test reliably, it says so, per line, rather than showing a green that
+      would mislead you. Never a fabricated, false-passing or flaky test.</p>
+    <div class="cta" style="justify-content:flex-start">
+      <a class="btn" href="{{ '/postgresql/unitautogen/get-started/' | relative_url }}">Get started, free</a>
+      <a class="btn ghost" href="{{ '/use-cases/integration-testing/' | relative_url }}">Integration testing for QA &rarr;</a>
+    </div>
+  </div>
+</section>

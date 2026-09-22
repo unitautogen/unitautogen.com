@@ -414,6 +414,18 @@ databases:
 # Use cases - the second nav axis (the problem / who it's for). Delivered on PostgreSQL today.
 # [framework] is replaced with the current database's framework name.
 use_cases:
+  - slug: "unit-testing"
+    name: "Unit testing for developers"
+    blurb: >-
+      Unit tests for every function, procedure and trigger, generated with the seed data each test depends
+      on, run for you, with line and branch coverage. Free in the Community Edition.
+    card: "Generated unit tests and seed data for every routine you own, with honest branch coverage. Free."
+  - slug: "integration-testing"
+    name: "Integration testing for QA"
+    blurb: >-
+      Each entry point run together with the functions it calls and the triggers its writes fire, on real
+      rows, with coverage across the whole call map. A regression suite for the assembled database, on every build.
+    card: "Each entry point run with everything it calls and fires, coverage across the call map, on every build."
   - slug: "ai-guardrail"
     name: "Guardrail for AI-written code"
     blurb: >-
