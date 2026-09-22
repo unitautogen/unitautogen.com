@@ -134,7 +134,7 @@ databases:
       close: "Complete leakage detection is both: policies verified by rlsautotest, code paths verified by UnitAutogen."
     pricing:
       title: "Editions and pricing"
-      lead: "One binary, three editions. Offline key file, no telemetry."
+      lead: "One binary. Three editions, plus a Supabase startup program. Offline key file, no telemetry."
       buy_note: "Online purchase is under development. Until then, email <a href=\"mailto:licensing@unitautogen.com\">licensing@unitautogen.com</a> and your licence is issued by email within one business day."
       editions:
         - name: "Community Edition"
@@ -177,17 +177,18 @@ databases:
           cta_label: "Email licensing@unitautogen.com"
           cta_href: "mailto:licensing@unitautogen.com?subject=UnitAutogen%20for%20PostgreSQL%20-%20Enterprise%20licence"
           cta_style: "btn"
-      # Featured program, shown as its own band under the three editions
-      program:
-        badge: "Supabase startups"
-        title: "Enterprise edition for Supabase startups, at a startup rate"
-        points:
-          - "The full Enterprise edition: seccover, PII detection, dated reports, priority support"
-          - "Priced below list, negotiated case by case"
-          - "For early-stage teams building on Supabase who need tenant isolation proven from day one"
-          - "Tell us about your project, your stage and your cluster; we reply within one business day"
-        cta_label: "Apply by email"
-        cta_href: "mailto:licensing@unitautogen.com?subject=Supabase%20startup%20program%20-%20UnitAutogen%20Enterprise"
+        - name: "Supabase startups"
+          price: "Negotiated"
+          unit: "Enterprise edition, startup rate, per year"
+          audience: "Early-stage teams building on Supabase."
+          includes:
+            - "The full Enterprise edition: seccover, PII detection, dated reports, priority support"
+            - "Priced below list, agreed case by case"
+            - "Tenant isolation proven from day one"
+            - "Tell us your project, stage and cluster; reply within one business day"
+          cta_label: "Apply by email"
+          cta_href: "mailto:licensing@unitautogen.com?subject=Supabase%20startup%20program%20-%20UnitAutogen%20Enterprise"
+          cta_style: "btn ghost"
       extras:
         - title: "Consultants and resellers"
           text: "One licence to run it from your infrastructure across your clients: USD 12,000 per year, list. A client running it in their own CI needs their own Enterprise licence."

@@ -89,14 +89,14 @@ ul.honest.cols2{display:grid;grid-template-columns:1fr 1fr;column-gap:28px}
 
 /* pricing */
 .pricegrid{display:grid;gap:22px;align-items:stretch}
-.price{background:#fff;border:1px solid var(--line);border-radius:14px;padding:26px 24px;display:flex;flex-direction:column}
+.price{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 20px;display:flex;flex-direction:column}
 .price--hl{border-color:var(--green);box-shadow:0 12px 36px rgba(26,127,55,.10)}
 .price h3{margin:0 0 10px;font-size:19px}
-.price-amt{font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.price-amt{font-size:30px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
 .price-unit{color:var(--muted);font-size:14px;margin:4px 0 14px}
 .price-for{color:var(--ink);font-size:15px;margin:0 0 6px}
 .price ul.honest{margin:8px 0 14px;flex:1}
-.price ul.honest li{font-size:15px}
+.price ul.honest li{font-size:14px;padding:4px 0 4px 24px}
 .price-note{color:var(--muted);font-size:13px;margin:0 0 14px}
 .price .btn{align-self:flex-start}
 /* featured program band (e.g. Supabase startups) */
@@ -104,7 +104,8 @@ ul.honest.cols2{display:grid;grid-template-columns:1fr 1fr;column-gap:28px}
 .program h2{font-size:clamp(20px,2.6vw,26px)}
 .program ul.honest{margin:6px 0 0}
 .program-cta{white-space:nowrap}
-@media(max-width:900px){.pricegrid{grid-template-columns:1fr !important}.program{grid-template-columns:1fr}}
+@media(max-width:1000px){.pricegrid{grid-template-columns:1fr 1fr !important}}
+@media(max-width:640px){.pricegrid{grid-template-columns:1fr !important}}
 
 /* footer */
 footer{border-top:1px solid var(--line);padding:40px 0;color:var(--muted);font-size:14px}
