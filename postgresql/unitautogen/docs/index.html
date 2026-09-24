@@ -1,0 +1,35 @@
+---
+layout: docs
+db: postgresql
+product: unitautogen
+title: "Documentation, UnitAutogen for PostgreSQL"
+heading: "UnitAutogen documentation"
+description: "User documentation for UnitAutogen for PostgreSQL. Point it at a database and it writes pgTAP tests, runs them, and reports honest coverage. Prerequisites, quickstart, commands, CI, and FAQ."
+---
+<p>UnitAutogen is a single executable, <code>unitautogen</code>. You point it at a PostgreSQL database and it reads your functions and triggers, writes the tests, runs them, and reports honest coverage, with no test written by hand. The tests it produces are standard <a href="https://pgtap.org/">pgTAP</a>, so they run with <code>SELECT runtests(...)</code> or <code>pg_prove</code> just like tests you would author yourself.</p>
+
+<p>It works with any PostgreSQL 14 to 18, self-hosted or managed. That includes Supabase, Neon, Amazon RDS and Aurora, and Azure Database for PostgreSQL, wherever you can enable the pgTAP and plpgsql_check extensions.</p>
+
+<h2>The four commands</h2>
+<p>Everything is organised as four commands. Each shares the same basic options and prints one line per routine plus a summary.</p>
+<ul class="honest">
+  <li><strong>unit tests (default)</strong>. Unit tests and branch/statement coverage for your functions and triggers. No command word needed.</li>
+  <li><strong>integration</strong>. Integration testing across the functions you call, run for real together. Team edition.</li>
+  <li><strong>seccover</strong>. The full security-coverage pass over functions, views, triggers and data classification. Enterprise edition.</li>
+  <li><strong>--pii</strong>. Audit for personal data leaked through error and <code>RAISE</code> messages. Enterprise edition.</li>
+</ul>
+<pre><code>unitautogen --schema public
+unitautogen integration --schema public
+unitautogen seccover --schema public
+unitautogen seccover --pii --schema public</code></pre>
+
+<h2>The one guarantee</h2>
+<p>UnitAutogen never gives you a fabricated, false-passing, or flaky test. If a branch cannot be tested reliably, the report tells you so, in plain language, rather than showing a green that would mislead you. Every report comes back with no failing and no false tests, and a visible, explained gap always beats a false pass.</p>
+
+<h2>A guardrail for AI-written code</h2>
+<p>AI coding assistants write database logic fast, and that is where a silent mistake costs the most, a wrong <code>WHERE</code>, a dropped <code>INSERT</code>, a policy loosened in one edit and forgotten. UnitAutogen captures how your functions and triggers behave today and emits it as standard pgTAP tests you commit alongside your code, so the next change, human or AI, that alters that behaviour fails one of them before it reaches production. Wired into CI, it checks changes as fast as they are produced.</p>
+
+<div class="cta" style="justify-content:flex-start;margin-top:24px">
+  <a class="btn" href="{{ '/postgresql/unitautogen/docs/quickstart/' | relative_url }}">Quickstart</a>
+  <a class="btn ghost" href="{{ '/postgresql/unitautogen/get-started/' | relative_url }}">Download</a>
+</div>

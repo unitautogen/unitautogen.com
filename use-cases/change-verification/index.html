@@ -1,12 +1,12 @@
 ---
 layout: default
-title: "Behavioural change verification - UnitAutogen"
+title: "Behavioural change verification, UnitAutogen"
 description: "Migration tools version, deploy and govern your schema changes. None of them check that a change left your database logic behaving the same. UnitAutogen does, through the generated unit and integration tests. See how it compares to Redgate Flyway, Liquibase and Bytebase."
 og_title: "Behavioural change verification"
 og_description: "They manage the change. We verify the changed logic still behaves the same."
 og_image: "/assets/social-preview.png"
 body_class: page-usecase
-footer_left: "(c) 2026 UnitAutogen - use cases"
+footer_left: "(c) 2026 UnitAutogen"
 footer_sep: "-"
 footer_links:
   - label: "Use cases"
@@ -17,9 +17,9 @@ footer_links:
     href: "https://github.com/unitautogen"
 ---
 <a id="top"></a>
-<div class="hero wrap">
-  <div style="margin-bottom:16px"><span class="badge badge--beta">Available for PostgreSQL</span></div>
-  <h1>They manage the change.<br><span class="hl">We verify it.</span></h1>
+<div class="hero wrap hero--sub">
+  <div class="hero-tag"><span class="badge badge--beta">Available for PostgreSQL</span></div>
+  <h1>They manage the change. <span class="hl">We verify it.</span></h1>
   <p class="sub">Migration tools deploy your change safely. None of them check the logic still behaves the same.</p>
   <ul class="honest hero-points">
     <li>Generated tests pin today's behaviour as pgTAP</li>
@@ -27,11 +27,23 @@ footer_links:
     <li>Real branch coverage, not a deploy log</li>
     <li>Sits on top of the migration tool you already run</li>
   </ul>
-  <div class="cta">
-    <a class="btn" href="https://github.com/unitautogen/unitautogen-postgresql/releases">Download</a>
-    <a class="btn ghost" href="{{ '/postgresql/unitautogen/' | relative_url }}">See the engine</a>
-  </div>
 </div>
+
+<section>
+  <div class="wrap">
+    <h2>How to do it</h2>
+    <p class="lead">Pin behaviour as tests, then let any change prove itself against them.</p>
+    <ol class="steps">
+      <li>Generate tests for the current behaviour and commit them next to your migrations:</li>
+    </ol>
+    <pre><code>unitautogen --schema public --out unit_tests --html report.html --json report.json</code></pre>
+    <ol class="steps" start="2">
+      <li>After a migration redeploys a function or trigger, re-run the suite in CI.</li>
+      <li>A moved behaviour fails, naming the routine and branch. If the change was intended, regenerate and commit.</li>
+    </ol>
+    <p class="lead" style="margin-top:12px">For flows that span several routines, pin them with <code>unitautogen integration</code> (Team).</p>
+  </div>
+</section>
 
 <section class="soft">
   <div class="wrap">
@@ -48,7 +60,7 @@ footer_links:
 <section>
   <div class="wrap">
     <h2>How it compares</h2>
-    <p class="lead">Top rows: what those tools do well. Bottom rows: the layer none of them offer.</p>
+    <p class="lead">Top rows show what those tools do well. Bottom rows show the layer none of them offer.</p>
     <div class="cmp-wrap">
       <table class="cmp">
         <thead>
@@ -73,5 +85,17 @@ footer_links:
       <a class="btn" href="https://github.com/unitautogen/unitautogen-postgresql/releases">Download</a>
       <a class="btn ghost" href="{{ '/postgresql/unitautogen/' | relative_url }}">See the engine</a>
     </div>
+  </div>
+</section>
+
+<section class="soft">
+  <div class="wrap">
+    <h2>What platforms suggest</h2>
+    <p class="lead">Verifying a change with tests in CI is what the platform tells you to do.</p>
+    <ul class="honest">
+      <li><strong>Supabase</strong> encourages automated pgTAP tests, run in CI with <code>supabase test db</code>. UnitAutogen generates them, so a change that moves a behaviour fails there. <a href="https://supabase.com/docs/guides/database/testing">Supabase, Testing your database &rarr;</a></li>
+      <li><strong>Supabase</strong> ships pgTAP as its unit-testing extension. UnitAutogen emits standard pgTAP you commit next to your migrations. <a href="https://supabase.com/docs/guides/database/extensions/pgtap">Supabase, pgTAP unit testing &rarr;</a></li>
+      <li><strong>Supabase</strong> ships <code>plpgsql_check</code> for PL/pgSQL. UnitAutogen uses it for the branch coverage behind the regression gate. <a href="https://supabase.com/docs/guides/database/extensions/plpgsql_check">Supabase, plpgsql_check &rarr;</a></li>
+    </ul>
   </div>
 </section>

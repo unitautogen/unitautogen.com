@@ -9,8 +9,8 @@ layout: default
 {%- assign db = cat.databases | where: "id", page.db | first %}
 <a id="top"></a>
 <div class="hero wrap">
-  <div style="margin-bottom:16px"><span class="badge badge--{{ db.badge_kind }}">{{ db.badge }}</span></div>
-  <h1>{{ db.hero_a }}<br><span class="hl">{{ db.hero_hl }}</span>{{ db.hero_b }}</h1>
+  <div class="hero-tag"><span class="badge badge--{{ db.badge_kind }}">{{ db.badge }}</span></div>
+  <h1>{{ db.hero_a }} <span class="hl">{{ db.hero_hl }}</span>{{ db.hero_b }}</h1>
   <p class="sub">{{ db.blurb }}</p>
   {%- if db.points %}
   <ul class="honest hero-points">
@@ -26,6 +26,7 @@ layout: default
     {%- endif %}
   </div>
   {%- if db.meta_line %}<div class="meta-line">{{ db.meta_line }}{% if db.platforms and db.platforms != "" %}<br>{{ db.platforms }}{% endif %}</div>{% endif %}
+  {%- if db.supabase_note %}<p class="supa-note">{{ db.supabase_note }}</p>{% endif %}
 </div>
 
 {%- if db.status_note %}

@@ -1,0 +1,32 @@
+---
+layout: docs
+db: postgresql
+product: unitautogen
+title: "Quickstart, UnitAutogen for PostgreSQL"
+heading: "Quickstart"
+description: "Generate pgTAP unit tests and a coverage report for every function and trigger in a schema, in one command."
+---
+<p>Generate unit tests and a coverage report for every function and trigger in the <code>public</code> schema. Generating unit tests is the default action, so you do not type a command word.</p>
+<pre><code>unitautogen --schema public --out unit_tests --html report.html --json report.json</code></pre>
+
+<div class="note">Windows and Linux run the same commands. On Windows invoke <code>unitautogen.exe</code>; on Linux invoke <code>./unitautogen</code> (or add its folder to <code>PATH</code> to drop the <code>./</code>). Every command, flag, and report is identical on both.</div>
+
+<p>You will see one line per routine and a summary. Real output from a sample database:</p>
+<pre><code>  public.account_health: 14 tests kept, branch 100% / stmt 100%  [test_account_health.sql]
+  public.accrue_interest: 15 tests kept, branch 100% / stmt 100%  [test_accrue_interest.sql]
+  public.transfer_funds: 15 tests kept, 1 pruned -> NT, branch 100% / stmt 100%  [test_transfer_funds.sql]
+
+== done: 72 tests across 6 routines, avg branch 100.0% -> unit_tests/ ==</code></pre>
+
+<p>That single command produced runnable pgTAP tests for the functions (one <code>test_&lt;routine&gt;.sql</code> file each in <code>unit_tests/</code>), plus behaviour tests for the triggers (in <code>unit_tests/trigger_tests/</code>), an HTML report, and a JSON summary. A "1 pruned -&gt; NT" note is the guarantee at work, a test that would not pass cleanly is dropped and the branch reported honestly, never faked.</p>
+
+<p>Run the generated tests yourself at any time:</p>
+<pre><code>psql -d mydb -c "SELECT * FROM runtests('test_transfer_funds'::name);"</code></pre>
+
+<h2>Before you run</h2>
+<p>Point the tool at a throwaway copy of your database, never production, and make sure pgTAP and plpgsql_check are installed there. See <a href="{{ '/postgresql/unitautogen/docs/prerequisites/' | relative_url }}">Prerequisites</a> and <a href="{{ '/postgresql/unitautogen/docs/connecting/' | relative_url }}">Connecting</a>.</p>
+
+<div class="cta" style="justify-content:flex-start;margin-top:22px">
+  <a class="btn" href="https://github.com/unitautogen/unitautogen-postgresql/releases">Download</a>
+  <a class="btn ghost" href="{{ '/postgresql/unitautogen/docs/commands/' | relative_url }}">Commands reference</a>
+</div>

@@ -1,12 +1,12 @@
 ---
 layout: default
-title: "Deterministic tests, not guesses - UnitAutogen"
+title: "Deterministic tests, not guesses, UnitAutogen"
 description: "Why UnitAutogen's generated tests beat AI-generated ones: derived from your code and schema, run against the real database, byte-for-byte reproducible, and never a false pass. A property of the algorithm, not a promise."
-og_title: "Generated, not guessed"
+og_title: "Generated from your code, not guessed by AI"
 og_description: "Deterministic, reproducible tests derived from your code, versus a language model's best guess. Never a false pass."
 og_image: "/assets/social-preview.png"
 body_class: page-usecase
-footer_left: "(c) 2026 UnitAutogen - use cases"
+footer_left: "(c) 2026 UnitAutogen"
 footer_sep: "-"
 footer_links:
   - label: "Use cases"
@@ -18,9 +18,9 @@ footer_links:
 ---
 {%- assign p = site.data.catalog.platform %}
 <a id="top"></a>
-<div class="hero wrap">
-  <div style="margin-bottom:16px"><span class="badge badge--beta">Every edition, every database</span></div>
-  <h1>Generated,<br><span class="hl">not guessed</span>.</h1>
+<div class="hero wrap hero--sub">
+  <div class="hero-tag"><span class="badge badge--beta">Every edition, every database</span></div>
+  <h1>Generated from your code, <span class="hl">not guessed by AI</span>.</h1>
   <p class="sub">{{ p.determinism_sub }}</p>
   <ul class="honest hero-points">
     <li>Derived from the code, not written as prose</li>
@@ -28,15 +28,12 @@ footer_links:
     <li>Byte-for-byte reproducible</li>
     <li>Never a false pass</li>
   </ul>
-  <div class="cta">
-    <a class="btn" href="{{ '/postgresql/unitautogen/' | relative_url }}">See the engine</a>
-    <a class="btn ghost" href="{{ '/use-cases/ai-guardrail/' | relative_url }}">Guardrail for AI-written code</a>
-  </div>
 </div>
 
 <section class="soft">
   <div class="wrap">
-    <h2>Two ways to get a test</h2>
+    <h2>An AI test guesses the answer. It cannot check it.</h2>
+    <p class="lead">A language model writes the text of a test from patterns it has seen, not from your code. It never runs your function, so it has no source of truth for the expected value. It predicts a number that looks right. When the prediction is wrong, the test is wrong, and nothing in the model can tell you which tests those are.</p>
     <div class="grid" style="align-items:start">
       <div class="card">
         <h3>{{ p.determinism_ours_title }}</h3>
@@ -56,17 +53,87 @@ footer_links:
 
 <section>
   <div class="wrap">
-    <h2>Why it matters for tests specifically</h2>
-    <ul class="honest cols2">
-      <li>A test suite is only worth what it rules out</li>
-      <li>A wrong test is worse than none: it fails when the code is fine, or passes when it is broken</li>
-      <li>You cannot find the wrong ones without the oracle you were trying to generate</li>
-      <li>Scaling a model changes the error rate, not the error kind</li>
+    <h2>The same function, two suites</h2>
+    <p class="lead">Take a function that gives a 9 percent discount over 100.</p>
+    <pre><code>CREATE FUNCTION apply_discount(p_total numeric) RETURNS numeric AS $$
+BEGIN
+  IF p_total &gt; 100 THEN
+    RETURN round(p_total * 0.09, 2);
+  END IF;
+  RETURN 0;
+END $$ LANGUAGE plpgsql;</code></pre>
+    <div class="grid" style="align-items:start;margin-top:6px">
+      <div>
+        <h3 style="margin:0 0 8px;color:var(--muted)">What a language model writes</h3>
+        <pre><code>-- guessed from the name, never run
+SELECT is( apply_discount(150), 15.00,
+  'gives 10% off' );
+-- wrong. the code uses 9%, so this
+-- reports a failure on correct code
+
+SELECT ok( apply_discount(50) &gt;= 0,
+  'no negative discount' );
+SELECT ok( apply_discount(150) IS NOT NULL,
+  'returns a value' );
+-- both pass for any number at all,
+-- so they prove nothing</code></pre>
+        <ul class="plain-x" style="margin:10px 0 0">
+          <li>The one real assertion is a wrong guess, so someone loosens or deletes it</li>
+          <li>What is left is green and proves nothing</li>
+          <li>No branch was measured, the boundary at 100 is untested</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin:0 0 8px">What UnitAutogen writes</h3>
+        <pre><code>-- expected value read by running the
+-- real function, both arms covered
+SELECT is( apply_discount(150.00), 13.50,
+  'over 100, the rate the code applies' );
+SELECT is( apply_discount(100.00), 0.00,
+  'at the boundary, nothing' );
+SELECT is( apply_discount(100.01), 9.00,
+  'just over the boundary, it applies' );
+-- branch coverage 100%, and any test
+-- that did not hold on a clean re-run
+-- is dropped, never shipped green</code></pre>
+        <ul class="honest" style="margin:10px 0 0">
+          <li>The expected value is whatever your function actually returns, captured by running it</li>
+          <li>Both sides of <code>total &gt; 100</code> are driven, boundary included</li>
+          <li>A change that moves that behaviour fails the test before it ships</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:16px;color:var(--muted);font-size:16px">The expected value is not a claim that your code is correct. It is exactly what your code does today, pinned so a later change cannot move it unnoticed. That is the one thing a guessed number can never be.</p>
+  </div>
+</section>
+
+<section class="soft">
+  <div class="wrap">
+    <h2>How an AI-generated test fails, and why you cannot catch it</h2>
+    <ul class="honest">
+      <li><strong>The false pass.</strong> An assertion loose enough to hold no matter what the code does, like <code>ok(count(*) &gt;= 0)</code>, stays green while the logic underneath is broken.</li>
+      <li><strong>The wrong expected value.</strong> The model predicts the number from priors, not from your code, so a correct function reports a failure and a broken one can slip through.</li>
+      <li><strong>Seed data that means nothing.</strong> Owner and tenant columns get a fixed or random id, never the identity the case is about, so an authorized-can-access test proves neither access nor denial.</li>
+      <li><strong>Invented schema.</strong> It asserts on a column, function or constraint that does not exist, so the test errors out and is quietly removed to make the run pass.</li>
+      <li><strong>No coverage.</strong> A model cannot tell you which branches it reached, so a green suite can leave half the logic dark.</li>
+      <li><strong>Not reproducible.</strong> The same prompt yields a different suite next time, so you cannot diff it or trust that it still covers what it did yesterday.</li>
     </ul>
-    <div class="myth" style="margin-top:22px;font-weight:400;font-size:17px">Never a false pass is a property of the algorithm here, not a promise. A model still earns its place at the edges - naming a test, summarising a routine, triaging a flagged case - never in the correctness core.</div>
-    <div class="cta" style="justify-content:flex-start;margin-top:6px">
+    <div class="myth" style="margin-top:20px;font-weight:400;font-size:17px">The trap is the last one. To find the wrong tests in an AI-generated suite, you need the very oracle you were trying to generate, so every assertion has to be reviewed by hand. Scaling the model changes how often it is wrong, not that it is wrong, and never in a way you can locate. That is why the correctness core here is deterministic. A model still earns its place at the edges, naming a test, summarising a routine, triaging a flagged case, but never deciding whether a pass is real.</div>
+    <div class="cta" style="justify-content:flex-start;margin-top:20px">
       <a class="btn" href="{{ '/postgresql/unitautogen/' | relative_url }}">See the engine</a>
       <a class="btn ghost" href="{{ '/postgresql/unitautogen/coverage/' | relative_url }}">How coverage is measured</a>
+      <a class="btn ghost" href="{{ '/use-cases/ai-guardrail/' | relative_url }}">Guardrail for AI-written code &rarr;</a>
     </div>
+  </div>
+</section>
+
+<section class="soft">
+  <div class="wrap">
+    <h2>What platforms suggest</h2>
+    <p class="lead">The platform points you to pgTAP tests that run against the real database.</p>
+    <ul class="honest">
+      <li><strong>Supabase</strong> ships pgTAP as its unit-testing extension, run against the real database. UnitAutogen's tests are derived from your code and run there, not guessed. <a href="https://supabase.com/docs/guides/database/extensions/pgtap">Supabase, pgTAP unit testing &rarr;</a></li>
+      <li><strong>Supabase</strong> encourages automated tests for your schema, functions and policies. UnitAutogen generates them, byte-for-byte reproducible. <a href="https://supabase.com/docs/guides/database/testing">Supabase, Testing your database &rarr;</a></li>
+    </ul>
   </div>
 </section>

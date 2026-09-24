@@ -12,8 +12,8 @@ layout: default
 {%- assign fw = product.framework | default: db.framework %}
 <a id="top"></a>
 <div class="hero wrap">
-  <div style="margin-bottom:16px"><span class="badge badge--{{ product.badge_kind | default: db.badge_kind }}">{{ product.badge | default: db.badge }}</span></div>
-  <h1>{{ product.hero_a }}<br><span class="hl">{{ product.hero_hl }}</span>{{ product.hero_b }}</h1>
+  <div class="hero-tag"><span class="badge badge--{{ product.badge_kind | default: db.badge_kind }}">{{ product.badge | default: db.badge }}</span></div>
+  <h1>{{ product.hero_a }} <span class="hl">{{ product.hero_hl }}</span>{{ product.hero_b }}</h1>
   <p class="sub">{{ product.sub | default: product.blurb }}</p>
   {%- if product.points %}
   <ul class="honest hero-points">
@@ -109,7 +109,7 @@ layout: default
     </ul>
     <div class="cta" style="justify-content:flex-start;margin-top:22px">
       <a class="btn" href="{{ h }}">{{ product.cta_label | default: db.cta_label }}</a>
-      {%- if db.docs_href and db.docs_href != "" %}<a class="btn ghost" href="{{ db.docs_href }}">Read the docs</a>{% endif %}
+      {%- assign docs_href = product.docs_href | default: db.docs_href %}{% if docs_href and docs_href != "" %}<a class="btn ghost" href="{{ docs_href }}">Read the docs</a>{% endif %}
       <a class="btn ghost" href="{{ db.slug | prepend: '/' | append: '/pricing/' | relative_url }}">Editions and pricing</a>
     </div>
   </div>

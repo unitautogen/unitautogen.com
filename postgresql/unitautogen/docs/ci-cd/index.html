@@ -1,0 +1,41 @@
+---
+layout: docs
+db: postgresql
+product: unitautogen
+title: "CI and CD, UnitAutogen for PostgreSQL"
+heading: "CI and CD integration"
+description: "Run the generated pgTAP tests in CI, wire the JUnit and coverage reports, and gate a release on a security leak."
+---
+<h2>Running the generated tests</h2>
+<p>The <code>--out</code> folder holds one <code>test_&lt;routine&gt;.sql</code> file per function and trigger. Each file is a standalone pgTAP suite that creates a <code>test_&lt;routine&gt;</code> schema of test functions. The tests need only <code>psql</code> and pgTAP in the database, no Python and no UnitAutogen at run time, so they slot into whatever runs your SQL in CI. There are two ways to run them.</p>
+
+<h3>Option A, let UnitAutogen run them</h3>
+<p>The command that generates the tests also runs them and writes the result and coverage reports in one step, so a CI job is a single line:</p>
+<pre><code>unitautogen --schema public --report --out ci_out</code></pre>
+<p>The pass/fail results land in <code>ci_out/junit.xml</code> and the coverage in <code>coverage.lcov</code> and <code>cobertura.xml</code>.</p>
+
+<h3>Option B, run the committed tests yourself</h3>
+<p>Keep the generated <code>test_*.sql</code> in your repo and run them like any other pgTAP suite. Install a suite, then run it with pgTAP's <code>runtests()</code>:</p>
+<pre><code>psql -d mydb -f ci_out/test_classify_amount.sql
+psql -d mydb -c "SELECT * FROM runtests('test_classify_amount'::name);"</code></pre>
+<pre><code>ok 1 - test_classify_amount.test_01_executes_with_valid_inputs
+ok 2 - test_classify_amount.test_02_low_boundary
+ ...
+1..11
+# All tests successful.</code></pre>
+<p>On Linux and macOS, <code>for f in ci_out/test_*.sql; do psql -d mydb -f "$f"; done</code> installs them all. Trigger suites live under <code>ci_out/trigger_tests/</code> and run the same way. The output is standard TAP, which <code>pg_prove</code> and most CI test panels read directly.</p>
+
+<h2>Wiring the reports into CI</h2>
+<p>Add <code>--report</code> to the default command (or <code>integration</code>) to emit every report format CI systems expect, into the <code>--out</code> folder:</p>
+<pre><code>unitautogen --schema public --report --out ci_out
+# -> ci_out/  report.html, report.json, junit.xml, cobertura.xml, coverage.lcov</code></pre>
+<ul class="honest">
+  <li><strong>Test results</strong> go to <code>junit.xml</code> (most CI test panels read JUnit).</li>
+  <li><strong>Coverage dashboards</strong> read <code>cobertura.xml</code> or <code>coverage.lcov</code> (Codecov, Coveralls, genhtml).</li>
+  <li><strong>Human review</strong> uses <code>report.html</code> as a build artifact.</li>
+</ul>
+
+<h2>Security gate</h2>
+<p>To fail a release pipeline when the security pass finds a data leak, add <code>--sec-gate</code>:</p>
+<pre><code>unitautogen seccover --schema public --sec-gate</code></pre>
+<p>The run exits with code 4 if a leak is found, which you can wire to block the release. A run with a self-check failure or a would-be false test exits non-zero as well. Treat that as a bug report, since it should never happen.</p>

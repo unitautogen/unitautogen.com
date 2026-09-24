@@ -1,0 +1,28 @@
+---
+layout: docs
+db: postgresql
+product: unitautogen
+title: "Connecting to your database, UnitAutogen for PostgreSQL"
+heading: "Connecting to your database"
+description: "UnitAutogen connects using the standard PostgreSQL environment variables or a UNITAUTOGEN_DSN connection string."
+---
+<p>UnitAutogen connects using the standard PostgreSQL environment variables. Set them once, then run any command:</p>
+<pre><code>set PGHOST=127.0.0.1
+set PGPORT=5432
+set PGUSER=postgres
+set PGPASSWORD=********
+set PGDATABASE=mydb</code></pre>
+
+<p>You can also supply a full connection string in <code>UNITAUTOGEN_DSN</code> instead of the separate variables, which is handy when switching between databases:</p>
+<pre><code>set UNITAUTOGEN_DSN=postgresql://postgres:********@127.0.0.1:5432/mydb</code></pre>
+
+<h2>Setting variables depends on your shell</h2>
+<p>The examples above use the Windows Command Prompt (<code>set VAR=value</code>). The same variables on other shells:</p>
+<ul class="honest">
+  <li><strong>Windows Command Prompt</strong>. <code>set UNITAUTOGEN_DSN=postgresql://user:pass@host:5432/mydb</code></li>
+  <li><strong>Windows PowerShell</strong>. <code>$env:UNITAUTOGEN_DSN="postgresql://user:pass@host:5432/mydb"</code></li>
+  <li><strong>Linux and macOS</strong> (bash, zsh). <code>export UNITAUTOGEN_DSN=postgresql://user:pass@host:5432/mydb</code></li>
+</ul>
+<p>Use whichever matches the terminal you run <code>unitautogen</code> from. The variable names and values are identical across all three.</p>
+
+<div class="note">Point the connection at a disposable copy of your database, never production. UnitAutogen probes each routine by seeding rows and running real statements, each rolled back, but the statements do run.</div>

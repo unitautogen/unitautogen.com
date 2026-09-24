@@ -1,12 +1,12 @@
 ---
 layout: default
-title: "Use cases - UnitAutogen"
+title: "Use cases, UnitAutogen"
 description: "What teams use UnitAutogen for: a guardrail for AI-written database code, behavioural change verification, tenant-isolation proof, and compliance evidence. Delivered on PostgreSQL today."
 og_title: "UnitAutogen use cases"
 og_description: "A guardrail for AI-written code, behavioural change verification, tenant-isolation proof, and compliance evidence."
 og_image: "/assets/social-preview.png"
 body_class: page-catalog
-footer_left: "(c) 2026 UnitAutogen - use cases"
+footer_left: "(c) 2026 UnitAutogen"
 footer_sep: "-"
 footer_links:
   - label: "PostgreSQL"
@@ -18,19 +18,15 @@ footer_links:
 ---
 {%- assign cat = site.data.catalog %}
 <a id="top"></a>
-<div class="hero wrap">
-  <h1>What teams use it for</h1>
-  <p class="sub">One method, several jobs. Each is delivered on PostgreSQL today; the same jobs come to the
-    other engines as they mature.</p>
-</div>
-
-<section>
+<section style="padding-top:26px">
   <div class="wrap">
+    <h1 style="font-size:clamp(22px,3vw,30px);line-height:1.15;margin:0 0 6px">Use cases</h1>
+    <p class="lead" style="margin:0 0 22px">One generator, several jobs. All run on PostgreSQL today, and reach SQL Server and Oracle as those engines mature.</p>
     <div class="dbgrid">
       {%- for uc in cat.use_cases %}
       <div class="dbcard">
         <div class="top"><h3>{{ uc.name }}</h3></div>
-        <p>{{ uc.blurb }}</p>
+        <p>{{ uc.blurb | replace: "[framework]", "pgTAP" }}</p>
         <a class="go" href="{{ uc.slug | prepend: '/use-cases/' | append: '/' | relative_url }}">Learn more &rarr;</a>
       </div>
       {%- endfor %}

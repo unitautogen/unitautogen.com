@@ -2,7 +2,7 @@
 
 title: UnitAutogen
 description: >-
-  UnitAutogen auto-generates database unit tests - and the data that drives them -
+  UnitAutogen auto-generates database unit tests, and the data that drives them,
   so the logic inside your database is actually tested.
 author: Munaf Khatri
 
@@ -25,7 +25,7 @@ feed:
 
 # Default footer for pages outside a database section (home, blog, use cases).
 # The header is built in _layouts/default.html from _data/catalog.yml.
-footer_left: "(c) 2026 UnitAutogen - automated database test generation."
+footer_left: "(c) 2026 UnitAutogen, automated database test generation."
 footer_sep: "-"
 footer_links:
   - label: "PostgreSQL"

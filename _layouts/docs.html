@@ -1,0 +1,30 @@
+---
+layout: default
+---
+{%- assign here = page.url | replace: "index.html", "" %}
+{%- assign root = "/postgresql/unitautogen/docs/" %}
+<section style="padding-top:26px">
+  <div class="wrap docs">
+    <aside class="docs-nav">
+      <div class="docs-nav-title">Documentation</div>
+      {%- assign u_over = root %}
+      {%- assign u_pre = root | append: 'prerequisites/' %}
+      {%- assign u_qs = root | append: 'quickstart/' %}
+      {%- assign u_conn = root | append: 'connecting/' %}
+      {%- assign u_cmd = root | append: 'commands/' %}
+      {%- assign u_ci = root | append: 'ci-cd/' %}
+      {%- assign u_faq = root | append: 'faq/' %}
+      <a href="{{ u_over | relative_url }}"{% if here == u_over %} class="is-cur"{% endif %}>Overview</a>
+      <a href="{{ u_pre | relative_url }}"{% if here == u_pre %} class="is-cur"{% endif %}>Prerequisites</a>
+      <a href="{{ u_qs | relative_url }}"{% if here == u_qs %} class="is-cur"{% endif %}>Quickstart</a>
+      <a href="{{ u_conn | relative_url }}"{% if here == u_conn %} class="is-cur"{% endif %}>Connecting</a>
+      <a href="{{ u_cmd | relative_url }}"{% if here == u_cmd %} class="is-cur"{% endif %}>Commands</a>
+      <a href="{{ u_ci | relative_url }}"{% if here == u_ci %} class="is-cur"{% endif %}>CI and CD</a>
+      <a href="{{ u_faq | relative_url }}"{% if here == u_faq %} class="is-cur"{% endif %}>FAQ</a>
+    </aside>
+    <div class="docs-body">
+      <h1>{{ page.heading | default: page.title }}</h1>
+      {{ content }}
+    </div>
+  </div>
+</section>

@@ -2,13 +2,13 @@
 layout: default
 db: postgresql
 product: unitautogen
-title: "Integration testing - UnitAutogen for PostgreSQL"
+title: "Integration testing, UnitAutogen for PostgreSQL"
 description: "Integration testing runs each function together with the functions it calls and the triggers its writes fire, for real, and measures coverage across the whole call map. Part of the Team edition."
-og_title: "Integration testing - UnitAutogen for PostgreSQL"
+og_title: "Integration testing, UnitAutogen for PostgreSQL"
 og_description: "Run each function together with its callees and triggers, for real, with coverage across the whole call map."
 og_image: "/assets/social-preview.png"
 body_class: page-product
-footer_left: "(c) 2026 UnitAutogen - PostgreSQL engine"
+footer_left: "(c) 2026 UnitAutogen for the PostgreSQL engine"
 footer_sep: "-"
 footer_links:
   - label: "Overview"
@@ -23,20 +23,16 @@ footer_links:
     href: "/postgresql/unitautogen/get-started/"
 ---
 <a id="top"></a>
-<div class="hero wrap">
-  <div style="margin-bottom:16px"><span class="badge badge--soon" style="text-transform:none">Team</span></div>
-  <h1>Test the whole flow,<br><span class="hl">not just the unit</span>.</h1>
+<div class="hero wrap hero--sub">
+  <div class="hero-tag"><span class="badge badge--soon" style="text-transform:none">Team</span></div>
+  <h1>Test the whole flow, <span class="hl">not just the unit</span>.</h1>
   <p class="sub">A routine run together with what it calls and what it fires, for real.</p>
   <ul class="honest hero-points">
-    <li>Full test set per root: valid inputs, boundaries, one per branch</li>
+    <li>Full test set per root, with valid inputs, boundaries and one per branch</li>
     <li>Run through the actual call chain</li>
     <li>Coverage measured across root, callees and triggers</li>
     <li>Standalone routines noted, not duplicated</li>
   </ul>
-  <div class="cta">
-    <a class="btn" href="{{ '/postgresql/unitautogen/get-started/' | relative_url }}">Get started</a>
-    <a class="btn ghost" href="{{ '/postgresql/unitautogen/' | relative_url }}">Back to overview</a>
-  </div>
 </div>
 <section>
   <div class="wrap">
@@ -65,12 +61,13 @@ footer_links:
     <h2>What an uncovered line means here</h2>
     <ul class="honest cols2">
       <li>The root's inputs never reached it through the whole flow</li>
-      <li>Not "the callee had no test": the callee's own unit test still covers it</li>
+      <li>Not "the callee had no test", since the callee's own unit test still covers it</li>
       <li>Part of the Team edition</li>
       <li>Same seed data and report format as the unit tests</li>
     </ul>
     <div class="cta" style="justify-content:flex-start;margin-top:22px">
-      <a class="btn" href="{{ '/postgresql/pricing/' | relative_url }}">Team edition</a>
+      <a class="btn" href="{{ '/postgresql/unitautogen/get-started/' | relative_url }}">Get started</a>
+      <a class="btn ghost" href="{{ '/postgresql/pricing/' | relative_url }}">Team edition</a>
       <a class="btn ghost" href="{{ '/use-cases/integration-testing/' | relative_url }}">Integration testing for QA &rarr;</a>
     </div>
   </div>

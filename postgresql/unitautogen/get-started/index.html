@@ -2,13 +2,13 @@
 layout: default
 db: postgresql
 product: unitautogen
-title: "Get started - UnitAutogen for PostgreSQL"
+title: "Get started, UnitAutogen for PostgreSQL"
 description: "Download UnitAutogen for PostgreSQL, install pgTAP and plpgsql_check in your database, and generate your first pgTAP suite with coverage. Editions, prerequisites and CI wiring."
-og_title: "Get started - UnitAutogen for PostgreSQL"
+og_title: "Get started, UnitAutogen for PostgreSQL"
 og_description: "Download, install the two extensions, and generate your first pgTAP suite with coverage."
 og_image: "/assets/social-preview.png"
 body_class: page-product
-footer_left: "(c) 2026 UnitAutogen - PostgreSQL engine"
+footer_left: "(c) 2026 UnitAutogen for the PostgreSQL engine"
 footer_sep: "-"
 footer_links:
   - label: "Overview"
@@ -25,14 +25,10 @@ footer_links:
     href: "/postgresql/unitautogen/get-started/"
 ---
 <a id="top"></a>
-<div class="hero wrap">
-  <div style="margin-bottom:16px"><span class="badge badge--beta">Beta</span></div>
-  <h1>Get started<br>with <span class="hl">UnitAutogen for PostgreSQL</span>.</h1>
+<div class="hero wrap hero--sub">
+  <div class="hero-tag"><span class="badge badge--beta">Beta</span></div>
+  <h1>Get started with <span class="hl">UnitAutogen for PostgreSQL</span>.</h1>
   <p class="sub">Download, install two extensions, generate your first suite.</p>
-  <div class="cta">
-    <a class="btn" href="https://github.com/unitautogen/unitautogen-postgresql/releases">Download</a>
-    <a class="btn ghost" href="https://github.com/unitautogen/unitautogen-postgresql#readme">Read the docs</a>
-  </div>
 </div>
 
 <section class="soft">
@@ -45,7 +41,7 @@ footer_links:
     </div>
     <pre><code>unitautogen --schema public --out unit_tests --html report.html --json report.json</code></pre>
     <ul class="honest cols2">
-      <li>PostgreSQL 14 to 18: Supabase, Neon, RDS, Aurora, Azure, self-hosted</li>
+      <li>PostgreSQL 14 to 18, on Supabase, Neon, RDS, Aurora, Azure or self-hosted</li>
       <li>Run against a throwaway copy, never production</li>
       <li>Output is standard pgTAP; CI needs no UnitAutogen at run time</li>
       <li>No telemetry</li>
@@ -64,6 +60,7 @@ footer_links:
     <p class="lead" style="margin-top:18px">The download needs no key and runs as the free Community Edition. Want to try Team or Enterprise features? Email <a href="mailto:licensing@unitautogen.com?subject=UnitAutogen%20for%20PostgreSQL%20-%20trial%20key">licensing@unitautogen.com</a> for a time-limited trial key.</p>
     <div class="cta" style="justify-content:flex-start;margin-top:16px">
       <a class="btn" href="https://github.com/unitautogen/unitautogen-postgresql/releases">Download</a>
+      <a class="btn ghost" href="https://github.com/unitautogen/unitautogen-postgresql#readme">Read the docs</a>
       <a class="btn ghost" href="{{ '/postgresql/pricing/' | relative_url }}">Pricing</a>
     </div>
   </div>

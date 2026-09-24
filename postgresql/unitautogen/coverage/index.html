@@ -2,13 +2,13 @@
 layout: default
 db: postgresql
 product: unitautogen
-title: "Coverage - UnitAutogen for PostgreSQL"
+title: "Coverage, UnitAutogen for PostgreSQL"
 description: "For every function and trigger, UnitAutogen generates a full set of pgTAP tests, runs them, and reports measured line and branch coverage, with every uncovered line explained. Free in the Community Edition."
-og_title: "Coverage - UnitAutogen for PostgreSQL"
+og_title: "Coverage, UnitAutogen for PostgreSQL"
 og_description: "Generated pgTAP unit and trigger tests with measured line and branch coverage, every uncovered line explained."
 og_image: "/assets/social-preview.png"
 body_class: page-product
-footer_left: "(c) 2026 UnitAutogen - PostgreSQL engine"
+footer_left: "(c) 2026 UnitAutogen for the PostgreSQL engine"
 footer_sep: "-"
 footer_links:
   - label: "Overview"
@@ -23,24 +23,20 @@ footer_links:
     href: "/postgresql/unitautogen/get-started/"
 ---
 <a id="top"></a>
-<div class="hero wrap">
-  <div style="margin-bottom:16px"><span class="badge badge--beta" style="text-transform:none">Community Edition - free</span></div>
-  <h1>Generated tests,<br><span class="hl">honest coverage</span>.</h1>
+<div class="hero wrap hero--sub">
+  <div class="hero-tag"><span class="badge badge--beta" style="text-transform:none">Community Edition, free</span></div>
+  <h1>Generated tests, <span class="hl">honest coverage</span>.</h1>
   <p class="sub">The default command. A full pgTAP suite for every function and trigger, run for you, measured.</p>
   <ul class="honest hero-points">
     <li>Valid inputs, low and high boundaries</li>
     <li>One test per branch, true and false side</li>
     <li>Result-set shape and rows matching recorded output</li>
-    <li>Triggers: fire the write, assert what happened</li>
+    <li>Triggers fire the write and assert what happened</li>
   </ul>
-  <div class="cta">
-    <a class="btn" href="{{ '/postgresql/unitautogen/get-started/' | relative_url }}">Get started</a>
-    <a class="btn ghost" href="{{ '/postgresql/unitautogen/' | relative_url }}">Back to overview</a>
-  </div>
   <div class="meta-line">Standard pgTAP. Commit it, run with <code>runtests()</code> or <code>pg_prove</code>.</div>
   <div class="shot">
     <img src="{{ '/assets/pg-function-drilldown.png' | relative_url }}" alt="Function drill-down: per-test results and the annotated source with covered and uncovered lines">
-    <div class="cap">A function drill-down: each generated test, and the annotated source showing what ran.</div>
+    <div class="cap">A function drill-down showing each generated test and the annotated source of what ran.</div>
   </div>
 </div>
 
@@ -59,7 +55,23 @@ footer_links:
     </ul>
     <div class="shot" style="margin-top:28px">
       <img src="{{ '/assets/pg-trigger-drilldown.png' | relative_url }}" alt="Trigger drill-down: the effect of each firing and the trigger function source">
-      <div class="cap">A trigger drill-down: the effect of each INSERT, UPDATE and DELETE, and the trigger function's source.</div>
+      <div class="cap">A trigger drill-down showing the effect of each INSERT, UPDATE and DELETE, and the trigger function's source.</div>
     </div>
+    <div class="cta" style="justify-content:flex-start;margin-top:28px">
+      <a class="btn" href="{{ '/postgresql/unitautogen/get-started/' | relative_url }}">Get started</a>
+      <a class="btn ghost" href="{{ '/postgresql/unitautogen/' | relative_url }}">Back to overview</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>What platforms suggest</h2>
+    <p class="lead">UnitAutogen uses exactly the tools PostgreSQL and Supabase point you to.</p>
+    <ul class="honest">
+      <li><strong>Supabase</strong> ships pgTAP as its unit-testing extension and runs it as the test runner. UnitAutogen emits standard pgTAP. <a href="https://supabase.com/docs/guides/database/extensions/pgtap">Supabase, pgTAP unit testing &rarr;</a></li>
+      <li><strong>Supabase</strong> encourages automated tests for your schema, functions and policies. UnitAutogen generates them. <a href="https://supabase.com/docs/guides/database/testing">Supabase, Testing your database &rarr;</a></li>
+      <li><strong>Supabase</strong> ships <code>plpgsql_check</code>, the PL/pgSQL linter. UnitAutogen uses it to measure real line and branch coverage. <a href="https://supabase.com/docs/guides/database/extensions/plpgsql_check">Supabase, plpgsql_check &rarr;</a></li>
+    </ul>
   </div>
 </section>

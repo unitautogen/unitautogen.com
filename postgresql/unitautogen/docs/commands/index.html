@@ -1,0 +1,40 @@
+---
+layout: docs
+db: postgresql
+product: unitautogen
+title: "Commands, UnitAutogen for PostgreSQL"
+heading: "Commands"
+description: "The four UnitAutogen commands: unit tests (default), integration, seccover, and seccover --pii, with their options and reports."
+---
+<p>Run <code>unitautogen &lt;command&gt; --help</code> for a command's full option list. There are four commands.</p>
+
+<h2>unit tests (the default command)</h2>
+<p>The everyday command, and the default, so <code>unitautogen --schema public</code> runs it with no command word. For each function and procedure it generates a full set of pgTAP tests, runs them, and measures how much of the routine they exercised, then does the same for your triggers.</p>
+<pre><code>unitautogen --schema public --out unit_tests --html report.html --json report.json</code></pre>
+<p>Key options:</p>
+<ul class="honest cols2">
+  <li><code>--schema a,b</code> the schemas to cover</li>
+  <li><code>--like pat</code> a name filter</li>
+  <li><code>--out DIR</code> where the test files go</li>
+  <li><code>--html PATH</code> the unified HTML report</li>
+  <li><code>--json PATH</code> a machine-readable summary</li>
+  <li><code>--report</code> also emit every CI report format</li>
+  <li><code>--no-coverage</code> generate and run only, faster</li>
+  <li><code>--include-extension</code> also test extension-owned routines</li>
+</ul>
+<p>It writes one <code>test_&lt;routine&gt;.sql</code> per function, a <code>trigger_tests/</code> sub-folder, and a JSON summary with one entry per routine. Every routine gets valid inputs, low and high boundaries, one test per branch, a stable result-set-shape check, a rows-match check, a touches-only-expected-tables check, and a hand-built expectation scaffold you can fill in. Triggers are tested by behaviour, firing INSERT, UPDATE and DELETE and asserting what the trigger did.</p>
+
+<h2>integration <span style="font-weight:400;color:var(--muted)">(Team)</span></h2>
+<p>Where unit testing checks a routine on its own, <code>integration</code> runs it together with the functions it calls and the triggers its writes fire, for real, and measures coverage across all of it.</p>
+<pre><code>unitautogen integration --schema public --out integration_tests --html integration.html --json integration.json</code></pre>
+<p>Requires a Team licence or above. Provide it with <code>--license PATH</code>, the <code>UAG_LICENSE</code> environment variable, or a <code>unitautogen.lic</code> file in the working directory. The report has one row per root function; click a root for its call map in real call order.</p>
+
+<h2>seccover <span style="font-weight:400;color:var(--muted)">(Enterprise)</span></h2>
+<p>The entire security-coverage pass, unfiltered. It checks, database-wide, whether data can cross trust boundaries through every kind of object, SECURITY DEFINER functions, views, triggers, and Row-Level-Security-protected tables, classifying each as leaking, safely contained, or not judgeable.</p>
+<pre><code>unitautogen seccover --schema public --out sec_out --sec-html sec.html --sec-json sec.json</code></pre>
+<p>Key options: <code>--sec-html PATH</code> and <code>--sec-json PATH</code> report paths, <code>--sec-gate</code> (exit code 4 if a leak is found, for release pipelines), <code>--sec-emit DIR</code> to write the security tests. Requires an Enterprise licence.</p>
+
+<h2>seccover --pii <span style="font-weight:400;color:var(--muted)">(Enterprise)</span></h2>
+<p>A focused audit that runs the security pass and, in addition, invokes each routine so as to trigger its error and <code>RAISE</code> paths, then inspects the resulting messages for leaked personal data, names, emails, card-like numbers, and similar.</p>
+<pre><code>unitautogen seccover --pii --schema public --out sec_out --sec-html sec.html --sec-json sec.json</code></pre>
+<p>The findings are written to a dedicated PII-in-error report at <code>&lt;out&gt;/pii_tests/pii_report.html</code>, with <code>pii_findings.json</code> alongside. Every leak is proven by real output, never inferred from the source text.</p>

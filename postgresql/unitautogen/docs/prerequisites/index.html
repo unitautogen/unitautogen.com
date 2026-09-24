@@ -1,0 +1,35 @@
+---
+layout: docs
+db: postgresql
+product: unitautogen
+title: "Prerequisites, UnitAutogen for PostgreSQL"
+heading: "Prerequisites"
+description: "What UnitAutogen for PostgreSQL needs: the binary, PostgreSQL 14 to 18, and the pgTAP and plpgsql_check extensions in the target database."
+---
+<ul class="honest">
+  <li><strong>The <code>unitautogen</code> executable.</strong> A single self-contained binary, with no Python installation and no dependencies to manage. Put it on your <code>PATH</code>, or call it by full path.</li>
+  <li><strong>PostgreSQL 14 to 18</strong>, with two required extensions installed in the database you are testing.</li>
+</ul>
+<p>The two extensions are <a href="https://pgtap.org/">pgTAP</a> (the framework the generated tests are written in) and <a href="https://github.com/okbob/plpgsql_check">plpgsql_check</a> (the coverage meter). Both are required. UnitAutogen checks for them before it generates anything and stops with a clear message (exit code 3) if either is missing, naming the exact command to run, so you never get a half-finished run.</p>
+
+<h2>Installing pgTAP and plpgsql_check</h2>
+<p>Both are standard PostgreSQL extensions, added in two steps. Install the extension on the database server once (a one-time DBA action), then enable it in each database you test.</p>
+
+<h3>1. Install on the server</h3>
+<ul class="honest">
+  <li><strong>Debian / Ubuntu</strong> (PostgreSQL PGDG apt repo), for PostgreSQL 16: <code>sudo apt install postgresql-16-pgtap postgresql-16-plpgsql-check</code> (swap 16 for your major version).</li>
+  <li><strong>RHEL / Rocky / Alma</strong> (PGDG yum repo): <code>sudo dnf install pgtap_16 plpgsql_check_16</code>.</li>
+  <li><strong>Windows or from source.</strong> pgTAP is pure SQL on PG14+ (no compiler needed), installed from the pgTAP distribution. plpgsql_check is compiled, so use a prebuilt build matching your PostgreSQL major version and place its files in PostgreSQL's <code>lib</code> and <code>share/extension</code> directories.</li>
+  <li><strong>Managed and cloud PostgreSQL</strong> (Supabase, Neon, Amazon RDS and Aurora, Azure Database for PostgreSQL, and similar). Both are frequently available already, so just run the <code>CREATE EXTENSION</code> step below. If a provider does not offer one, check its supported-extensions list or ask its support to enable it.</li>
+</ul>
+
+<h3>2. Enable in each database you test</h3>
+<p>Once per database, with a role allowed to create extensions:</p>
+<pre><code>CREATE EXTENSION IF NOT EXISTS pgtap;
+CREATE EXTENSION IF NOT EXISTS plpgsql_check;</code></pre>
+<p>This is exactly the command UnitAutogen prints when it detects a missing extension. Extensions are per-database, so repeat this step for every database you point the tool at.</p>
+
+<div class="note">The tables your routine reads must exist in the database, along with any custom types they use, even if empty. UnitAutogen does not need them populated, but it does need them to be there.</div>
+
+<h2>Privilege note</h2>
+<p>Plain functions need no special rights. A few advanced setups, around triggers, circular foreign keys, and role-dependent branches, need a superuser or replication-capable role. Without it, those specific branches are skipped honestly (reported <code>NOT_TESTABLE</code>) rather than faked. Licensing is by command: the default unit-test generation is free, <code>integration</code> needs a Team licence, and <code>seccover</code> and <code>--pii</code> need an Enterprise licence.</p>

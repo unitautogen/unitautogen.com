@@ -1,0 +1,27 @@
+---
+layout: docs
+db: postgresql
+product: unitautogen
+title: "FAQ, UnitAutogen for PostgreSQL"
+heading: "FAQ and troubleshooting"
+description: "Common questions about UnitAutogen for PostgreSQL: branch versus statement coverage, pruned tests, committing the generated tests, and which command to use."
+---
+<h2>Coverage is 100% statement but less than 100% branch. Why?</h2>
+<p>A result-set query has a condition that no committed test exercised on both sides, for example a date-range filter. The report names the exact untested condition so you can add data that trips it, or confirm the other side is unreachable.</p>
+
+<h2>A routine shows "tests generated, coverage skipped".</h2>
+<p>plpgsql_check is not installed in that database. Tests are still generated and run. Install the extension to get branch and statement numbers.</p>
+
+<h2>A test was "pruned". Is that a failure?</h2>
+<p>No, the opposite. A pruned test is one the tool set aside rather than ship, because it would not have been reliable. The branch is then reported honestly instead. Pruned tests are listed in the JSON so you can see exactly what was set aside and why.</p>
+
+<h2>Coverage looks low for a routine whose conditions look simple.</h2>
+<p>Usually a specific precondition is not being met, a required row, an upsert target, a date gate. The report's per-line explanations name the blocker. If it turns out to be a limit of the tool (an <code>E</code> tag), reporting the routine is the most useful thing you can do.</p>
+
+<h2>Do I commit the generated tests?</h2>
+<p>Yes. The <code>test_&lt;routine&gt;.sql</code> files are ordinary pgTAP. Commit them next to your code and run them in CI. When a routine's intended behaviour changes, re-generate (or accept the new recorded output) and commit the update.</p>
+
+<h2>Which command should I use day to day?</h2>
+<p><code>unitautogen --schema public --html report.html --out unit_tests</code> is the one to start with, since unit tests are the default. Reach for <code>integration</code> when routines call each other, and <code>seccover</code> or <code>--pii</code> for security review.</p>
+
+<div class="note">Generated tests are standard pgTAP; coverage is measured with plpgsql_check. All command output shown in these docs was produced by running the actual <code>unitautogen</code> commands against live databases.</div>

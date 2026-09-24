@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {%- if page.layout == "post" %}
-<title>{{ page.title | escape }} - {{ site.title }}</title>
+<title>{{ page.title | escape }}, {{ site.title }}</title>
 {%- else %}
 <title>{{ page.title | default: site.title | escape }}</title>
 {%- endif %}
@@ -21,7 +21,7 @@
 <meta property="og:image" content="{{ page.og_image | default: '/assets/social-preview.png' | absolute_url }}">
 <meta property="og:type" content="website">
 {%- endif %}
-<link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}?v={{ site.time | date: '%Y%m%d%H%M%S' }}">
 </head>
 {%- assign cat = site.data.catalog %}
 {%- comment %} The database in view: the page's own db, else the site default (PostgreSQL).
@@ -93,15 +93,18 @@
           {%- endfor %}
         </div>
       </div>
-      {%- comment %} GitHub menu, per database: the engine repo, each product's own repo (rlsautotest has its own), and the Docs (README) link. {% endcomment %}
+      {%- comment %} Docs: on-site documentation when the database has it, else the repo README. {% endcomment %}
+      {%- assign docs_url = db.docs_site | default: db.docs_href %}
+      {%- if docs_url and docs_url != "" %}
+      {%- unless docs_url contains "://" or docs_url contains "mailto:" %}{% assign docs_url = docs_url | relative_url %}{% endunless %}
+      <a{% if here contains "/docs/" %} class="is-here"{% endif %} href="{{ docs_url }}">Docs</a>
+      {%- endif %}
+      {%- comment %} GitHub menu, per database: each product's repo (rlsautotest has its own). {% endcomment %}
       {%- assign nrepo = 0 %}
-      {%- if db.repo and db.repo != "" %}{% assign nrepo = nrepo | plus: 1 %}{% endif %}
-      {%- for product in db.products %}{% if product.repo and product.repo != "" and product.repo != db.repo %}{% assign nrepo = nrepo | plus: 1 %}{% endif %}{% endfor %}
-      {%- assign has_docs = false %}{% if db.docs_href and db.docs_href != "" %}{% assign has_docs = true %}{% endif %}
-      {%- assign gh_items = nrepo %}{% if has_docs %}{% assign gh_items = gh_items | plus: 1 %}{% endif %}
-      {%- if gh_items == 1 and nrepo == 1 %}
+      {%- for product in db.products %}{% if product.repo and product.repo != "" %}{% assign nrepo = nrepo | plus: 1 %}{% endif %}{% endfor %}
+      {%- if nrepo == 1 and db.repo and db.repo != "" %}
       <a class="hidem" href="{{ db.repo }}">GitHub</a>
-      {%- elsif gh_items > 1 %}
+      {%- elsif nrepo > 1 %}
       <div class="menu hidem">
         <button type="button" class="menu-t" aria-haspopup="true">GitHub <span class="caret" aria-hidden="true">&#9662;</span></button>
         <div class="menu-panel" role="menu">
@@ -110,9 +113,6 @@
           <a role="menuitem" href="{{ product.repo }}"><span class="mp-name">{{ product.name }}</span></a>
           {%- endif %}
           {%- endfor %}
-          {%- if has_docs %}
-          <a role="menuitem" href="{{ db.docs_href }}"><span class="mp-name">Docs</span></a>
-          {%- endif %}
         </div>
       </div>
       {%- endif %}

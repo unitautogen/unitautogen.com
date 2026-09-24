@@ -2,12 +2,12 @@
 layout: default
 db: postgresql
 product: unitautogen
-title: "Security coverage - UnitAutogen for PostgreSQL"
-description: "seccover runs your functions, views and triggers as different tenants and reports, per routine, whether isolation is enforced or leaking - with the table, command and channel of any leak. Enterprise edition, runs on your side with no telemetry."
-og_title: "Security coverage - prove tenant isolation holds"
+title: "Security coverage, UnitAutogen for PostgreSQL"
+description: "seccover runs your functions, views and triggers as different tenants and reports, per routine, whether isolation is enforced or leaking, with the table, command and channel of any leak. Enterprise edition, runs on your side with no telemetry."
+og_title: "Security coverage, prove tenant isolation holds"
 og_description: "Isolation judged per routine through functions, views and triggers, with witnessed evidence. Enterprise edition."
 body_class: page-product
-footer_left: "(c) 2026 UnitAutogen - PostgreSQL engine"
+footer_left: "(c) 2026 UnitAutogen for the PostgreSQL engine"
 footer_sep: "-"
 footer_links:
   - label: "Overview"
@@ -24,36 +24,51 @@ footer_links:
     href: "/postgresql/unitautogen/get-started/"
 ---
 <a id="top"></a>
-<div class="hero wrap">
-  <div style="margin-bottom:16px"><span class="badge badge--soon" style="text-transform:none">Enterprise</span></div>
-  <h1>Prove your database<br><span class="hl">isolates tenants</span>.</h1>
+<div class="hero wrap hero--sub">
+  <div class="hero-tag"><span class="badge badge--soon" style="text-transform:none">Enterprise</span></div>
+  <h1>Prove your database <span class="hl">isolates tenants</span>.</h1>
   <p class="sub">Row-Level Security and function logic keep tenant A from seeing tenant B. seccover proves it stays true as the code keeps shipping.</p>
   <ul class="honest hero-points">
     <li>Enforced or leaking, per routine</li>
-    <li>Evidence: which table, which command, which channel</li>
+    <li>Evidence of which table, which command and which channel</li>
     <li>Functions, views and triggers, run as different tenants</li>
     <li>Runs on your side, no telemetry</li>
   </ul>
-  <div class="cta">
-    <a class="btn" href="mailto:licensing@unitautogen.com?subject=UnitAutogen%20for%20PostgreSQL%20-%20Enterprise%20licence">Email licensing@unitautogen.com</a>
-    <a class="btn ghost" href="{{ '/postgresql/unitautogen/' | relative_url }}">Back to overview</a>
-  </div>
 </div>
+
+<section class="soft">
+  <div class="wrap">
+    <h2>What seccover checks</h2>
+    <p class="lead">The objects that run with their owner's privileges, so they can bypass the caller's RLS.</p>
+    <ul class="honest cols2">
+      <li><strong>SECURITY DEFINER functions</strong> run as their owner, not the calling user</li>
+      <li><strong>Views without <code>security_invoker</code></strong> are evaluated as the view owner, the Postgres default</li>
+      <li><strong>SECURITY DEFINER and owner-run triggers</strong> make writes and reads that escape RLS</li>
+      <li>Each run as two tenants, with generated data on both sides</li>
+    </ul>
+  </div>
+</section>
 
 <section>
   <div class="wrap">
-    <div class="grid">
-      <div>
-        <h3 style="margin:0 0 8px">The Security coverage report</h3>
-        <ul class="honest">
-          <li>Four counters and four detection sections up top</li>
-          <li>Each function judged role by role</li>
-          <li>Per cell: authorised, not authorised, anon, for SELECT / INSERT / UPDATE / DELETE</li>
-          <li>Verdict per routine with the table, command and channel of a leak</li>
-        </ul>
-      </div>
-      <img src="{{ '/assets/pg-seccover-report.png' | relative_url }}" alt="Security coverage report judging each function role by role">
+    <h2>The Security coverage report</h2>
+    <p class="lead">Dated and reproducible. Four counters and four detection passes up top, then every routine judged role by role, with the table, command and channel of any leak.</p>
+    <div class="shot">
+      <img src="{{ '/assets/pg-seccover-leaking.png' | relative_url }}" alt="Security coverage report flagging leaks. Eight SECURITY DEFINER functions read LEAKING in red with an X hole on the INSERT and WITH CHECK cell, and two views leak as well.">
+      <div class="cap">When a routine leaks, it is flagged. Here 8 functions and 2 views cross a trust boundary, each with the table and channel named.</div>
     </div>
+    <div class="shot" style="margin-top:28px">
+      <img src="{{ '/assets/pg-seccover-clean.png' | relative_url }}" alt="Security coverage report with no leaks. Zero leaking, and the SECURITY DEFINER function is judged enforced as declared.">
+      <div class="cap">When isolation holds, the same report reads 0 leaking, every routine enforced as declared.</div>
+    </div>
+    <ul class="honest cols2">
+      <li>Counters for leaking, too strict, enforced and unproven cells</li>
+      <li>Detection passes for RLS leak, view leak, trigger-binding and PII</li>
+      <li>Each function judged per client role, with its unit-test coverage</li>
+      <li>A leak names the table, the command and the channel</li>
+      <li>A hole means the role can act but shouldn't, a tick means enforced</li>
+      <li>Dated and reproducible, so a run stands as evidence</li>
+    </ul>
   </div>
 </section>
 
@@ -69,9 +84,23 @@ footer_links:
       <li>A tool, never a certification or an audit service</li>
     </ul>
     <div class="cta" style="justify-content:flex-start;margin-top:22px">
+      <a class="btn" href="mailto:licensing@unitautogen.com?subject=UnitAutogen%20for%20PostgreSQL%20-%20Enterprise%20licence">Email licensing@unitautogen.com</a>
       <a class="btn ghost" href="{{ '/postgresql/unitautogen/pii/' | relative_url }}">PII audit &rarr;</a>
       <a class="btn ghost" href="{{ '/use-cases/tenant-isolation/' | relative_url }}">Tenant isolation</a>
       <a class="btn ghost" href="{{ '/use-cases/compliance-evidence/' | relative_url }}">Compliance evidence</a>
     </div>
+  </div>
+</section>
+
+<section class="soft">
+  <div class="wrap">
+    <h2>What platforms suggest</h2>
+    <p class="lead">seccover checks exactly what PostgreSQL, Supabase and Neon tell you to watch.</p>
+    <ul class="honest">
+      <li><strong>Supabase</strong> flags SECURITY DEFINER views that bypass RLS in its project linter, and says to set <code>security_invoker</code>. seccover finds every one. <a href="https://supabase.github.io/splinter/0010_security_definer_view/">Supabase, Security Definer View lint &rarr;</a></li>
+      <li><strong>Supabase</strong> encourages automated pgTAP tests that RLS policies are correctly applied. seccover generates them. <a href="https://supabase.com/docs/guides/database/testing">Supabase, Testing your database &rarr;</a></li>
+      <li><strong>PostgreSQL</strong> documents that SECURITY DEFINER runs with the owner's rights, and how RLS is applied. seccover runs each routine as a tenant to prove it. <a href="https://www.postgresql.org/docs/current/ddl-rowsecurity.html">PostgreSQL, Row Security Policies &rarr;</a></li>
+      <li><strong>Neon</strong> requires RLS on every table exposed through its Data API. seccover proves the code paths cannot slip past it. <a href="https://neon.com/docs/guides/row-level-security">Neon, Row-Level Security &rarr;</a></li>
+    </ul>
   </div>
 </section>

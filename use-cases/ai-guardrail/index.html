@@ -1,12 +1,12 @@
 ---
 layout: default
-title: "A guardrail for AI-written database code - UnitAutogen"
-description: "AI assistants write database logic fast, and a silent mistake there costs the most. UnitAutogen generates tests that pin today's behaviour, so the next change - human or AI - that alters it fails a committed test before production."
+title: "A guardrail for AI-written database code, UnitAutogen"
+description: "AI assistants write database logic fast, and a silent mistake there costs the most. UnitAutogen generates tests that pin today's behaviour, so the next change, human or AI, that alters it fails a committed test before production."
 og_title: "Guardrail for AI-written database code"
 og_description: "Pin today's behaviour as tests, so the next AI or human change that breaks it fails before production."
 og_image: "/assets/social-preview.png"
 body_class: page-usecase
-footer_left: "(c) 2026 UnitAutogen - use cases"
+footer_left: "(c) 2026 UnitAutogen"
 footer_sep: "-"
 footer_links:
   - label: "Use cases"
@@ -17,21 +17,31 @@ footer_links:
     href: "https://github.com/unitautogen"
 ---
 <a id="top"></a>
-<div class="hero wrap">
-  <div style="margin-bottom:16px"><span class="badge badge--beta">Available for PostgreSQL</span></div>
-  <h1>A guardrail for<br><span class="hl">AI-written database code</span>.</h1>
+<div class="hero wrap hero--sub">
+  <div class="hero-tag"><span class="badge badge--beta">Available for PostgreSQL</span></div>
+  <h1>A guardrail for <span class="hl">AI-written database code</span>.</h1>
   <p class="sub">AI writes database logic fast. A silent mistake there costs the most and is hardest to catch by eye.</p>
   <ul class="honest hero-points">
     <li>Generated tests pin how each routine behaves today</li>
     <li>The assistant runs them before reporting back</li>
     <li>A failure you did not ask for means fix the code</li>
-    <li>Intended change: regenerate, re-pin, commit</li>
+    <li>Intended change means regenerate, re-pin and commit</li>
   </ul>
-  <div class="cta">
-    <a class="btn" href="{{ '/postgresql/unitautogen/' | relative_url }}">See the engine</a>
-    <a class="btn ghost" href="https://github.com/unitautogen/unitautogen-postgresql/releases">Download</a>
-  </div>
 </div>
+
+<section>
+  <div class="wrap">
+    <h2>How to do it</h2>
+    <ol class="steps">
+      <li>Generate tests that pin today's behaviour and commit them:</li>
+    </ol>
+    <pre><code>unitautogen --schema public --out unit_tests --html report.html --json report.json</code></pre>
+    <ol class="steps" start="2">
+      <li>Give your AI tool the guardrail rule below, so it runs the committed tests on every change.</li>
+      <li>Wire the same tests into CI; a behaviour it altered fails before merge.</li>
+    </ol>
+  </div>
+</section>
 
 <section class="soft">
   <div class="wrap">
@@ -39,7 +49,7 @@ footer_links:
     <ul class="honest">
       <li>You ask for a new tier. The assistant quietly changes <code>&gt;= 1000</code> to <code>&gt; 1000</code>.</li>
       <li>The edit reads fine and ships. A customer with exactly 1000 points drops a tier.</li>
-      <li>With the guardrail: the committed test for 1000 fails first. <code>have: silver, want: gold</code>.</li>
+      <li>With the guardrail, the committed test for 1000 fails first. <code>have: silver, want: gold</code>.</li>
       <li>The assistant fixes the boundary, re-runs green, then adds the new tier's tests.</li>
     </ul>
   </div>
@@ -67,5 +77,16 @@ Whenever you add or change a function, procedure, trigger or RLS policy:
       <a class="btn" href="https://github.com/unitautogen/unitautogen-postgresql/releases">Download</a>
       <a class="btn ghost" href="{{ '/postgresql/unitautogen/' | relative_url }}">See the engine</a>
     </div>
+  </div>
+</section>
+
+<section class="soft">
+  <div class="wrap">
+    <h2>What platforms suggest</h2>
+    <p class="lead">Automated tests in CI are how the platform says to catch a change before production.</p>
+    <ul class="honest">
+      <li><strong>Supabase</strong> encourages automated pgTAP tests, run in CI with <code>supabase test db</code>. UnitAutogen generates them, so a change (AI or human) that breaks behaviour fails there. <a href="https://supabase.com/docs/guides/database/testing">Supabase, Testing your database &rarr;</a></li>
+      <li><strong>Supabase</strong> ships pgTAP as its unit-testing extension. UnitAutogen emits standard pgTAP you commit and gate CI on. <a href="https://supabase.com/docs/guides/database/extensions/pgtap">Supabase, pgTAP unit testing &rarr;</a></li>
+    </ul>
   </div>
 </section>

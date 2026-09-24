@@ -1,12 +1,12 @@
 ---
 layout: default
-title: "Compliance evidence - UnitAutogen"
-description: "seccover emits standard pgTAP tests and dated, reproducible reports whose output supports your HIPAA and SOC 2 access controls. Supporting evidence produced on your own infrastructure, framed as a tool - never a certification or an audit service."
+title: "Compliance evidence, UnitAutogen"
+description: "seccover emits standard pgTAP tests and dated, reproducible reports whose output supports your HIPAA and SOC 2 access controls. Supporting evidence produced on your own infrastructure, framed as a tool, never a certification or an audit service."
 og_title: "Compliance evidence, produced on your own infrastructure"
 og_description: "Dated pgTAP tests and reports that support your HIPAA and SOC 2 access controls. A tool, not a certificate."
 og_image: "/assets/social-preview.png"
 body_class: page-usecase
-footer_left: "(c) 2026 UnitAutogen - use cases"
+footer_left: "(c) 2026 UnitAutogen"
 footer_sep: "-"
 footer_links:
   - label: "Use cases"
@@ -17,33 +17,59 @@ footer_links:
     href: "mailto:hello@unitautogen.com"
 ---
 <a id="top"></a>
-<div class="hero wrap">
-  <div style="margin-bottom:16px"><span class="badge badge--beta">Available for PostgreSQL</span></div>
-  <h1>Compliance evidence,<br><span class="hl">produced on your own infrastructure</span>.</h1>
+<div class="hero wrap hero--sub">
+  <div class="hero-tag"><span class="badge badge--beta">Available for PostgreSQL</span></div>
+  <h1>Compliance evidence, <span class="hl">produced on your own infrastructure</span>.</h1>
   <p class="sub">Standard pgTAP tests and dated, reproducible reports. Evidence you can hand an auditor, produced inside your perimeter.</p>
   <ul class="honest hero-points">
-    <li>HIPAA Access Control, 45 CFR 164.312(a)(1): per-routine evidence</li>
-    <li>HIPAA Evaluation, 164.308(a)(8): run continuously</li>
-    <li>SOC 2 CC6.1 and CC6.3: logical and role-based access</li>
+    <li>HIPAA Access Control, 45 CFR 164.312(a)(1), with per-routine evidence</li>
+    <li>HIPAA Evaluation, 164.308(a)(8), run continuously</li>
+    <li>SOC 2 CC6.1 and CC6.3, logical and role-based access</li>
     <li>SOC 2 C1 where the data is confidential</li>
   </ul>
-  <div class="cta">
-    <a class="btn" href="{{ '/postgresql/unitautogen/seccover/' | relative_url }}">See seccover</a>
-    <a class="btn ghost" href="mailto:hello@unitautogen.com">Get in touch</a>
-  </div>
 </div>
+
+<section>
+  <div class="wrap">
+    <h2>How to do it</h2>
+    <p class="lead">Enterprise. Each run produces dated, reproducible reports you keep as evidence.</p>
+    <ol class="steps">
+      <li>Connect with <code>UNITAUTOGEN_DSN</code> or the <code>PG*</code> variables, licence in place.</li>
+      <li>Run the security-coverage pass:</li>
+    </ol>
+    <pre><code>unitautogen seccover --schema public --out sec_out --sec-html sec.html --sec-json sec.json</code></pre>
+    <ol class="steps" start="3">
+      <li>Add <code>--pii</code> to also audit personal data leaked through error and RAISE messages.</li>
+      <li>Archive the dated <code>sec.html</code> and <code>sec.json</code> from each run; together they show the controls operating across the audit period.</li>
+    </ol>
+  </div>
+</section>
 
 <section class="soft">
   <div class="wrap">
     <h2>What it is, and is not</h2>
     <ul class="honest cols2">
       <li>Reports dated per run, so controls are shown operating across the audit period</li>
-      <li>No telemetry: schema and data never leave your machine</li>
+      <li>No telemetry, so schema and data never leave your machine</li>
       <li>Supporting evidence for your auditors, framed as a tool</li>
       <li>Not a certification, not an audit service</li>
     </ul>
     <div class="cta" style="justify-content:flex-start;margin-top:22px">
-      <a class="btn" href="{{ '/postgresql/unitautogen/' | relative_url }}">See the engine</a>
+      <a class="btn" href="{{ '/postgresql/unitautogen/seccover/' | relative_url }}">See seccover</a>
+      <a class="btn ghost" href="{{ '/postgresql/unitautogen/' | relative_url }}">See the engine</a>
+      <a class="btn ghost" href="mailto:hello@unitautogen.com">Get in touch</a>
     </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>What platforms suggest</h2>
+    <p class="lead">Enforcing access controls and testing them is what the platforms document.</p>
+    <ul class="honest">
+      <li><strong>Supabase</strong> documents Row Level Security as the access control for your data. UnitAutogen turns proof of it into dated evidence. <a href="https://supabase.com/docs/guides/database/postgres/row-level-security">Supabase, Row Level Security &rarr;</a></li>
+      <li><strong>Supabase</strong> encourages automated pgTAP tests of your policies. UnitAutogen emits standard pgTAP with dated reports. <a href="https://supabase.com/docs/guides/database/testing">Supabase, Testing your database &rarr;</a></li>
+      <li><strong>PostgreSQL</strong> documents RLS policies per command and role. seccover proves they hold through the code. <a href="https://www.postgresql.org/docs/current/ddl-rowsecurity.html">PostgreSQL, Row Security Policies &rarr;</a></li>
+    </ul>
   </div>
 </section>

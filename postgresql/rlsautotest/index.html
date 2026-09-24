@@ -2,13 +2,13 @@
 layout: default
 db: postgresql
 product: rlsautotest
-title: "rlsautotest - auto-generated pgTAP tests that prove your Postgres / Supabase RLS"
+title: "rlsautotest, auto-generated pgTAP tests that prove your Postgres / Supabase RLS"
 description: "rlsautotest reads your Row-Level Security policies and auto-generates a native pgTAP suite, and the seed data, that proves, per table, per command, per identity, who can read and write which rows. Free, open source, for Supabase and any Postgres."
-og_title: "rlsautotest - prove your Postgres / Supabase RLS"
+og_title: "rlsautotest, prove your Postgres / Supabase RLS"
 og_description: "Auto-generate pgTAP tests (and the data) that prove your Row-Level Security policies. Catches an unprotected table on the spot. Free and open source."
 og_image: "/assets/rls-hero.png"
 body_class: page-product
-footer_left: "(c) 2026 UnitAutogen - rlsautotest, the free PostgreSQL companion - open source under <a href=\"https://github.com/unitautogen/rlsautotest/blob/main/LICENSE\">Apache-2.0</a>"
+footer_left: "(c) 2026 UnitAutogen. rlsautotest, the free PostgreSQL companion, open source under <a href=\"https://github.com/unitautogen/rlsautotest/blob/main/LICENSE\">Apache-2.0</a>"
 footer_sep: "-"
 footer_links:
   - label: "PostgreSQL"
@@ -19,24 +19,21 @@ footer_links:
     href: "https://pypi.org/project/rlsautotest/"
 ---
 <a id="top"></a>
-<div class="hero wrap">
-  <div style="margin-bottom:16px"><span class="badge badge--beta" style="text-transform:none">Free &amp; open source</span></div>
-  <h1>Prove your Postgres RLS,<br><span class="hl">tests generated for you</span>.</h1>
+<div class="hero wrap hero--sub">
+  <div class="hero-tag"><span class="badge badge--beta" style="text-transform:none">Free &amp; open source</span></div>
+  <h1>Prove your Postgres RLS, <span class="hl">tests generated for you</span>.</h1>
   <p class="sub">Reads your Row-Level Security policies. Generates the pgTAP suite and the seed data that prove them.</p>
   <ul class="honest hero-points">
-    <li>Per table, per command, per identity: who can read and write which rows</li>
+    <li>Per table, per command and per identity, showing who can read and write which rows</li>
     <li>Owner, other user, other tenant, anon</li>
     <li>Two tenants seeded; one cannot touch the other's rows</li>
     <li>Unprotected table fails CI through a built-in guard</li>
   </ul>
-  <div class="cta">
-    <a class="btn" href="https://github.com/unitautogen/rlsautotest">View on GitHub</a>
-    <a class="btn ghost" href="https://pypi.org/project/rlsautotest/">PyPI</a>
-  </div>
-  <div class="meta-line">Apache-2.0 - emits pgTAP - Supabase &amp; any Postgres</div>
+  <div class="meta-line">Apache-2.0, emits pgTAP, Supabase &amp; any Postgres</div>
+  <div class="meta-line">Featured in <a href="https://github.com/supabase/supabase/releases/tag/v1.26.07">Supabase's July 2026 Developer Update</a>, under "Made with Supabase".</div>
   <div class="shot">
     <img src="{{ '/assets/rls-hero.png' | relative_url }}" alt="rlsautotest RLS access report: a per-identity grid where anon can read every row in public.documents is flagged red as a leak">
-    <div class="cap">One command: a per-identity access report that flags a table anon can read.</div>
+    <div class="cap">One command produces a per-identity access report that flags a table anon can read.</div>
   </div>
 </div>
 
@@ -45,11 +42,62 @@ footer_links:
     <h2>Why the data matters</h2>
     <ul class="honest cols2">
       <li>A generated test only proves something if its data matches the policy and the identity</li>
-      <li>Reverse-predicate seeding: from each policy to the rows that satisfy and violate it</li>
+      <li>Reverse-predicate seeding works from each policy to the rows that satisfy and violate it</li>
       <li>"The owner can see their row" is checked against a row that is actually theirs</li>
       <li>"Another tenant cannot" against a real, different tenant</li>
       <li>Never emits a false-passing test</li>
       <li>Runs against a local or throwaway database, never production</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>The report</h2>
+    <p class="lead">One report per schema, dated and reproducible. Each table shows a row-level grid and a column-level security grid, side by side, so it reads like a permissions table.</p>
+    <div class="shot">
+      <img src="{{ '/assets/rls-report-colsec.png' | relative_url }}" alt="rlsautotest RLS access report for the colsec schema. Each table has a Row level (can act?) grid and a Column level security (granted / leaks) grid, per identity and command, with columns that leak past their grant flagged red.">
+      <div class="cap">Each table carries a row-level grid and a column-level security grid, side by side. Columns that a broader grant leaks past are flagged red.</div>
+    </div>
+    <ul class="honest cols2">
+      <li>Row level, a tick means the identity can act, a dot means blocked</li>
+      <li>A tick where a dot belongs is the security hole, flagged red</li>
+      <li>Column level security, the columns each role is granted and any a broader grant leaks past</li>
+      <li>A summary line counts tables, exposed tables, problems, enforced as declared, and bypass surfaces</li>
+      <li>service_role is shown for completeness; it bypasses RLS by design</li>
+      <li>A table with RLS off is flagged loud, with no row-level protection at all</li>
+      <li>Dated and reproducible, so a run stands as access-control evidence</li>
+      <li><code>--all-schemas</code> writes one dashboard for the whole database, a schema picker beside each report</li>
+    </ul>
+  </div>
+</section>
+
+<section class="soft">
+  <div class="wrap">
+    <h2>The two-membership user</h2>
+    <p class="lead">Most suites test membership policies with users who belong to exactly one team. Real users belong to two, and that is where a class of bugs lives.</p>
+    <ul class="honest cols2">
+      <li>A scalar subquery keyed on <code>auth.uid()</code> errors the moment a user joins a second team</li>
+      <li>A <code>LIMIT 1</code> "fix" silently shows one of their teams at random</li>
+      <li>An over-broad rewrite shows a user more than their memberships grant</li>
+      <li>rlsautotest seeds one identity in two tenants, probes what it sees, and pins the exact count as a test</li>
+      <li>Any later drift into those shapes turns the suite red in CI</li>
+      <li><code>lint</code> flags the scalar-subquery shape statically, with the fix</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Beyond the policies</h2>
+    <p class="lead">Correct policies can still be undone by how the data is reached. rlsautotest maps that surface straight from the catalog and reports each object or role that can sidestep RLS.</p>
+    <ul class="honest cols2">
+      <li>Owner-rights (<code>SECURITY DEFINER</code>) views and functions a client can reach</li>
+      <li>Materialized views, a frozen owner-populated copy of their source</li>
+      <li><code>BYPASSRLS</code> and superuser roles a client can become</li>
+      <li>Tables with RLS enabled but not <code>FORCE</code>d</li>
+      <li>Column grants a broader grant quietly widens past, named column by column</li>
+      <li>Each is a review flag with a severity and a reason, not a pass or fail</li>
     </ul>
   </div>
 </section>
@@ -70,11 +118,24 @@ rlsautotest --db-url "$DATABASE_URL" --schema public --emit supabase/</code></pr
       <li>Native pgTAP: <code>supabase test db</code>, <code>pg_prove</code> or <code>psql</code></li>
       <li>Nothing to install on the database</li>
       <li>Free and open source under Apache-2.0</li>
-      <li>Beta: validated on real Supabase schemas and a multi-tenant corpus</li>
+      <li>Beta, validated on real Supabase schemas and a multi-tenant corpus</li>
     </ul>
     <div class="cta" style="justify-content:flex-start;margin-top:22px">
       <a class="btn" href="https://github.com/unitautogen/rlsautotest">View on GitHub</a>
       <a class="btn ghost" href="https://pypi.org/project/rlsautotest/">PyPI</a>
     </div>
+  </div>
+</section>
+
+<section class="soft">
+  <div class="wrap">
+    <h2>What platforms suggest</h2>
+    <p class="lead">rlsautotest generates exactly the RLS proof PostgreSQL, Supabase and Neon tell you to have.</p>
+    <ul class="honest">
+      <li><strong>Supabase</strong> encourages automated pgTAP tests that RLS policies are correctly applied. rlsautotest writes them, with the seed data. <a href="https://supabase.com/docs/guides/database/testing">Supabase, Testing your database &rarr;</a></li>
+      <li><strong>Supabase</strong> documents Row Level Security as how you secure data in Postgres. rlsautotest proves each policy per identity. <a href="https://supabase.com/docs/guides/database/postgres/row-level-security">Supabase, Row Level Security &rarr;</a></li>
+      <li><strong>Neon</strong> requires RLS on every table exposed through its Data API. rlsautotest fails CI on any table left unprotected. <a href="https://neon.com/docs/guides/row-level-security">Neon, Row-Level Security &rarr;</a></li>
+      <li><strong>PostgreSQL</strong> documents RLS policies per command and role. rlsautotest tests each, per table, command and identity. <a href="https://www.postgresql.org/docs/current/ddl-rowsecurity.html">PostgreSQL, Row Security Policies &rarr;</a></li>
+    </ul>
   </div>
 </section>

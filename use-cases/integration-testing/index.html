@@ -1,12 +1,12 @@
 ---
 layout: default
-title: "Integration testing for QA - UnitAutogen"
+title: "Integration testing for QA, UnitAutogen"
 description: "Integration tests for the whole flow inside the database: a function together with the functions it calls and the triggers its writes fire, run for real with generated data, and coverage across the entire call map. For QA teams that need the end-to-end database behaviour verified on every build."
 og_title: "Integration testing for QA"
 og_description: "Each function run with everything it calls and every trigger it fires, with coverage across the whole call map. Team edition."
 og_image: "/assets/social-preview.png"
 body_class: page-usecase
-footer_left: "(c) 2026 UnitAutogen - use cases"
+footer_left: "(c) 2026 UnitAutogen"
 footer_sep: "-"
 footer_links:
   - label: "Use cases"
@@ -17,9 +17,9 @@ footer_links:
     href: "mailto:hello@unitautogen.com"
 ---
 <a id="top"></a>
-<div class="hero wrap">
-  <div style="margin-bottom:16px"><span class="badge badge--beta">Available for PostgreSQL - Team edition</span></div>
-  <h1>The whole flow inside the database,<br><span class="hl">tested on every build</span>.</h1>
+<div class="hero wrap hero--sub">
+  <div class="hero-tag"><span class="badge badge--beta">Available for PostgreSQL, Team edition</span></div>
+  <h1>The whole flow inside the database, <span class="hl">tested on every build</span>.</h1>
   <p class="sub">For QA teams that need the assembled database verified, not one routine at a time.</p>
   <ul class="honest hero-points">
     <li>Each entry point run with the functions it calls</li>
@@ -27,37 +27,99 @@ footer_links:
     <li>Coverage across the whole call map</li>
     <li>No scenarios written by hand</li>
   </ul>
-  <div class="cta">
-    <a class="btn" href="{{ '/postgresql/unitautogen/integration/' | relative_url }}">See integration testing</a>
-    <a class="btn ghost" href="{{ '/postgresql/pricing/' | relative_url }}">Team edition</a>
-  </div>
 </div>
+
+<section>
+  <div class="wrap">
+    <h2>How to do it</h2>
+    <p class="lead">Team edition. Same setup as unit testing, one command.</p>
+    <ol class="steps">
+      <li>Install pgTAP and plpgsql_check; connect with <code>UNITAUTOGEN_DSN</code> or the <code>PG*</code> variables.</li>
+      <li>Provide a Team licence: <code>--license PATH</code>, the <code>UAG_LICENSE</code> variable, or a <code>unitautogen.lic</code> file.</li>
+      <li>Run the integration command:</li>
+    </ol>
+    <pre><code>unitautogen integration --schema public --out integration_tests --html integration.html --json integration.json</code></pre>
+    <ul class="honest cols2">
+      <li>One row per root function, its whole call map run for real</li>
+      <li>Commit the suite; gate every build in CI</li>
+    </ul>
+  </div>
+</section>
 
 <section class="soft">
   <div class="wrap">
-    <h2>What QA gets</h2>
-    <div class="pts">
-      <div class="card"><h3>End-to-end runs</h3><p>The test sees what production sees: calls and triggers in place.</p></div>
-      <div class="card"><h3>Deep coverage</h3><p>A branch inside a trigger three calls down is measured, not invisible.</p></div>
-      <div class="card"><h3>A regression suite you did not write</h3><p>A change that alters an outcome fails the build with the routine and branch named.</p></div>
+    <h2>What QA can't reach through the app</h2>
+    <ul class="honest cols2">
+      <li>App tests drive the database only with inputs the screens produce</li>
+      <li>A branch inside a trigger three calls down never runs</li>
+      <li>Error, rollback and rare-data paths in the chain stay untested</li>
+      <li>Writing database scenarios by hand means building the data by hand, so it is skipped</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>One entry point, the whole chain</h2>
+    <p class="lead">Point it at a root function. It runs the callees and the triggers for real, with generated data.</p>
+    <pre><code>checkout(order_id)              -- root: full test set generated
+  |- reserve_stock(item, qty)   -- callee, run for real
+  |- apply_pricing(order_id)    -- callee, run for real
+  \- [trigger] audit_order      -- fires on write, not mocked</code></pre>
+    <ul class="honest cols2">
+      <li>Valid inputs, boundaries and one test per branch, for the root</li>
+      <li>Every callee and trigger executed in real call order</li>
+      <li>Coverage measured across root, callees and triggers as one map</li>
+      <li>Standalone routines noted, not duplicated</li>
+    </ul>
+  </div>
+</section>
+
+<section class="soft">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <h3 style="margin:0 0 8px">What lands in CI, every build</h3>
+        <ul class="honest">
+          <li>An Integration Testing Report with one row per root function</li>
+          <li>Click a root for its call map, in real call order</li>
+          <li>Per-test write footprint across every table the map touches</li>
+          <li>Uncovered lines explained, because the root's inputs never reached them</li>
+          <li>Non-zero exit code when an outcome moves, root and branch named</li>
+        </ul>
+      </div>
+      <img src="{{ '/assets/pg-integration-report.png' | relative_url }}" alt="Integration Testing Report with one row per root function">
     </div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h2>Unit and integration together</h2>
+    <h2>How it fits a QA pipeline</h2>
     <ul class="honest cols2">
-      <li>Developers run unit tests on their own routines while they work</li>
-      <li>QA runs the integration suite on the assembled database each build</li>
-      <li>Same generator: one set of seed data, one report format</li>
-      <li>One place a failure points to</li>
-      <li>Unit testing and coverage: free, Community Edition</li>
-      <li>Integration testing: Team edition</li>
+      <li>Runs on a throwaway copy of the database, never production</li>
+      <li>Same generator, seed data and report format as the unit tests</li>
+      <li>Developers run unit tests as they work, free in the Community Edition</li>
+      <li>QA runs the integration suite each build, on the Team edition</li>
+      <li>One report, one place a failure points to</li>
+      <li>No scenarios to write or maintain</li>
     </ul>
     <div class="cta" style="justify-content:flex-start;margin-top:22px">
       <a class="btn" href="{{ '/postgresql/unitautogen/integration/' | relative_url }}">See integration testing</a>
+      <a class="btn ghost" href="{{ '/postgresql/pricing/' | relative_url }}">Team edition</a>
       <a class="btn ghost" href="{{ '/use-cases/unit-testing/' | relative_url }}">Unit testing for developers &rarr;</a>
     </div>
+  </div>
+</section>
+
+<section class="soft">
+  <div class="wrap">
+    <h2>What platforms suggest</h2>
+    <p class="lead">Testing your database logic is what the platform tells you to do.</p>
+    <ul class="honest">
+      <li><strong>Supabase</strong> encourages automated pgTAP tests of your functions and policies. UnitAutogen runs each with its callees and triggers. <a href="https://supabase.com/docs/guides/database/testing">Supabase, Testing your database &rarr;</a></li>
+      <li><strong>Supabase</strong> ships pgTAP as its unit-testing extension. UnitAutogen emits standard pgTAP across the call map. <a href="https://supabase.com/docs/guides/database/extensions/pgtap">Supabase, pgTAP unit testing &rarr;</a></li>
+      <li><strong>Supabase</strong> ships <code>plpgsql_check</code>, the PL/pgSQL linter. UnitAutogen uses it for coverage across the whole map. <a href="https://supabase.com/docs/guides/database/extensions/plpgsql_check">Supabase, plpgsql_check &rarr;</a></li>
+    </ul>
   </div>
 </section>

@@ -20,11 +20,16 @@
         <ul class="honest" style="margin:0">
           {%- for pt in side.does_points %}<li>{{ pt }}</li>{% endfor %}
         </ul>
-        <p style="margin-top:10px"><strong>Cannot:</strong> {{ side.cannot }}</p>
+        <p style="margin-top:10px">{{ side.cannot }}</p>
         <p style="margin-top:12px"><a class="go" href="{{ side.url | relative_url }}">{{ side.link }} &rarr;</a></p>
       </div>
       {%- endfor %}
     </div>
     <div class="myth" style="margin-top:22px;font-size:17px">{{ pr.close }}</div>
+    {%- if pr.close_points %}
+    <ul class="honest" style="margin-top:14px">
+      {%- for pt in pr.close_points %}<li>{{ pt }}</li>{% endfor %}
+    </ul>
+    {%- endif %}
   </div>
 </section>
