@@ -171,7 +171,7 @@ databases:
           cta_label: "Download"
           cta_href: "https://github.com/unitautogen/unitautogen-postgresql/releases"
           cta_style: "btn ghost"
-        - name: "Team"
+        - name: "Team Edition"
           price: "USD 400"
           unit: "per developer, per year"
           audience: "Teams running the suite in CI."
@@ -184,12 +184,12 @@ databases:
           cta_href: "mailto:licensing@unitautogen.com?subject=UnitAutogen%20for%20PostgreSQL%20-%20Team%20licence"
           cta_style: "btn"
           highlight: true
-        - name: "Enterprise"
+        - name: "Enterprise Edition"
           price: "USD 6,000"
           unit: "per production database cluster, per year"
           audience: "Multi-tenant SaaS, healthcare, finance."
           includes:
-            - "Everything in Team, for every developer on the cluster"
+            - "Everything in Team Edition, for every developer on the cluster"
             - "seccover, security coverage through functions, views and triggers"
             - "PII leak detection in error paths"
             - "Dated reports as supporting evidence for HIPAA and SOC 2 controls"
