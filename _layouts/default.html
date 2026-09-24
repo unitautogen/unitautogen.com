@@ -86,8 +86,19 @@
         <button type="button" class="menu-t{% if uc_cur != "" %} is-here{% endif %}" aria-haspopup="true">Use cases{% if uc_cur != "" %}<span class="menu-cur">{{ uc_cur }}</span>{% endif %} <span class="caret" aria-hidden="true">&#9662;</span></button>
         <div class="menu-panel" role="menu">
           <a role="menuitem" class="{% if here == '/use-cases/' %}is-cur{% endif %}" href="{{ '/use-cases/' | relative_url }}"><span class="mp-name">All use cases</span></a>
+          <div class="menu-head">AI use cases</div>
+          <div class="mp-subs">
+            {%- for uc in cat.use_cases %}
+            {%- unless uc.group == "ai" %}{% continue %}{% endunless %}
+            {%- if uc.only_db and uc.only_db != db.id %}{% continue %}{% endif %}
+            {%- assign uc_url = uc.slug | prepend: '/use-cases/' | append: '/' %}
+            <a role="menuitem" class="mp-sub{% if here == uc_url %} is-cur{% endif %}" href="{{ uc_url | relative_url }}"{% if here == uc_url %} aria-current="page"{% endif %}>{{ uc.name }}</a>
+            {%- endfor %}
+          </div>
+          <div class="menu-head">Other use cases</div>
           {%- for uc in cat.use_cases %}
           {%- if uc.only_db and uc.only_db != db.id %}{% continue %}{% endif %}
+          {%- if uc.group == "ai" %}{% continue %}{% endif %}
           {%- assign uc_url = uc.slug | prepend: '/use-cases/' | append: '/' %}
           <a role="menuitem" class="{% if here == uc_url %}is-cur{% endif %}" href="{{ uc_url | relative_url }}"{% if here == uc_url %} aria-current="page"{% endif %}><span class="mp-name">{{ uc.name }}</span></a>
           {%- endfor %}

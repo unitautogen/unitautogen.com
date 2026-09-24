@@ -184,6 +184,7 @@ footer{border-top:1px solid var(--line);padding:40px 0;color:var(--muted);font-s
               padding:10px 12px;border-radius:8px;color:var(--ink);font-size:15px}
 .menu-panel a:hover{background:var(--bg-soft);text-decoration:none}
 .mp-name{font-weight:600}
+.menu-panel .menu-head{padding:9px 12px 4px;margin-top:4px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
 /* the open sub-page: named on the dropdown button and highlighted in its list */
 /* menu label stays as is; the open sub-page sits beside it as a separate pill: Products [Coverage] */
 .menu-cur{display:inline-block;margin-left:9px;padding:2px 10px;border-radius:999px;background:#e7f3ec;

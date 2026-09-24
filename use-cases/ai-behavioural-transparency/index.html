@@ -1,0 +1,125 @@
+---
+layout: default
+title: "AI behavioural transparency, UnitAutogen"
+description: "When AI writes a database function you cannot eyeball it. UnitAutogen generates the tests, runs them against the real database, and the HTML report shows exactly what each function does, every branch, and what the AI left uncovered. Immediate, local, free in the Community Edition."
+og_title: "AI behavioural transparency"
+og_description: "See what an AI-written database function actually does. Generated tests, run against the real database, in one HTML report. Free and local."
+og_image: "/assets/social-preview.png"
+body_class: page-usecase
+footer_left: "(c) 2026 UnitAutogen"
+footer_sep: "-"
+footer_links:
+  - label: "Use cases"
+    href: "/use-cases/"
+  - label: "PostgreSQL engine"
+    href: "/postgresql/unitautogen/"
+  - label: "Contact"
+    href: "mailto:hello@unitautogen.com"
+---
+<a id="top"></a>
+<div class="hero wrap hero--sub">
+  <div class="hero-tag"><span class="badge badge--beta">Free, Community Edition</span></div>
+  <h1>AI wrote the function. <span class="hl">See what it actually does</span>.</h1>
+  <p class="sub">The tests and the HTML report are where AI-written database code becomes visible. Generate them, run them against the real database, and read exactly what each function does before you trust it.</p>
+  <ul class="honest hero-points">
+    <li>Every branch the AI wrote, run and shown</li>
+    <li>The expected value is what it really returns, not what the prompt claims</li>
+    <li>Uncovered lines named, so you see what the AI left unreachable</li>
+    <li>Free and local, no CI needed to look</li>
+  </ul>
+</div>
+
+<section>
+  <div class="wrap">
+    <h2>Where the output shows up</h2>
+    <p class="lead">Community Edition. You wrote a function, or an assistant did. One command generates the tests, runs them, and writes a report you open in the browser.</p>
+    <ol class="steps">
+      <li>Install pgTAP and plpgsql_check; connect with <code>UNITAUTOGEN_DSN</code> or the <code>PG*</code> variables.</li>
+      <li>Run the default command and point it at an HTML report:</li>
+    </ol>
+    <pre><code>unitautogen --schema public --html report.html --out unit_tests</code></pre>
+    <ol class="steps" start="3">
+      <li>Open <code>report.html</code>. Every function is there with its coverage; click one for its per-test results and annotated source.</li>
+    </ol>
+    <ul class="honest cols2">
+      <li>Nothing to write, the tests and the seed data are generated</li>
+      <li>Runs on your own database, nothing leaves your machine</li>
+    </ul>
+  </div>
+</section>
+
+<section class="soft">
+  <div class="wrap">
+    <h2>Put it in the assistant's loop</h2>
+    <p class="lead">The assistant that wrote the function can check its own work against the report, but only if you tell it to, step by step.</p>
+    <ol class="steps">
+      <li>Install once. The binary, plus pgTAP and plpgsql_check in your development database. Connect with <code>UNITAUTOGEN_DSN</code> or the <code>PG*</code> variables.</li>
+      <li>Add a project rule, or paste the prompt below, so the assistant runs UnitAutogen every time it writes or changes a function.</li>
+      <li>Give the assistant this prompt.</li>
+    </ol>
+    <pre><code>After you add or change any PL/pgSQL function, run this and wait for it to finish.
+
+  unitautogen --schema public --json report.json --html report.html --out unit_tests
+
+Then read report.json. For every function you touched:
+  1. Confirm its branch coverage is 100 percent.
+  2. Open its generated test in unit_tests/ and read the value each branch returns.
+  3. If a branch is uncovered, or a returned value is not what I asked for, change
+     the function and run the command again.
+
+Never edit or delete the generated tests to make them pass. When you are done, tell me
+which functions you changed, their coverage, and any behaviour in the report I should confirm.</code></pre>
+    <ul class="honest cols2">
+      <li>The assistant reads <code>report.json</code>, you open <code>report.html</code> to see the same thing</li>
+      <li>It fixes the function, never the test, so a green result still means something</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>What the report makes visible</h2>
+    <div class="grid" style="align-items:start">
+      <div>
+        <ul class="honest">
+          <li>One row per function, with its measured line and branch coverage</li>
+          <li>Click a function for each generated test and whether it passed</li>
+          <li>The annotated source, covered lines in green and uncovered in red</li>
+          <li>Each expected value captured by running the real function, so the report shows what the code does, not what it was meant to do</li>
+          <li>Every uncovered line explained, so a branch the AI left unreachable is named, not hidden</li>
+        </ul>
+      </div>
+      <img src="{{ '/assets/pg-function-drilldown.png' | relative_url }}" alt="A function drill-down showing per-test results and the annotated source with covered and uncovered lines">
+    </div>
+  </div>
+</section>
+
+<section class="soft">
+  <div class="wrap">
+    <h2>Why AI-written code needs it</h2>
+    <p class="lead">You did not write the function, so you cannot hold its behaviour in your head, and the model's own summary of what it did is one more guess.</p>
+    <ul class="honest cols2">
+      <li>The report is the function's real behaviour, executed against your database</li>
+      <li>A branch the AI got subtly wrong shows up now, in the loop, not in review</li>
+      <li>A line the AI wrote that nothing can reach is surfaced as an uncovered line</li>
+      <li>You see it before you commit, while the change is still cheap to fix</li>
+    </ul>
+    <p style="margin-top:16px;color:var(--muted);font-size:16px">This is transparency, not a gate. It shows you what the AI produced. Once you have looked and you trust it, the same generated tests become your regression guardrail, so the next change that moves that behaviour fails before production.</p>
+    <div class="cta" style="justify-content:flex-start;margin-top:14px">
+      <a class="btn" href="{{ '/postgresql/unitautogen/coverage/' | relative_url }}">See the report</a>
+      <a class="btn ghost" href="{{ '/use-cases/deterministic/' | relative_url }}">Generated, not guessed by AI</a>
+      <a class="btn ghost" href="{{ '/use-cases/ai-guardrail/' | relative_url }}">Then make it a guardrail &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>What platforms suggest</h2>
+    <p class="lead">The platform points you to local pgTAP tests you run and read as you build.</p>
+    <ul class="honest">
+      <li><strong>Supabase</strong> shows you writing pgTAP tests and running them locally with <code>supabase test db</code> for immediate pass or fail. UnitAutogen writes those tests for you and adds the coverage report. <a href="https://supabase.com/docs/guides/local-development/testing/overview">Supabase, Testing overview &rarr;</a></li>
+      <li><strong>Supabase</strong> ships pgTAP as its unit-testing extension for functions and policies. UnitAutogen emits standard pgTAP, so the report reads the same tests you would run by hand. <a href="https://supabase.com/docs/guides/database/extensions/pgtap">Supabase, pgTAP unit testing &rarr;</a></li>
+    </ul>
+  </div>
+</section>

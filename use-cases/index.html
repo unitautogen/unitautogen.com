@@ -22,8 +22,22 @@ footer_links:
   <div class="wrap">
     <h1 style="font-size:clamp(22px,3vw,30px);line-height:1.15;margin:0 0 6px">Use cases</h1>
     <p class="lead" style="margin:0 0 22px">One generator, several jobs. All run on PostgreSQL today, and reach SQL Server and Oracle as those engines mature.</p>
+    <h2 style="margin:6px 0 6px">AI use cases</h2>
+    <p class="lead" style="margin:0 0 22px">Where AI writes your database code, and you need to see, trust and hold what it produced.</p>
     <div class="dbgrid">
       {%- for uc in cat.use_cases %}
+      {%- unless uc.group == "ai" %}{% continue %}{% endunless %}
+      <div class="dbcard">
+        <div class="top"><h3>{{ uc.name }}</h3></div>
+        <p>{{ uc.blurb | replace: "[framework]", "pgTAP" }}</p>
+        <a class="go" href="{{ uc.slug | prepend: '/use-cases/' | append: '/' | relative_url }}">Learn more &rarr;</a>
+      </div>
+      {%- endfor %}
+    </div>
+    <h2 style="margin:34px 0 6px">Other use cases</h2>
+    <div class="dbgrid">
+      {%- for uc in cat.use_cases %}
+      {%- if uc.group == "ai" %}{% continue %}{% endif %}
       <div class="dbcard">
         <div class="top"><h3>{{ uc.name }}</h3></div>
         <p>{{ uc.blurb | replace: "[framework]", "pgTAP" }}</p>
