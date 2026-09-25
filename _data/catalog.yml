@@ -289,7 +289,7 @@ databases:
             url: "/postgresql/unitautogen/coverage/"
             edition: "Free"
             edition_kind: "beta"
-            blurb: "Unit and trigger tests, run for you. Line and branch coverage. Every uncovered line explained."
+            blurb: "Unit and trigger tests, run for you. Line and branch coverage, including dynamic SQL. Every uncovered line explained."
           - name: "Integration testing"
             short: "Integration"
             slug: "integration"
